@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+
+# Claude
+.claude/
+
+# Logs / temporales
+*.log
+*.tmp
