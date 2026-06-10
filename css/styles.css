@@ -125,7 +125,7 @@
   /* SVG */
   .node-card{cursor:grab}
   .node-card:active{cursor:grabbing}
-  .node-rect{fill:#15151a;stroke:var(--line);stroke-width:1.2;transition:stroke .15s, filter .15s}
+  .node-rect{fill:#15151a;stroke:var(--line);stroke-width:1.2;transition:stroke .15s, filter .15s;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
   .node-card:hover .node-rect{stroke:var(--gold-dim)}
   .node-card.sel .node-rect{stroke:var(--gold);filter:drop-shadow(0 0 10px rgba(200,168,107,.35))}
   .node-card.pick .node-rect{stroke:var(--gold);stroke-dasharray:4 3}
@@ -137,8 +137,8 @@
   .card-kicker{fill:var(--gold);font-family:'Jost';font-size:8px;text-anchor:middle;letter-spacing:.22em}
   .node-clip{fill:var(--gold);font-size:11px;font-family:'Jost'}
   .hub .node-rect{fill:#1a1509}
-  .edge{fill:none;stroke:var(--gold-soft);stroke-width:1.4;transition:stroke .15s, stroke-width .15s;cursor:pointer}
-  .edge.hi{stroke:var(--gold);stroke-width:2.4}
+  .edge{fill:none;stroke:var(--gold-dim);stroke-width:1.6;stroke-linecap:round;transition:stroke .15s, stroke-width .15s;cursor:pointer}
+  .edge.hi{stroke:var(--gold);stroke-width:2.6}
   .edge-hit{fill:none;stroke:transparent;stroke-width:18;cursor:pointer}
   .cardlink{fill:none;stroke:rgba(200,168,107,.22);stroke-width:1.2;stroke-dasharray:5 4;pointer-events:none;transition:.15s}
   .cardlink.hi{stroke:var(--gold-dim)}
@@ -149,6 +149,10 @@
   .lbl-tx{fill:#d9d6cf;font-family:'Jost';font-size:10.5px;text-anchor:middle;font-weight:400;pointer-events:none}
   .arrow{fill:var(--gold-dim)}
   .arrow.hi{fill:var(--gold)}
+
+  /* ===== Banda de dirección / zonas ===== */
+  .zone-band{fill:rgba(200,168,107,.045);stroke:rgba(200,168,107,.20);stroke-width:1;stroke-dasharray:2 6;pointer-events:none}
+  .zone-label{fill:var(--gold-dim);font-family:'Jost';font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;pointer-events:none}
 
   /* ===== Búsqueda ===== */
   .searchbar{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding:8px 12px;

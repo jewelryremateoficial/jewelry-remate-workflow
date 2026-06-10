@@ -72,6 +72,7 @@ let selFmt=null, selArea=null, selCard=null;
 let labelsOn=true, connectMode=false, pickFirst=null;
 let undoStack=[], redoStack=[], histTimer=null, restoringHistory=false;
 let searchQuery='';
+let layoutMode=localStorage.getItem('jr_layout')||'flow';
 
 function loadGraph(){
   try{const raw=localStorage.getItem(STORE);if(raw){const g=JSON.parse(raw);if(g&&g.nodes&&g.edges){if(!g.cards)g.cards=[];g.nodes.forEach(n=>{if(!n.files)n.files=[];});g.edges.forEach(e=>{if(!e.files)e.files=[];});g.cards.forEach(c=>{if(!c.files)c.files=[];if(!c.links)c.links=[];});return g;}}}catch(e){}
@@ -125,6 +126,7 @@ const gLinks=document.getElementById('gLinks');
 const gEdges=document.getElementById('gEdges');
 const gLabels=document.getElementById('gLabels');
 const gNodes=document.getElementById('gNodes');
+const gZones=document.getElementById('gZones');
 const findNode=id=>G.nodes.find(n=>n.id===id);
 const findCard=id=>(G.cards||[]).find(c=>c.id===id);
 const isCard=id=>!!findCard(id);
@@ -141,9 +143,65 @@ function circleLayout(){
 }
 function ensurePositions(){
   const anyStored=G.nodes.some(n=>n.x!=null);
-  if(!anyStored){circleLayout();}
+  if(!anyStored){ if(layoutMode==='circle')circleLayout(); else flowLayout(); }
   else{G.nodes.forEach(n=>{pos[n.id]=(n.x!=null&&n.y!=null)?{x:n.x,y:n.y}:{x:CX,y:CY};});}
   (G.cards||[]).forEach(c=>{pos[c.id]={x:c.x!=null?c.x:CX,y:c.y!=null?c.y:CY};});
+}
+
+/* ===================== LAYOUT POR FLUJO (capas izq→der) ===================== */
+/* Separa la "dirección/reportes" (banda superior) del flujo operativo. */
+function classifyBands(){
+  const outDeg={}, inDeg={};
+  G.nodes.forEach(n=>{outDeg[n.id]=0;inDeg[n.id]=0;});
+  G.edges.forEach(e=>{if(outDeg[e.from]!=null)outDeg[e.from]++;if(inDeg[e.to]!=null)inDeg[e.to]++;});
+  const isMgmt=n=> n.hub || n.cat==='reporte' || (outDeg[n.id]===0 && inDeg[n.id]>=2);
+  let mgmt=G.nodes.filter(isMgmt), ops=G.nodes.filter(n=>!isMgmt(n));
+  if(!ops.length){ops=G.nodes.slice();mgmt=[];}
+  return {mgmt,ops};
+}
+function flowLayout(){
+  const {mgmt,ops}=classifyBands();
+  const opIds=new Set(ops.map(n=>n.id));
+  const fwd={}, incList={};
+  ops.forEach(n=>{fwd[n.id]=[];incList[n.id]=[];});
+  G.edges.forEach(e=>{if(opIds.has(e.from)&&opIds.has(e.to)&&e.from!==e.to){fwd[e.from].push(e.to);incList[e.to].push(e.from);}});
+  /* romper ciclos: las aristas hacia un nodo en la pila (back-edge) se ignoran */
+  const state={}, keep={};
+  ops.forEach(n=>keep[n.id]=[]);
+  function dfs(u){state[u]=1;fwd[u].forEach(v=>{if(state[v]===1)return;keep[u].push(v);if(!state[v])dfs(v);});state[u]=2;}
+  ops.forEach(n=>{if(!state[n.id])dfs(n.id);});
+  /* asignar columna = camino más largo desde las fuentes (sin ciclos) */
+  const layer={}, indeg={};
+  ops.forEach(n=>{layer[n.id]=0;indeg[n.id]=0;});
+  ops.forEach(n=>keep[n.id].forEach(v=>indeg[v]++));
+  let q=ops.filter(n=>indeg[n.id]===0).map(n=>n.id);
+  while(q.length){const u=q.shift();keep[u].forEach(v=>{if(layer[v]<layer[u]+1)layer[v]=layer[u]+1;if(--indeg[v]===0)q.push(v);});}
+  let maxL=0;ops.forEach(n=>{if(layer[n.id]>maxL)maxL=layer[n.id];});
+  const cols=[];for(let i=0;i<=maxL;i++)cols.push([]);
+  ops.forEach(n=>cols[layer[n.id]].push(n));
+  /* ordenar dentro de cada columna por baricentro (reduce cruces) */
+  function pmap(col){const m={};col.forEach((n,i)=>m[n.id]=i);return m;}
+  function bc(n,map,pm){const ks=(map[n.id]||[]).filter(x=>pm[x]!=null);if(!ks.length)return 9999;return ks.reduce((s,x)=>s+pm[x],0)/ks.length;}
+  for(let s=0;s<5;s++){
+    for(let i=1;i<cols.length;i++){const pm=pmap(cols[i-1]);cols[i].sort((a,b)=>bc(a,incList,pm)-bc(b,incList,pm));}
+    for(let i=cols.length-2;i>=0;i--){const pm=pmap(cols[i+1]);cols[i].sort((a,b)=>bc(a,fwd,pm)-bc(b,fwd,pm));}
+  }
+  /* posiciones */
+  const COLW=290, ROWH=128;
+  const span=maxL*COLW, startX=CX-span/2, opCY=CY+70;
+  cols.forEach((col,i)=>{const x=startX+i*COLW;const h=(col.length-1)*ROWH;col.forEach((n,j)=>{pos[n.id]={x,y:opCY-h/2+j*ROWH};});});
+  /* banda de dirección arriba, centrada */
+  if(mgmt.length){
+    const topY=CY-150, cx0=startX+span/2, step=Math.max(280,span/Math.max(mgmt.length,1));
+    mgmt.forEach((n,k)=>{pos[n.id]={x:cx0+(k-(mgmt.length-1)/2)*step,y:topY};});
+  }
+  G.nodes.forEach(n=>{if(pos[n.id]){n.x=pos[n.id].x;n.y=pos[n.id].y;}});
+  (G.cards||[]).forEach(c=>{if(pos[c.id]==null)pos[c.id]={x:CX,y:opCY+210};});
+}
+/* Reorganiza una sola vez al estrenar el modo flujo (respeta arrastres después). */
+function maybeAutoFlow(){
+  if(layoutMode==='flow' && !localStorage.getItem('jr_flow_migrated')){flowLayout();savePositions();}
+  try{localStorage.setItem('jr_flow_migrated','1');}catch(e){}
 }
 function savePositions(){
   G.nodes.forEach(n=>{if(pos[n.id]){n.x=pos[n.id].x;n.y=pos[n.id].y;}});
@@ -158,15 +216,27 @@ function borderPoint(id,tx,ty){
   const sx=dx!==0?hw/Math.abs(dx):Infinity, sy=dy!==0?hh/Math.abs(dy):Infinity;
   const s=Math.min(sx,sy);return{x:p.x+dx*s,y:p.y+dy*s};
 }
+function anchor(id,side){
+  const p=pos[id],{w,h}=dims(id);
+  if(side==='r')return{x:p.x+w/2,y:p.y};
+  if(side==='l')return{x:p.x-w/2,y:p.y};
+  if(side==='t')return{x:p.x,y:p.y-h/2};
+  return{x:p.x,y:p.y+h/2};
+}
+/* Conector estilo diagrama: sale por el lado dominante con curva suave (cúbica). */
 function curve(fromId,toId){
   const a=pos[fromId],b=pos[toId];if(!a||!b)return{d:'',lx:0,ly:0};
-  const p1=borderPoint(fromId,b.x,b.y),p2=borderPoint(toId,a.x,a.y);
-  const mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2;
-  const dx=p2.x-p1.x,dy=p2.y-p1.y,len=Math.hypot(dx,dy)||1;
-  const nx=-dy/len,ny=dx/len,bow=Math.min(60,len*0.16);
-  const sign=(nx*(CX-mx)+ny*(CY-my))>0?-1:1;
-  const cx=mx+nx*bow*sign,cy=my+ny*bow*sign;
-  return{d:`M${p1.x},${p1.y} Q${cx},${cy} ${p2.x},${p2.y}`,lx:(p1.x+2*cx+p2.x)/4,ly:(p1.y+2*cy+p2.y)/4};
+  const dx=b.x-a.x, dy=b.y-a.y, horiz=Math.abs(dx)>=Math.abs(dy);
+  let s,e;
+  if(horiz){s=anchor(fromId,dx>=0?'r':'l');e=anchor(toId,dx>=0?'l':'r');}
+  else{s=anchor(fromId,dy>=0?'b':'t');e=anchor(toId,dy>=0?'t':'b');}
+  let c1,c2;
+  if(horiz){const k=Math.max(38,Math.abs(e.x-s.x)*0.45);c1={x:s.x+(dx>=0?k:-k),y:s.y};c2={x:e.x+(dx>=0?-k:k),y:e.y};}
+  else{const k=Math.max(38,Math.abs(e.y-s.y)*0.45);c1={x:s.x,y:s.y+(dy>=0?k:-k)};c2={x:e.x,y:e.y+(dy>=0?-k:k)};}
+  const d=`M${s.x},${s.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${e.x},${e.y}`;
+  const lx=0.125*s.x+0.375*c1.x+0.375*c2.x+0.125*e.x;
+  const ly=0.125*s.y+0.375*c1.y+0.375*c2.y+0.125*e.y;
+  return{d,lx,ly};
 }
 const NS='http://www.w3.org/2000/svg';
 const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
@@ -232,7 +302,22 @@ function renderEdges(){
     }
   });
 }
-function renderAll(){renderEdges();renderNodes();}
+function renderZones(){
+  if(!gZones)return;
+  gZones.innerHTML='';
+  if(layoutMode!=='flow')return;
+  const {mgmt}=classifyBands();
+  if(!mgmt.length)return;
+  let minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9,any=false;
+  mgmt.forEach(n=>{const p=pos[n.id];if(!p)return;any=true;const{w,h}=dims(n.id);
+    minx=Math.min(minx,p.x-w/2);maxx=Math.max(maxx,p.x+w/2);miny=Math.min(miny,p.y-h/2);maxy=Math.max(maxy,p.y+h/2);});
+  if(!any)return;
+  const padX=46,padTop=30,padBot=22;
+  const x=minx-padX, y=miny-padTop, w=(maxx-minx)+padX*2, h=(maxy-miny)+padTop+padBot;
+  gZones.appendChild(el('rect',{class:'zone-band',x,y,width:w,height:h,rx:22}));
+  const t=el('text',{class:'zone-label',x:x+18,y:y+17});t.textContent='Dirección · Reportes';gZones.appendChild(t);
+}
+function renderAll(){renderZones();renderEdges();renderNodes();}
 
 /* ===================== PAN / DRAG / ZOOM ===================== */
 let drag=null, pan=null, labelDrag=null;
@@ -494,7 +579,8 @@ btnConnect.addEventListener('click',()=>{connectMode=!connectMode;pickFirst=null
   showHint(connectMode?'Modo conexión: clic en ORIGEN y luego en DESTINO (solo áreas)':'Modo conexión desactivado');renderNodes();});
 const btnLabels=document.getElementById('btnLabels');
 btnLabels.addEventListener('click',()=>{labelsOn=!labelsOn;btnLabels.classList.toggle('active',labelsOn);renderAll();});
-document.getElementById('btnRecircle').addEventListener('click',()=>{circleLayout();G.nodes.forEach(n=>{if(pos[n.id]){n.x=pos[n.id].x;n.y=pos[n.id].y;}});persist();renderAll();fitView();showHint('Áreas reacomodadas en círculo');});
+document.getElementById('btnFlow').addEventListener('click',()=>{layoutMode='flow';localStorage.setItem('jr_layout','flow');flowLayout();persist();renderAll();fitView();showHint('Áreas acomodadas por flujo (izquierda → derecha)');});
+document.getElementById('btnRecircle').addEventListener('click',()=>{layoutMode='circle';localStorage.setItem('jr_layout','circle');circleLayout();G.nodes.forEach(n=>{if(pos[n.id]){n.x=pos[n.id].x;n.y=pos[n.id].y;}});persist();renderAll();fitView();showHint('Áreas reacomodadas en círculo');});
 document.getElementById('zIn').addEventListener('click',()=>zoomBy(1.1));
 document.getElementById('zOut').addEventListener('click',()=>zoomBy(1/1.1));
 document.getElementById('zFit').addEventListener('click',fitView);
@@ -531,6 +617,6 @@ let hintT;function showHint(m){const h=document.getElementById('hint');h.textCon
 const flashT={};function flash(id){const e=document.getElementById(id);e.classList.add('show');clearTimeout(flashT[id]);flashT[id]=setTimeout(()=>e.classList.remove('show'),1000);}
 
 /* ===================== INIT ===================== */
-resizeVB();ensurePositions();bindFmt();bindCard();bindArea();renderAll();buildLists();applyView();fitView();histInit();
+resizeVB();ensurePositions();maybeAutoFlow();bindFmt();bindCard();bindArea();renderAll();buildLists();applyView();fitView();histInit();
 window.addEventListener('resize',resizeVB);
 setTimeout(()=>showHint('Agrega formatos como línea entre áreas o como tarjeta independiente · se guarda solo'),500);
