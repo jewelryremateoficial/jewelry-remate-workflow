@@ -149,3 +149,22 @@
   .lbl-tx{fill:#d9d6cf;font-family:'Jost';font-size:10.5px;text-anchor:middle;font-weight:400;pointer-events:none}
   .arrow{fill:var(--gold-dim)}
   .arrow.hi{fill:var(--gold)}
+
+  /* ===== Búsqueda ===== */
+  .searchbar{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding:8px 12px;
+    background:var(--panel2);border:1px solid var(--line);border-radius:999px;transition:.15s}
+  .searchbar:focus-within{border-color:var(--gold-dim)}
+  .searchbar svg{width:15px;height:15px;color:var(--muted);flex:0 0 auto}
+  .searchbar input{flex:1;background:none;border:none;outline:none;color:var(--ink);
+    font-family:'Jost';font-weight:300;font-size:13px;letter-spacing:.01em}
+  .searchbar input::placeholder{color:var(--muted)}
+  .searchbar input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+  #searchClear{color:var(--muted);cursor:pointer;font-size:12px;padding:2px 4px;border-radius:50%;
+    line-height:1;display:none}
+  #searchClear:hover{color:var(--ink)}
+  .searchbar.has-text #searchClear{display:inline-block}
+  .noresults{color:var(--muted);font-size:12.5px;font-style:italic;padding:14px 4px;text-align:center}
+
+  /* atenuar lo que no coincide con la búsqueda */
+  .node-card.dim{opacity:.16;transition:opacity .15s}
+  .edge.dim,.lbl-g.dim,.cardlink.dim{opacity:.10;transition:opacity .15s}

@@ -23,6 +23,9 @@
     <button class="btn active" id="btnLabels"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Etiquetas</button>
     <button class="btn" id="btnRecircle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>Círculo</button>
     <span class="sep"></span>
+    <button class="btn" id="btnUndo" title="Deshacer (Ctrl/Cmd+Z)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 7 4 12l5 5"/><path d="M4 12h11a5 5 0 0 1 0 10h-1"/></svg>Deshacer</button>
+    <button class="btn" id="btnRedo" title="Rehacer (Ctrl/Cmd+Shift+Z)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 7l5 5-5 5"/><path d="M20 12H9a5 5 0 0 0 0 10h1"/></svg>Rehacer</button>
+    <span class="sep"></span>
     <button class="btn ghost" id="btnExport" title="Descargar tu trabajo (incluye archivos)">⬇ Exportar</button>
     <button class="btn ghost" id="btnImport" title="Cargar un archivo guardado">⬆ Importar</button>
     <button class="btn ghost" id="btnReset" title="Volver al original">↺ Reiniciar</button>
@@ -59,6 +62,11 @@
       <div class="tab" data-tab="areas">Áreas</div>
     </div>
     <div class="panel-body">
+      <div class="searchbar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+        <input type="search" id="searchInput" placeholder="Buscar áreas y formatos…" autocomplete="off">
+        <span id="searchClear" title="Limpiar">✕</span>
+      </div>
       <!-- LIST formatos -->
       <div id="listFormatos">
         <p class="lead">Documentos que <em>viajan</em> entre áreas. Cada uno alimenta una decisión.</p>

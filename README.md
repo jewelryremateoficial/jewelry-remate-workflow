@@ -12,6 +12,8 @@ sin servidor ni base de datos: todo se guarda localmente en el navegador
 - **Conexiones (edges)**: definir el flujo entre áreas con propósito y decisión.
 - **Archivos adjuntos**: subir archivos a cada área o formato.
 - **Guardado automático** en el navegador (no se pierde al cerrar la pestaña).
+- **Deshacer / Rehacer** (`Ctrl/Cmd+Z` y `Ctrl/Cmd+Shift+Z`).
+- **Búsqueda**: filtra áreas y formatos y resalta en el diagrama.
 
 ## 🚀 Cómo usarlo
 
@@ -28,13 +30,13 @@ https://<tu-usuario>.github.io/<nombre-del-repo>/
 
 ## 🛠️ Editar y mejorar
 
-Todo el código (HTML, CSS y JavaScript) vive en `index.html`. Para cambios:
+El código está separado por responsabilidad. Para cambios:
 
-1. Edita `index.html`.
-2. Prueba abriéndolo en el navegador.
+1. Edita el archivo correspondiente (estructura abajo).
+2. Pruébalo en el navegador (ver nota de previsualización local).
 3. Haz commit y push:
    ```bash
-   git add index.html
+   git add -A
    git commit -m "Describe tu cambio"
    git push
    ```
@@ -43,9 +45,21 @@ Todo el código (HTML, CSS y JavaScript) vive en `index.html`. Para cambios:
 
 ```
 .
-├── index.html      # La aplicación completa (UI + lógica)
-└── README.md       # Este archivo
+├── index.html        # Estructura (HTML) de la página
+├── css/
+│   └── styles.css    # Estilos / apariencia
+├── js/
+│   └── app.js        # Lógica de la aplicación
+└── README.md         # Este archivo
 ```
+
+> **Previsualización local:** como el código está en archivos separados, abrir
+> `index.html` con doble clic puede no cargar el JS por seguridad del navegador.
+> Para verlo en local, levanta un servidor simple en la carpeta:
+> ```bash
+> python3 -m http.server 8000
+> ```
+> y abre `http://localhost:8000`. En la web (GitHub Pages) funciona sin esto.
 
 ## 🗺️ Ideas a futuro
 
