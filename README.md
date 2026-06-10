@@ -14,8 +14,9 @@ sin servidor ni base de datos: todo se guarda localmente en el navegador
 - **Guardado automático** en el navegador (no se pierde al cerrar la pestaña).
 - **Deshacer / Rehacer** (`Ctrl/Cmd+Z` y `Ctrl/Cmd+Shift+Z`).
 - **Búsqueda**: filtra áreas y formatos y resalta en el diagrama.
-- **Acomodo automático**: vista **Flujo** (por etapas, izquierda→derecha, con la
-  dirección/reportes en una banda superior) o **Círculo**.
+- **4 vistas/perspectivas** (selector "Vista"): **Flujo por etapas**, **Jerárquico**
+  (dirección arriba), **Por departamento** (zonas por tipo) y **Círculo**.
+- **Auto-separación de etiquetas**: los nombres de formato nunca se enciman.
 
 ## 🚀 Cómo usarlo
 

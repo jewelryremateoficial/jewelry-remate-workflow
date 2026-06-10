@@ -150,6 +150,16 @@
   .arrow{fill:var(--gold-dim)}
   .arrow.hi{fill:var(--gold)}
 
+  /* ===== Selector de Vista ===== */
+  .viewsel{display:inline-flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:999px;padding:6px 11px;font-family:'Jost';transition:border-color .15s}
+  .viewsel:hover{border-color:var(--gold-dim)}
+  .viewsel svg{width:15px;height:15px;color:var(--gold-dim);flex:0 0 auto}
+  .viewsel span{color:var(--muted);text-transform:uppercase;letter-spacing:.16em;font-size:9.5px}
+  .viewsel select{background:none;border:none;outline:none;color:var(--ink);font-family:'Jost';
+    font-size:12px;letter-spacing:.03em;cursor:pointer}
+  .viewsel select option{background:#16161a;color:var(--ink)}
+
   /* ===== Banda de dirección / zonas ===== */
   .zone-band{fill:rgba(200,168,107,.045);stroke:rgba(200,168,107,.20);stroke-width:1;stroke-dasharray:2 6;pointer-events:none}
   .zone-label{fill:var(--gold-dim);font-family:'Jost';font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;pointer-events:none}
