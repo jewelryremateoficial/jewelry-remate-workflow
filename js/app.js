@@ -194,8 +194,8 @@ function syncPos(){G.nodes.forEach(n=>{if(pos[n.id]){n.x=pos[n.id].x;n.y=pos[n.i
 /* VISTA: Flujo por etapas (izquierda → derecha) */
 function flowLayout(){
   const {mgmt,cols}=computeFlowStructure();
-  const COLW=340, ROWH=156, maxL=cols.length-1;
-  const span=maxL*COLW, startX=CX-span/2, opCY=CY+80;
+  const COLW=380, ROWH=178, maxL=cols.length-1;
+  const span=maxL*COLW, startX=CX-span/2, opCY=CY+90;
   cols.forEach((col,i)=>{const x=startX+i*COLW;const h=(col.length-1)*ROWH;col.forEach((n,j)=>{pos[n.id]={x,y:opCY-h/2+j*ROWH};});});
   if(mgmt.length){const topY=CY-170, cx0=startX+span/2, step=Math.max(320,(span||COLW)/Math.max(mgmt.length,1));
     mgmt.forEach((n,k)=>{pos[n.id]={x:cx0+(k-(mgmt.length-1)/2)*step,y:topY};});}
@@ -204,7 +204,7 @@ function flowLayout(){
 /* VISTA: Jerárquico (dirección arriba, niveles hacia abajo) */
 function hierLayout(){
   const {mgmt,cols}=computeFlowStructure();
-  const COLW=250, ROWGAP=168, topY=CY-300;
+  const COLW=280, ROWGAP=200, topY=CY-340;
   if(mgmt.length){const w=(mgmt.length-1)*COLW;mgmt.forEach((n,k)=>{pos[n.id]={x:CX-w/2+k*COLW,y:topY};});}
   const startY=topY+(mgmt.length?ROWGAP:0);
   cols.forEach((col,i)=>{const y=startY+i*ROWGAP;const w=(col.length-1)*COLW;col.forEach((n,j)=>{pos[n.id]={x:CX-w/2+j*COLW,y};});});
@@ -216,7 +216,7 @@ function deptGroups(){
 }
 function deptLayout(){
   const groups=deptGroups();
-  const COLW=280, ROWH=150, span=(groups.length-1)*COLW, startX=CX-span/2;
+  const COLW=300, ROWH=168, span=(groups.length-1)*COLW, startX=CX-span/2;
   groups.forEach((g,i)=>{const x=startX+i*COLW;const h=(g.nodes.length-1)*ROWH;g.nodes.forEach((n,j)=>{pos[n.id]={x,y:CY-h/2+j*ROWH};});});
   syncPos();(G.cards||[]).forEach(c=>{if(pos[c.id]==null)pos[c.id]={x:CX,y:CY+280};});
 }
@@ -319,29 +319,34 @@ function renderEdges(){
     const hit=el('path',{class:'edge-hit',d:geo.d});gEdges.appendChild(hit);
     hit.addEventListener('click',()=>selectFormat(e.id));
     if(labelsOn){
-      const clipc=(e.files&&e.files.length)?' 📎':'';const txt=e.name+clipc;
-      const tw=Math.max(70,txt.length*5.7)+18;
+      const fcount=(e.files&&e.files.length)||0;
+      const txt=clip(e.name,30);
+      const tw=Math.max(140,txt.length*7.1+72);
       const ox=e.labelDx||0, oy=e.labelDy||0;
-      labelData.push({e,hi,edim,txt,tw,lx:geo.lx,ly:geo.ly,ox,oy,manual:(Math.abs(ox)>1||Math.abs(oy)>1)});
+      labelData.push({e,hi,edim,txt,tw,fcount,lx:geo.lx,ly:geo.ly,ox,oy,manual:(Math.abs(ox)>1||Math.abs(oy)>1)});
     }
   });
-  /* separar etiquetas que se encimen (las arrastradas a mano quedan fijas) */
+  /* separar tarjetas de formato que se encimen (las arrastradas a mano quedan fijas) */
   if(labelsOn){
     labelsDecollide(labelData);
+    const CH=42;
     labelData.forEach(L=>{
       const lxp=L.lx+L.ox, lyp=L.ly+L.oy;
-      if(Math.abs(L.ox)>14||Math.abs(L.oy)>14){gLabels.appendChild(el('line',{x1:L.lx,y1:L.ly,x2:lxp,y2:lyp,stroke:'rgba(200,168,107,.28)','stroke-width':1,'stroke-dasharray':'3 3'}));}
+      if(Math.abs(L.ox)>16||Math.abs(L.oy)>16){gLabels.appendChild(el('line',{class:'lbl-leader',x1:L.lx,y1:L.ly,x2:lxp,y2:lyp}));}
+      const col=CAT[L.e.cat]?CAT[L.e.cat].c:'#c8a86b';
       const lg=el('g',{class:'lbl-g'+(L.hi?' hi':'')+L.edim,'data-id':L.e.id,transform:`translate(${lxp},${lyp})`});
-      lg.appendChild(el('rect',{class:'lbl-bg',x:-L.tw/2,y:-12,width:L.tw,height:24,rx:12}));
-      lg.appendChild(el('circle',{cx:-L.tw/2+11,cy:0,r:3.2,fill:CAT[L.e.cat]?CAT[L.e.cat].c:'#c8a86b'}));
-      const tx=el('text',{class:'lbl-tx',x:6,y:3.5});tx.textContent=L.txt;lg.appendChild(tx);
+      lg.appendChild(el('rect',{class:'lbl-bg',x:-L.tw/2,y:-CH/2,width:L.tw,height:CH,rx:13}));
+      lg.appendChild(el('rect',{class:'lbl-strip',x:-L.tw/2,y:-CH/2,width:7,height:CH,rx:3.5,fill:col}));
+      const ico=el('text',{class:'lbl-ico',x:-L.tw/2+26,y:5.5,'text-anchor':'middle'});ico.textContent='📄';lg.appendChild(ico);
+      const tx=el('text',{class:'lbl-tx',x:-L.tw/2+44,y:5});tx.textContent=L.txt;lg.appendChild(tx);
+      if(L.fcount){const fc=el('text',{class:'lbl-clip',x:L.tw/2-15,y:5,'text-anchor':'middle'});fc.textContent='📎'+L.fcount;lg.appendChild(fc);}
       gLabels.appendChild(lg);
     });
   }
 }
 /* Empuja verticalmente las etiquetas que chocan (con otras etiquetas o nodos). */
 function labelsDecollide(items){
-  const H=26,GAP=5;
+  const H=46,GAP=6;
   const box=(cx,cy,w)=>({x1:cx-w/2-GAP,y1:cy-H/2-GAP,x2:cx+w/2+GAP,y2:cy+H/2+GAP});
   const hit=(a,b)=>!(a.x2<b.x1||a.x1>b.x2||a.y2<b.y1||a.y1>b.y2);
   const placed=[];

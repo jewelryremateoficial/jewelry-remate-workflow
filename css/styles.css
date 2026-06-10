@@ -143,10 +143,14 @@
   .cardlink{fill:none;stroke:rgba(200,168,107,.22);stroke-width:1.2;stroke-dasharray:5 4;pointer-events:none;transition:.15s}
   .cardlink.hi{stroke:var(--gold-dim)}
   .lbl-g{cursor:pointer}
-  .lbl-bg{fill:#141418;stroke:var(--line);stroke-width:1;transition:.15s}
+  .lbl-bg{fill:#1a1a20;stroke:var(--line);stroke-width:1.2;transition:.15s;filter:drop-shadow(0 5px 12px rgba(0,0,0,.45))}
   .lbl-g:hover .lbl-bg{stroke:var(--gold-dim)}
-  .lbl-g.hi .lbl-bg{fill:#1d1a12;stroke:var(--gold)}
-  .lbl-tx{fill:#d9d6cf;font-family:'Jost';font-size:10.5px;text-anchor:middle;font-weight:400;pointer-events:none}
+  .lbl-g.hi .lbl-bg{fill:#221d12;stroke:var(--gold);stroke-width:1.6;filter:drop-shadow(0 0 12px rgba(200,168,107,.45))}
+  .lbl-strip{pointer-events:none}
+  .lbl-ico{font-size:15px;pointer-events:none}
+  .lbl-clip{fill:var(--gold);font-family:'Jost';font-size:11px;pointer-events:none}
+  .lbl-tx{fill:#efece4;font-family:'Jost';font-size:13px;text-anchor:start;font-weight:500;letter-spacing:.012em;pointer-events:none}
+  .lbl-leader{stroke:rgba(200,168,107,.32);stroke-width:1.1;stroke-dasharray:3 3;pointer-events:none}
   .arrow{fill:var(--gold-dim)}
   .arrow.hi{fill:var(--gold)}
 

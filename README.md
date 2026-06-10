@@ -16,7 +16,8 @@ sin servidor ni base de datos: todo se guarda localmente en el navegador
 - **Búsqueda**: filtra áreas y formatos y resalta en el diagrama.
 - **4 vistas/perspectivas** (selector "Vista"): **Flujo por etapas**, **Jerárquico**
   (dirección arriba), **Por departamento** (zonas por tipo) y **Círculo**.
-- **Auto-separación de etiquetas**: los nombres de formato nunca se enciman.
+- **Formatos como tarjetas de documento** grandes y legibles (icono, color por
+  categoría, nombre y adjuntos) que se auto-separan para nunca encimarse.
 
 ## 🚀 Cómo usarlo
 
