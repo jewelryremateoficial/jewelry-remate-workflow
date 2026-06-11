@@ -70,7 +70,7 @@ let pos={};
 let view={tx:0,ty:0,k:1};
 let selFmt=null, selArea=null, selCard=null;
 let labelsOn=true, connectMode=false, pickFirst=null;
-let hoverFmt=null;
+let hoverFmt=null, hoverArea=null;
 let undoStack=[], redoStack=[], histTimer=null, restoringHistory=false;
 let searchQuery='';
 let layoutMode=localStorage.getItem('jr_layout')||'flow';
@@ -134,7 +134,7 @@ const isCard=id=>!!findCard(id);
 function dims(id){if(isCard(id))return{w:CARDW,h:CARDH};const n=findNode(id);return n&&n.hub?{w:HUBW,h:HUBH}:{w:NW,h:NH};}
 
 function resizeVB(){const r=svg.getBoundingClientRect();svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);}
-function applyView(){viewport.setAttribute('transform',`translate(${view.tx},${view.ty}) scale(${view.k})`);document.getElementById('zLbl').textContent=Math.round(view.k*100)+'%';}
+function applyView(){viewport.setAttribute('transform',`translate(${view.tx},${view.ty}) scale(${view.k})`);document.getElementById('zLbl').textContent=Math.round(view.k*100)+'%';renderMinimap();}
 
 function circleLayout(){
   const ring=G.nodes.filter(n=>!n.hub);const hub=G.nodes.find(n=>n.hub);
@@ -275,19 +275,31 @@ function stageToWorld(s){return{x:(s.x-view.tx)/view.k,y:(s.y-view.ty)/view.k};}
 function toWorld(evt){return stageToWorld(toStage(evt));}
 
 /* ===================== RENDER ===================== */
-function activeRoute(){const hl=hoverFmt||selFmt;return hl?G.edges.find(x=>x.id===hl):null;}
-function routeNodeCls(id){const r=activeRoute();if(!r)return '';if(id===r.from||id===r.to)return ' route';return selFmt?' faded':'';}
+/* Resaltado unificado: enfoque por formato (origen→destino) o por área (todo lo que toca). */
+function computeHighlight(){
+  const fmtId=hoverFmt||selFmt;
+  if(fmtId){const e=G.edges.find(x=>x.id===fmtId);if(e)return{kind:'fmt',nodeIds:new Set([e.from,e.to]),edgeIds:new Set([e.id]),focus:!!selFmt};}
+  const areaId=hoverArea||selArea;
+  if(areaId&&findNode(areaId)){const nodeIds=new Set([areaId]),edgeIds=new Set();
+    G.edges.forEach(e=>{if(e.from===areaId||e.to===areaId){edgeIds.add(e.id);nodeIds.add(e.from);nodeIds.add(e.to);}});
+    return{kind:'area',nodeIds,edgeIds,focus:!!selArea};}
+  return null;
+}
 function renderNodes(){
   gNodes.innerHTML='';
+  const H=computeHighlight();
   G.nodes.forEach(n=>{
     const p=pos[n.id];if(!p)return;const{w,h}=dims(n.id);
-    const g=el('g',{class:'node-card'+(n.hub?' hub':'')+(selArea===n.id?' sel':'')+(pickFirst===n.id?' pick':'')+(searchQuery&&!nodeMatches(n,searchQuery)?' dim':'')+routeNodeCls(n.id),'data-id':n.id,transform:`translate(${p.x},${p.y})`});
+    const rcls=H?(H.nodeIds.has(n.id)?' route':(H.focus?' faded':'')):'';
+    const g=el('g',{class:'node-card'+(n.hub?' hub':'')+(selArea===n.id?' sel':'')+(pickFirst===n.id?' pick':'')+(searchQuery&&!nodeMatches(n,searchQuery)?' dim':'')+rcls,'data-id':n.id,transform:`translate(${p.x},${p.y})`});
     g.appendChild(el('rect',{class:'node-rect',x:-w/2,y:-h/2,width:w,height:h,rx:16,stroke:(n.hub||selArea===n.id)?'#c8a86b':'#2a2a30'}));
     g.appendChild(el('rect',{x:-w/2,y:-h/2,width:5,height:h,rx:2,fill:CAT[n.cat]?CAT[n.cat].c:'#c8a86b'}));
     const title=el('text',{class:'node-title',y:n.person?-4:5,fill:n.hub?'#c8a86b':'#f4f1ea'});title.textContent=n.title;g.appendChild(title);
     if(n.person){const per=el('text',{class:'node-person',y:15});per.textContent=n.person;g.appendChild(per);}
     const k=el('text',{class:'node-kicker',y:n.person?30:24});k.textContent=n.kicker||'';g.appendChild(k);
     if(n.files&&n.files.length){const c=el('text',{class:'node-clip',x:w/2-16,y:-h/2+18,'text-anchor':'middle'});c.textContent='📎'+n.files.length;g.appendChild(c);}
+    g.addEventListener('pointerenter',()=>{if(drag||pan||labelDrag||connectMode)return;if(hoverArea!==n.id){hoverArea=n.id;renderAll();}});
+    g.addEventListener('pointerleave',()=>{if(hoverArea===n.id){hoverArea=null;renderAll();}});
     gNodes.appendChild(g);
   });
   (G.cards||[]).forEach(c=>{
@@ -315,14 +327,14 @@ function renderEdges(){
   });
   /* edges (líneas y flechas) */
   const labelData=[];
-  const route=activeRoute();
+  const H=computeHighlight();
   G.edges.forEach(e=>{
     if(!pos[e.from]||!pos[e.to])return;
     const geo=curve(e.from,e.to);
-    const isHL=!!route&&e.id===route.id;
+    const isHL=!!H&&H.edgeIds.has(e.id);
     const hi=(selFmt===e.id)||isHL;
     const edim=(searchQuery&&!edgeMatches(e,searchQuery))?' dim':'';
-    const efade=(selFmt&&route&&!isHL)?' faded':'';
+    const efade=(H&&H.focus&&!isHL)?' faded':'';
     gEdges.appendChild(el('path',{class:'edge'+(hi?' hi':'')+edim+efade,d:geo.d,'marker-end':hi?'url(#arrowHi)':'url(#arrow)'}));
     const hit=el('path',{class:'edge-hit',d:geo.d});gEdges.appendChild(hit);
     hit.addEventListener('click',()=>selectFormat(e.id));
@@ -403,19 +415,35 @@ function renderZones(){
 }
 function updateFocusBar(){
   const bar=document.getElementById('focusBar');if(!bar)return;
-  const e=selFmt?G.edges.find(x=>x.id===selFmt):null;
-  if(!e){bar.classList.remove('show');return;}
-  const fn=findNode(e.from),tn=findNode(e.to);
-  document.getElementById('fbFrom').textContent=fn?fn.title:'—';
-  document.getElementById('fbName').textContent=e.name||'Formato';
-  document.getElementById('fbTo').textContent=tn?tn.title:'—';
-  const dec=document.getElementById('fbDec');
-  const d=e.decision?('Decisión: '+e.decision):(e.purpose||'');
-  dec.textContent=d;dec.style.display=d?'block':'none';
-  bar.classList.add('show');
+  const cont=document.getElementById('fbContent');
+  if(selFmt){
+    const e=G.edges.find(x=>x.id===selFmt);if(!e){bar.classList.remove('show');return;}
+    const fn=findNode(e.from),tn=findNode(e.to);
+    const d=e.decision?('Decisión: '+e.decision):(e.purpose||'');
+    cont.innerHTML=`<div class="fb-row"><span class="fb-area">${esc(fn?fn.title:'—')}</span>`+
+      `<span class="fb-arrow">→</span><span class="fb-fmt">📄 ${esc(e.name||'Formato')}</span>`+
+      `<span class="fb-arrow">→</span><span class="fb-area">${esc(tn?tn.title:'—')}</span></div>`+
+      (d?`<div class="fb-dec">${esc(d)}</div>`:'');
+    bar.classList.add('show');return;
+  }
+  if(selArea){
+    const n=findNode(selArea);if(!n){bar.classList.remove('show');return;}
+    let inc=0,out=0;G.edges.forEach(e=>{if(e.to===selArea)inc++;if(e.from===selArea)out++;});
+    cont.innerHTML=`<div class="fb-row"><span class="fb-fmt">📍 ${esc(n.title)}</span>`+
+      `<span class="fb-meta">📥 recibe ${inc}</span><span class="fb-meta">📤 envía ${out}</span>`+
+      (n.person?`<span class="fb-meta">👤 ${esc(n.person)}</span>`:'')+`</div>`+
+      `<div class="fb-dec">Resaltado: todo lo que entra y sale de esta área</div>`;
+    bar.classList.add('show');return;
+  }
+  bar.classList.remove('show');
 }
-function clearFocus(){selFmt=null;hoverFmt=null;const b=document.getElementById('focusBar');if(b)b.classList.remove('show');showList('formatos');buildLists();}
-function renderAll(){renderZones();renderEdges();renderNodes();updateFocusBar();if(gZones)gZones.style.opacity=selFmt?'0.22':'1';}
+function clearFocus(){
+  const wasArea=!!selArea&&!selFmt;
+  selFmt=null;selArea=null;selCard=null;hoverFmt=null;hoverArea=null;
+  const b=document.getElementById('focusBar');if(b)b.classList.remove('show');
+  showList(wasArea?'areas':'formatos');buildLists();
+}
+function renderAll(){renderZones();renderEdges();renderNodes();updateFocusBar();if(gZones)gZones.style.opacity=(selFmt||selArea)?'0.22':'1';renderMinimap();}
 
 /* ===================== PAN / DRAG / ZOOM ===================== */
 let drag=null, pan=null, labelDrag=null;
@@ -478,6 +506,50 @@ function frameReadable(){
   if(k<=fit+1e-6){view.tx=(r.width-(minx+maxx)*k)/2;view.ty=(r.height-(miny+maxy)*k)/2;}
   else{view.tx=pad-minx*k;view.ty=pad-miny*k;}
   applyView();
+}
+
+/* ===================== NAVEGACIÓN (centrar suave + minimapa) ===================== */
+let animRAF=null;
+function animateTo(tx,ty,k){
+  const sx=view.tx,sy=view.ty,sk=view.k,ms=280;let start=null;
+  if(animRAF)cancelAnimationFrame(animRAF);
+  function step(ts){if(start==null)start=ts;const p=Math.min(1,(ts-start)/ms);const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+    view.tx=sx+(tx-sx)*e;view.ty=sy+(ty-sy)*e;view.k=sk+(k-sk)*e;applyView();
+    if(p<1)animRAF=requestAnimationFrame(step);else animRAF=null;}
+  animRAF=requestAnimationFrame(step);
+}
+function centerWorld(wx,wy,animate){
+  const r=svg.getBoundingClientRect();
+  const tx=r.width/2-wx*view.k, ty=r.height/2-wy*view.k;
+  if(animate)animateTo(tx,ty,view.k);else{view.tx=tx;view.ty=ty;applyView();}
+}
+function ensureVisibleWorld(wx,wy){
+  const r=svg.getBoundingClientRect();
+  const sx=wx*view.k+view.tx, sy=wy*view.k+view.ty, m=120;
+  if(sx<m||sx>r.width-m||sy<m||sy>r.height-m)centerWorld(wx,wy,true);
+}
+let mmTf=null;
+function renderMinimap(){
+  const mm=document.getElementById('mmSvg');if(!mm)return;
+  while(mm.firstChild)mm.removeChild(mm.firstChild);
+  const items=[...G.nodes,...(G.cards||[])];if(!items.length)return;
+  let minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;
+  items.forEach(o=>{const p=pos[o.id];if(!p)return;const{w,h}=dims(o.id);minx=Math.min(minx,p.x-w/2);maxx=Math.max(maxx,p.x+w/2);miny=Math.min(miny,p.y-h/2);maxy=Math.max(maxy,p.y+h/2);});
+  const MW=190,MH=130,pad=12,bw=(maxx-minx)||1,bh=(maxy-miny)||1;
+  const s=Math.min((MW-pad*2)/bw,(MH-pad*2)/bh);
+  const offx=(MW-bw*s)/2-minx*s, offy=(MH-bh*s)/2-miny*s;
+  mmTf={s,offx,offy};
+  const wx=x=>x*s+offx, wy=y=>y*s+offy;
+  G.edges.forEach(e=>{const a=pos[e.from],b=pos[e.to];if(!a||!b)return;mm.appendChild(el('line',{x1:wx(a.x),y1:wy(a.y),x2:wx(b.x),y2:wy(b.y),stroke:'rgba(200,168,107,.16)','stroke-width':0.7}));});
+  items.forEach(o=>{const p=pos[o.id];if(!p)return;const n=findNode(o.id);const cat=n?n.cat:o.cat;mm.appendChild(el('circle',{cx:wx(p.x),cy:wy(p.y),r:2.6,fill:CAT[cat]?CAT[cat].c:'#c8a86b'}));});
+  const r=svg.getBoundingClientRect();const w0=stageToWorld({x:0,y:0}),w1=stageToWorld({x:r.width,y:r.height});
+  mm.appendChild(el('rect',{class:'mm-rect',x:wx(w0.x),y:wy(w0.y),width:Math.max(4,(w1.x-w0.x)*s),height:Math.max(4,(w1.y-w0.y)*s)}));
+}
+function mmNavigate(ev){
+  const mm=document.getElementById('mmSvg');if(!mm||!mmTf)return;
+  const rect=mm.getBoundingClientRect();
+  const mx=(ev.clientX-rect.left)*(190/rect.width), my=(ev.clientY-rect.top)*(130/rect.height);
+  centerWorld((mx-mmTf.offx)/mmTf.s,(my-mmTf.offy)/mmTf.s,false);
 }
 function handlePick(id){
   if(!pickFirst){pickFirst=id;showHint('Ahora elige el área DESTINO…');renderNodes();return;}
@@ -582,6 +654,7 @@ function selectFormat(id){
   document.getElementById('ef_purpose').value=e.purpose||'';document.getElementById('ef_decision').value=e.decision||'';
   if(!e.files)e.files=[];renderFileList('ef_files',e);
   renderAll();buildLists();
+  const a=pos[e.from],b=pos[e.to];if(a&&b)ensureVisibleWorld((a.x+b.x)/2,(a.y+b.y)/2);
 }
 function bindFmt(){
   const map={ef_name:'name',ef_from:'from',ef_to:'to',ef_cat:'cat',ef_purpose:'purpose',ef_decision:'decision'};
@@ -643,6 +716,7 @@ function selectArea(id){
   if(!n.files)n.files=[];renderFileList('ea_files',n);
   document.getElementById('ea_delete').style.display=n.hub?'none':'block';
   renderAll();buildLists();
+  if(pos[id])ensureVisibleWorld(pos[id].x,pos[id].y);
 }
 function bindArea(){
   const simple={ea_title:'title',ea_person:'person',ea_kicker:'kicker',ea_cat:'cat',ea_start:'start',ea_end:'end'};
@@ -702,6 +776,13 @@ const viewSelect=document.getElementById('viewSelect');
 if(viewSelect){viewSelect.value=layoutMode;viewSelect.addEventListener('change',()=>setView(viewSelect.value));}
 const fbClose=document.getElementById('fbClose');
 if(fbClose)fbClose.addEventListener('click',clearFocus);
+const zHome=document.getElementById('zHome');if(zHome)zHome.addEventListener('click',()=>frameReadable());
+const mmSvg=document.getElementById('mmSvg');let mmDrag=false;
+if(mmSvg){
+  mmSvg.addEventListener('pointerdown',e=>{mmDrag=true;mmNavigate(e);try{mmSvg.setPointerCapture(e.pointerId);}catch(_){}});
+  mmSvg.addEventListener('pointermove',e=>{if(mmDrag)mmNavigate(e);});
+  mmSvg.addEventListener('pointerup',()=>{mmDrag=false;});
+}
 document.getElementById('zIn').addEventListener('click',()=>zoomBy(1.1));
 document.getElementById('zOut').addEventListener('click',()=>zoomBy(1/1.1));
 document.getElementById('zFit').addEventListener('click',fitView);

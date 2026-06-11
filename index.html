@@ -46,15 +46,8 @@
   <div id="stage">
     <div id="hint"></div>
     <div id="focusBar" class="focusbar">
-      <div class="fb-row">
-        <span class="fb-area" id="fbFrom">—</span>
-        <span class="fb-arrow">→</span>
-        <span class="fb-fmt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span id="fbName">Formato</span></span>
-        <span class="fb-arrow">→</span>
-        <span class="fb-area" id="fbTo">—</span>
-        <button class="fb-close" id="fbClose" title="Salir del enfoque">✕</button>
-      </div>
-      <div class="fb-dec" id="fbDec"></div>
+      <button class="fb-close" id="fbClose" title="Salir del enfoque">✕</button>
+      <div id="fbContent"></div>
     </div>
     <svg id="wf" preserveAspectRatio="xMidYMid meet">
       <defs>
@@ -67,10 +60,12 @@
         <g id="gZones"></g><g id="gLinks"></g><g id="gEdges"></g><g id="gLabels"></g><g id="gNodes"></g>
       </g>
     </svg>
+    <div id="minimap" class="minimap" title="Mapa · clic para navegar"><svg id="mmSvg" viewBox="0 0 190 130" width="190" height="130"></svg></div>
     <div class="zoom">
+      <button id="zHome" title="Ir al inicio (vista legible)">⌂</button>
       <button id="zIn" title="Acercar">+</button>
       <button id="zOut" title="Alejar">−</button>
-      <button id="zFit" title="Centrar / ajustar">⊡</button>
+      <button id="zFit" title="Ver todo">⊡</button>
       <div class="lbl" id="zLbl">100%</div>
     </div>
     <div class="footer-note">Arrastra el fondo para mover todo · scroll = zoom suave · arrastra un área, una tarjeta o la etiqueta de un formato para separarlos · clic para editar</div>
