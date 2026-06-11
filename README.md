@@ -23,7 +23,11 @@ sin servidor ni base de datos: todo se guarda localmente en el navegador
   `Área A → [Formato] → Área B` + la decisión, se resalta la ruta y se atenúa el
   resto. Al pasar el mouse se previsualiza la ruta.
 - **Lienzo navegable**: abre a tamaño legible y se navega con arrastre + zoom
-  (espacio "infinito"); el botón ⊡ muestra todo de un vistazo.
+  (espacio "infinito"); ⌂ vuelve al inicio y ⊡ muestra todo. **Minimapa** para ubicarte.
+- **Enfoque de área**: clic en un área resalta todo lo que entra y sale de ella.
+- **Ayuda**: botón **?** con guía y atajos (se muestra en la primera visita).
+- **Presentar / exportar**: modo presentación a pantalla completa, y exportar el
+  diagrama a **PNG** o **PDF** para compartir con el equipo.
 
 ## 🚀 Cómo usarlo
 

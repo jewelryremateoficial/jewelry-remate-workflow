@@ -443,7 +443,8 @@ function clearFocus(){
   const b=document.getElementById('focusBar');if(b)b.classList.remove('show');
   showList(wasArea?'areas':'formatos');buildLists();
 }
-function renderAll(){renderZones();renderEdges();renderNodes();updateFocusBar();if(gZones)gZones.style.opacity=(selFmt||selArea)?'0.22':'1';renderMinimap();}
+function updateEmptyState(){const es=document.getElementById('emptyState');if(es)es.classList.toggle('show',G.nodes.length===0);}
+function renderAll(){renderZones();renderEdges();renderNodes();updateFocusBar();if(gZones)gZones.style.opacity=(selFmt||selArea)?'0.22':'1';renderMinimap();updateEmptyState();}
 
 /* ===================== PAN / DRAG / ZOOM ===================== */
 let drag=null, pan=null, labelDrag=null;
@@ -818,7 +819,60 @@ document.getElementById('searchClear').addEventListener('click',()=>{searchInput
 let hintT;function showHint(m){const h=document.getElementById('hint');h.textContent=m;h.classList.add('show');clearTimeout(hintT);hintT=setTimeout(()=>h.classList.remove('show'),2800);}
 const flashT={};function flash(id){const e=document.getElementById(id);e.classList.add('show');clearTimeout(flashT[id]);flashT[id]=setTimeout(()=>e.classList.remove('show'),1000);}
 
+/* ===================== AYUDA · ESTADO VACÍO · PRESENTAR · EXPORTAR ===================== */
+function openHelp(){document.getElementById('helpModal').classList.add('show');}
+function closeHelp(){document.getElementById('helpModal').classList.remove('show');}
+document.getElementById('btnHelp').addEventListener('click',openHelp);
+document.getElementById('helpClose').addEventListener('click',closeHelp);
+document.getElementById('helpModal').addEventListener('click',e=>{if(e.target.id==='helpModal')closeHelp();});
+
+document.getElementById('esAdd').addEventListener('click',addArea);
+document.getElementById('esExample').addEventListener('click',()=>{G=defaultGraph();pos={};applyLayout(layoutMode);savePositions();renderAll();buildLists();showList('formatos');frameReadable();showHint('Ejemplo cargado');});
+
+function setPresent(on){document.body.classList.toggle('present',on);setTimeout(()=>{resizeVB();frameReadable();},80);}
+document.getElementById('btnPresent').addEventListener('click',()=>setPresent(true));
+document.getElementById('presentExit').addEventListener('click',()=>setPresent(false));
+window.addEventListener('keydown',e=>{if(e.key!=='Escape')return;
+  if(document.getElementById('helpModal').classList.contains('show'))closeHelp();
+  else if(document.body.classList.contains('present'))setPresent(false);
+  else if(selFmt||selArea)clearFocus();
+});
+
+function svgCssText(){let css='';for(const ss of document.styleSheets){try{for(const r of ss.cssRules)css+=r.cssText+'\n';}catch(err){}}return css;}
+function buildStandaloneSVG(){
+  const items=[...G.nodes,...(G.cards||[])];if(!items.length)return null;
+  let minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;
+  items.forEach(o=>{const p=pos[o.id];if(!p)return;const{w,h}=dims(o.id);minx=Math.min(minx,p.x-w/2);maxx=Math.max(maxx,p.x+w/2);miny=Math.min(miny,p.y-h/2);maxy=Math.max(maxy,p.y+h/2);});
+  const pad=60;minx-=pad;miny-=pad;maxx+=pad;maxy+=pad;const W=maxx-minx,Hh=maxy-miny;
+  const clone=svg.cloneNode(true);
+  clone.setAttribute('viewBox',`${minx} ${miny} ${W} ${Hh}`);clone.setAttribute('width',W);clone.setAttribute('height',Hh);
+  clone.removeAttribute('preserveAspectRatio');
+  const vp=clone.querySelector('#viewport');if(vp)vp.removeAttribute('transform');
+  const style=document.createElementNS(NS,'style');style.textContent=svgCssText();clone.insertBefore(style,clone.firstChild);
+  const xml=new XMLSerializer().serializeToString(clone);
+  return{uri:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml),W,Hh};
+}
+function exportPNG(){
+  const s=buildStandaloneSVG();if(!s){showHint('Nada que exportar');return;}
+  const img=new Image();
+  img.onload=()=>{const sc=2;const c=document.createElement('canvas');c.width=Math.round(s.W*sc);c.height=Math.round(s.Hh*sc);
+    const ctx=c.getContext('2d');ctx.fillStyle='#0b0b0d';ctx.fillRect(0,0,c.width,c.height);ctx.setTransform(sc,0,0,sc,0,0);ctx.drawImage(img,0,0);
+    c.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='jewelry_workflow.png';a.click();showHint('Imagen PNG exportada');},'image/png');};
+  img.onerror=()=>showHint('No se pudo generar la imagen');
+  img.src=s.uri;
+}
+function exportPDF(){
+  const s=buildStandaloneSVG();if(!s){showHint('Nada que exportar');return;}
+  const w=window.open('','_blank');
+  if(!w){showHint('Permite ventanas emergentes para PDF');return;}
+  w.document.write('<html><head><title>Jewelry Remate · Workflow</title><style>@page{margin:10mm}html,body{margin:0;background:#fff}img{width:100%;height:auto;display:block}</style></head><body><img src="'+s.uri+'"></body></html>');
+  w.document.close();setTimeout(()=>{try{w.focus();w.print();}catch(err){}},500);showHint('Abriendo vista para PDF…');
+}
+document.getElementById('btnPng').addEventListener('click',exportPNG);
+document.getElementById('btnPdf').addEventListener('click',exportPDF);
+
 /* ===================== INIT ===================== */
 resizeVB();ensurePositions();maybeAutoLayout();bindFmt();bindCard();bindArea();renderAll();buildLists();applyView();frameReadable();histInit();
+if(!localStorage.getItem('jr_seen_help')){try{localStorage.setItem('jr_seen_help','1');}catch(e){}setTimeout(openHelp,400);}
 window.addEventListener('resize',resizeVB);
 setTimeout(()=>showHint('Agrega formatos como línea entre áreas o como tarjeta independiente · se guarda solo'),500);
