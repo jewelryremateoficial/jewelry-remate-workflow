@@ -176,6 +176,11 @@
   .viewsel select{background:none;border:none;outline:none;color:var(--ink);font-family:'Jost';
     font-size:12px;letter-spacing:.03em;cursor:pointer}
   .viewsel select option{background:#16161a;color:var(--ink)}
+  .sizesel{display:inline-flex;align-items:center;gap:9px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px;transition:border-color .15s}
+  .sizesel:hover{border-color:var(--gold-dim)}
+  .sizesel svg{width:14px;height:14px;color:var(--gold-dim);flex:0 0 auto}
+  .sizesel input[type=range]{width:88px;accent-color:var(--gold);cursor:pointer;height:4px}
 
   /* ===== Banner de enfoque (clic en un formato) ===== */
   .focusbar{position:absolute;left:50%;top:14px;transform:translateX(-50%) translateY(-8px);
