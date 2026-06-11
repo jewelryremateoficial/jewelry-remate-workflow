@@ -16,8 +16,14 @@ sin servidor ni base de datos: todo se guarda localmente en el navegador
 - **Búsqueda**: filtra áreas y formatos y resalta en el diagrama.
 - **4 vistas/perspectivas** (selector "Vista"): **Flujo por etapas**, **Jerárquico**
   (dirección arriba), **Por departamento** (zonas por tipo) y **Círculo**.
-- **Formatos como tarjetas de documento** grandes y legibles (icono, color por
-  categoría, nombre y adjuntos) que se auto-separan para nunca encimarse.
+- **Formatos como tarjetas de documento** grandes y legibles: icono, color por
+  categoría, nombre y **"Área origen → Área destino"** para ver cómo viaja cada
+  formato. Se auto-separan para nunca encimarse.
+- **Modo enfoque**: al hacer clic en un formato, un banner muestra
+  `Área A → [Formato] → Área B` + la decisión, se resalta la ruta y se atenúa el
+  resto. Al pasar el mouse se previsualiza la ruta.
+- **Lienzo navegable**: abre a tamaño legible y se navega con arrastre + zoom
+  (espacio "infinito"); el botón ⊡ muestra todo de un vistazo.
 
 ## 🚀 Cómo usarlo
 

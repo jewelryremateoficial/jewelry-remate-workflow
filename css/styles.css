@@ -150,9 +150,17 @@
   .lbl-ico{font-size:15px;pointer-events:none}
   .lbl-clip{fill:var(--gold);font-family:'Jost';font-size:11px;pointer-events:none}
   .lbl-tx{fill:#efece4;font-family:'Jost';font-size:13px;text-anchor:start;font-weight:500;letter-spacing:.012em;pointer-events:none}
+  .lbl-sub{fill:var(--muted);font-family:'Jost';font-size:10px;text-anchor:start;font-weight:400;letter-spacing:.02em;pointer-events:none}
   .lbl-leader{stroke:rgba(200,168,107,.32);stroke-width:1.1;stroke-dasharray:3 3;pointer-events:none}
   .arrow{fill:var(--gold-dim)}
   .arrow.hi{fill:var(--gold)}
+
+  /* ===== Resaltado de ruta / enfoque ===== */
+  .node-card.route .node-rect{stroke:var(--gold);stroke-width:1.8;filter:drop-shadow(0 0 14px rgba(200,168,107,.5))}
+  .node-card.faded{opacity:.16;transition:opacity .18s}
+  .edge.faded,.cardlink.faded{opacity:.08;transition:opacity .18s}
+  .lbl-g.faded{opacity:.14;transition:opacity .18s}
+  .lbl-g.faded .lbl-bg{filter:none}
 
   /* ===== Selector de Vista ===== */
   .viewsel{display:inline-flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);
@@ -163,6 +171,25 @@
   .viewsel select{background:none;border:none;outline:none;color:var(--ink);font-family:'Jost';
     font-size:12px;letter-spacing:.03em;cursor:pointer}
   .viewsel select option{background:#16161a;color:var(--ink)}
+
+  /* ===== Banner de enfoque (clic en un formato) ===== */
+  .focusbar{position:absolute;left:50%;top:14px;transform:translateX(-50%) translateY(-8px);
+    z-index:7;min-width:min(640px,86%);max-width:90%;background:linear-gradient(180deg,rgba(28,24,16,.97),rgba(18,17,20,.97));
+    border:1px solid var(--gold-soft);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .18s, transform .18s}
+  .focusbar.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .fb-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .fb-area{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);font-weight:600;letter-spacing:.01em}
+  .fb-arrow{color:var(--gold);font-size:16px}
+  .fb-fmt{display:inline-flex;align-items:center;gap:8px;background:rgba(200,168,107,.14);
+    border:1px solid var(--gold-soft);border-radius:999px;padding:5px 14px;color:var(--gold);
+    font-family:'Jost';font-size:13px;font-weight:500;letter-spacing:.02em}
+  .fb-fmt svg{width:14px;height:14px}
+  .fb-close{margin-left:auto;background:var(--panel2);border:1px solid var(--line);color:var(--muted);
+    width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px;line-height:1;transition:.15s}
+  .fb-close:hover{color:var(--ink);border-color:var(--gold-dim)}
+  .fb-dec{margin-top:9px;color:var(--muted);font-family:'Jost';font-size:12px;line-height:1.5;
+    border-top:1px solid var(--line);padding-top:8px}
 
   /* ===== Banda de dirección / zonas ===== */
   .zone-band{fill:rgba(200,168,107,.045);stroke:rgba(200,168,107,.20);stroke-width:1;stroke-dasharray:2 6;pointer-events:none}

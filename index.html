@@ -45,6 +45,17 @@
 <div class="layout">
   <div id="stage">
     <div id="hint"></div>
+    <div id="focusBar" class="focusbar">
+      <div class="fb-row">
+        <span class="fb-area" id="fbFrom">—</span>
+        <span class="fb-arrow">→</span>
+        <span class="fb-fmt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span id="fbName">Formato</span></span>
+        <span class="fb-arrow">→</span>
+        <span class="fb-area" id="fbTo">—</span>
+        <button class="fb-close" id="fbClose" title="Salir del enfoque">✕</button>
+      </div>
+      <div class="fb-dec" id="fbDec"></div>
+    </div>
     <svg id="wf" preserveAspectRatio="xMidYMid meet">
       <defs>
         <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#1d1d22"></circle></pattern>
