@@ -28,6 +28,9 @@ sin servidor ni base de datos: todo se guarda localmente en el navegador
 - **Ayuda**: botón **?** con guía y atajos (se muestra en la primera visita).
 - **Presentar / exportar**: modo presentación a pantalla completa, y exportar el
   diagrama a **PNG** o **PDF** para compartir con el equipo.
+- **Manual de operación**: cada formato puede tener **checklist de pasos** (marcable,
+  con contador ✔2/4 en el diagrama), **links rápidos** (Shopify, Notion, Drive…) y
+  **plantillas descargables** directo desde el banner de enfoque.
 
 ## 🚀 Cómo usarlo
 
