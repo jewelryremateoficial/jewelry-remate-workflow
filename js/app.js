@@ -421,20 +421,28 @@ function updateFocusBar(){
     const e=G.edges.find(x=>x.id===selFmt);if(!e){bar.classList.remove('show');return;}
     const fn=findNode(e.from),tn=findNode(e.to);
     const d=e.decision?('Decisión: '+e.decision):(e.purpose||'');
-    cont.innerHTML=`<div class="fb-row"><span class="fb-area">${esc(fn?fn.title:'—')}</span>`+
+    cont.innerHTML=`<div class="fb-row"><button class="fb-area" data-area="${esc(e.from)}" title="Ver esta área y sus formatos">${esc(fn?fn.title:'—')}</button>`+
       `<span class="fb-arrow">→</span><span class="fb-fmt">📄 ${esc(e.name||'Formato')}</span>`+
-      `<span class="fb-arrow">→</span><span class="fb-area">${esc(tn?tn.title:'—')}</span></div>`+
+      `<span class="fb-arrow">→</span><button class="fb-area" data-area="${esc(e.to)}" title="Ver esta área y sus formatos">${esc(tn?tn.title:'—')}</button></div>`+
       (d?`<div class="fb-dec">${esc(d)}</div>`:'');
-    bar.classList.add('show');return;
+    bar.classList.add('show');
+    cont.querySelectorAll('[data-area]').forEach(b=>b.addEventListener('click',()=>selectArea(b.dataset.area)));
+    return;
   }
   if(selArea){
     const n=findNode(selArea);if(!n){bar.classList.remove('show');return;}
-    let inc=0,out=0;G.edges.forEach(e=>{if(e.to===selArea)inc++;if(e.from===selArea)out++;});
+    const inc=G.edges.filter(e=>e.to===selArea), out=G.edges.filter(e=>e.from===selArea);
+    const chip=(e,dir)=>{const other=findNode(dir==='in'?e.from:e.to);
+      const sub=(dir==='in'?'de ':'a ')+(other?clip(other.title,18):'?');
+      return `<button class="fb-chip" data-fmt="${esc(e.id)}" title="${esc(e.purpose||'Ver este formato')}">📄 ${esc(clip(e.name,26))}<span class="fb-chip-sub">${esc(sub)}</span></button>`;};
     cont.innerHTML=`<div class="fb-row"><span class="fb-fmt">📍 ${esc(n.title)}</span>`+
-      `<span class="fb-meta">📥 recibe ${inc}</span><span class="fb-meta">📤 envía ${out}</span>`+
       (n.person?`<span class="fb-meta">👤 ${esc(n.person)}</span>`:'')+`</div>`+
-      `<div class="fb-dec">Resaltado: todo lo que entra y sale de esta área</div>`;
-    bar.classList.add('show');return;
+      (inc.length?`<div class="fb-list"><span class="fb-list-h">📥 Recibe</span>${inc.map(e=>chip(e,'in')).join('')}</div>`:'')+
+      (out.length?`<div class="fb-list"><span class="fb-list-h">📤 Envía</span>${out.map(e=>chip(e,'out')).join('')}</div>`:'')+
+      ((!inc.length&&!out.length)?`<div class="fb-dec">Esta área aún no tiene formatos conectados.</div>`:'');
+    bar.classList.add('show');
+    cont.querySelectorAll('[data-fmt]').forEach(b=>b.addEventListener('click',()=>selectFormat(b.dataset.fmt)));
+    return;
   }
   bar.classList.remove('show');
 }
