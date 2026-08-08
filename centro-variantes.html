@@ -192,7 +192,7 @@ function transitHTML(){
 function render(){
   if(!mainRows){ if(transitList.length){document.getElementById('result').innerHTML=transitHTML();info('🚚 Orden en camino: <b>'+transitComing+'</b> en camino, <b>'+transitArrived+'</b> ya llegaron 🟢. Sube también la orden a analizar (recuadro 1) para el análisis completo.');} return; }
   var est=[],star=[],normal=[],nuevo=[];var vendors={};
-  mainRows.forEach(function(it){var m=lookup(it);if(m){vendors[m.v]=1;if(m.s=='muerto'||m.s=='lento')est.push({it:it,m:m});else if(m.s=='star')star.push({it:it,m:m});else normal.push({it:it,m:m});}else{nuevo.push({it:it,m:null});}});
+  mainRows.forEach(function(it){var m=lookup(it);if(m){vendors[m.v]=1;if(m.s=='muerto'||m.s=='lento'||m.s=='apenas')est.push({it:it,m:m});else if(m.s=='star')star.push({it:it,m:m});else normal.push({it:it,m:m});}else{nuevo.push({it:it,m:null});}});
   // faltantes: stars agotado/critico de esos proveedores, no en la orden, no en camino
   var ordSkus={};mainRows.forEach(function(it){var m=lookup(it);ordSkus[m?(m.k||normTitle(m.t)+'|'+normTitle(m.vt)):it.sku]=1;});
   var miss=DATA.filter(function(x){return x.s=='star'&&(x.g=='agotado'||x.g=='critico')&&vendors[x.v];}).filter(function(x){var k=x.k||normTitle(x.t)+'|'+normTitle(x.vt);return !ordSkus[k]&&!inTransit(x);}).sort(function(a,b){return (a.g=='agotado'?0:1)-(b.g=='agotado'?0:1)||b.vel-a.vel;});
