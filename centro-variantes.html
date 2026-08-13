@@ -187,8 +187,10 @@ function info(m){document.getElementById('upinfo').innerHTML=m;}
 function inTransit(x){var k=x.k||normTitle(x.t)+'|'+normTitle(x.vt);return transitSet[k]||0;}
 // Sugerencia de pedido: cubrir 6 semanas al ritmo MÁS RECIENTE (lo mayor entre 30d y 90d),
 // restando stock y lo que viene en camino. Si agarró vuelo en el último mes, manda el ritmo nuevo.
+// TOP (regla del usuario): si vende 2+ piezas/semana (los más vendidos de la tienda), +30% de colchón.
 function velUse(m){return Math.max(m.vel||0,m.v3||0);}
-function sugQty(m){if(!m)return null;if(m.s=='muerto'||m.s=='lento')return 0;var t=inTransit(m)||0;return Math.max(0,Math.ceil(velUse(m)*6)-(m.q||0)-t);}
+function isTop(m){return m.s=='star'&&velUse(m)>=2;}
+function sugQty(m){if(!m)return null;if(m.s=='muerto'||m.s=='lento')return 0;var t=inTransit(m)||0;var base=velUse(m)*6;if(isTop(m))base*=1.3;return Math.max(0,Math.ceil(base)-(m.q||0)-t);}
 function sugTxt(m,pedido){
   if(!m)return 'Producto nuevo, sin historial — empieza con poco.';
   var t=inTransit(m)||0, s=sugQty(m), v=velUse(m);
@@ -198,7 +200,7 @@ function sugTxt(m,pedido){
   if(m.s=='muerto') b='No se vende (0 en 90 días) y tienes '+stock+'.';
   else if(m.s=='lento') b='Sin ventas en 30 días y tienes '+stock+'.';
   else if(m.s=='apenas') b='Casi no se vende ('+m.u9+' en 90 días) y tienes '+stock+'.';
-  else if(s>0) b='Vende '+(v>=1? v+' por semana':m.u9+' en 90 días')+(sube?' y va subiendo':'')+'; tienes '+stock+'.';
+  else if(s>0) b='Vende '+(v>=1? v+' por semana':m.u9+' en 90 días')+(sube?' y va subiendo':'')+'; tienes '+stock+'.'+(isTop(m)?' 🔥 Es top: le sumé 30% de colchón.':'');
   else b='Con '+stock+' te alcanza 6+ semanas.';
   var head=(pedido!=null&&pedido!=s)?('Pediste '+pedido+' → pide '+s+'. '):('Pide '+s+'. ');
   var extra=(m.dn>0?' 💸 Se vendió hasta '+m.dx+'% abajo del precio'+(m.dh?' ('+m.dh+')':'')+'.':'');
