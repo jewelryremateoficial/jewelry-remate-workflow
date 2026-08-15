@@ -154,14 +154,9 @@ print('| estancadas reales:', sum(1 for r in rows if r['st']=='' and r['u9']==0 
 DATA_JSON = json.dumps(rows, ensure_ascii=False, separators=(',', ':'))
 IMGS_JSON = json.dumps(imgs, ensure_ascii=False, separators=(',', ':'))
 VEND_JSON = json.dumps(ACTIVE_VENDORS, ensure_ascii=False)
+# REGLA FIJA: "ya llego" SOLO si la fila esta 100% en verde en el Excel de la orden.
+# Ninguna inferencia por stock. Los flags arrived vienen tal cual del parseo de los Excel.
 tb = json.load(open(SCRATCH + '/transit_base.json'))
-stock_by_sku = {}
-for v in variants:
-    if v['sku']: stock_by_sku[v['sku']] = v['inv']
-for o in tb:
-    for l in o['lines']:
-        if l['qty'] and stock_by_sku.get(l['sku'], 0) >= l['qty']:
-            l['arrived'] = True
 TBASE_JSON = json.dumps(tb, ensure_ascii=False)
 
 cv = open(REPO + '/centro-variantes.html', encoding='utf-8').read()
@@ -263,7 +258,7 @@ tr.gris td{background:#fafafa}
 
 <div class="pane" id="camino">
   <h2>Órdenes en camino</h2>
-  <p class="note">Ya vienen precargadas las órdenes <b>NANCY 09/07/2026</b> y <b>CYNTHIA 07/07/2026</b> (de tus tablas; la de CYNTHIA sin cantidades). Si alguna ya llegó completa, quítala con ✕. Arrastra el Excel de cada orden que mandes: una fila cuenta como "ya llegó" SOLO si <b>toda la fila está en verde</b> (una sola celda verde no cuenta — los colores agrupan guías); el resto se descuenta de lo sugerido. Se guarda en este navegador.</p>
+  <p class="note">Ya vienen precargadas con cantidades reales: <b>NANCY 09/07</b>, <b>CYNTHIA 07/07 (tu Excel ACT2)</b> y <b>HAIFENG 11/07 (tu Excel)</b>. Cada línea viene clasificada como 🔄 <b>Restock</b> (SKU con historial) o 🆕 <b>Nueva</b> (SKU nuevo o recién dado de alta). Si subiste alguna de estas órdenes manualmente, quítala con ✕ para no contarla doble. Arrastra el Excel de cada orden que mandes: una fila cuenta como "ya llegó" SOLO si <b>toda la fila está en verde</b> (una sola celda verde no cuenta — los colores agrupan guías); el resto se descuenta de lo sugerido. Se guarda en este navegador.</p>
   <div class="uprow">
     <div class="drop" id="dropT"><b>Arrastra o haz clic</b><br><small>Puedes subir varias órdenes, una por una</small><input type="file" id="fileT" accept=".xlsx,.xls,.csv" hidden></div>
     <div class="sec" style="margin:0"><h3 class="ok">Órdenes cargadas</h3><div id="tlist"></div></div>
@@ -520,13 +515,26 @@ function onT(file){var rd=new FileReader();rd.onload=function(e){try{
   renderT();renderSem();renderOrden();
  }catch(err){alert('No pude leer el archivo: '+err)}};
  rd.readAsArrayBuffer(file)}
+function tipoLinea(l){
+  if(!l.sku)return ['nuevo','🆕 Nuevo — sin SKU en Shopify'];
+  var r=null;for(var i=0;i<DATA.length;i++){if(DATA[i].k===l.sku){r=DATA[i];break}}
+  if(!r)return ['nuevo','🆕 Nuevo — no está en Shopify'];
+  if(r.a<90)return ['nuevo','🆕 Nuevo 2026 ('+r.a+' días de alta)'];
+  return ['restock','🔄 Restock'];
+}
 function renderT(){
   var os=allT();var h='',det='';
   if(!os.length)h='<div class="transitem" style="color:var(--muted)">Ninguna todavía.</div>';
-  os.forEach(function(o,ix){var com=o.lines.filter(function(l){return !l.arrived}).length,arr=o.lines.length-com;
-   h+='<div class="transitem"><span><b>'+o.name+'</b>'+(o.base?' <span class="chip bajo">de tus tablas</span>':'')+' · '+o.date+' · '+com+' en camino · '+arr+' ya llegaron 🟢</span><button onclick="delT('+ix+')">✕ quitar</button></div>';
-   det+='<div class="sec"><h3 class="ok">🚚 '+o.name+'</h3><div class="tblwrap"><table><thead><tr><th>Estado</th><th class="num">Cant</th><th>Producto · variante</th><th>SKU</th></tr></thead><tbody>'+
-    o.lines.map(function(l){return '<tr'+(l.arrived?' style="background:var(--ok-bg)"':'')+'><td>'+(l.arrived?'🟢 Ya llegó':'🚚 En camino')+'</td><td class="num">'+l.qty+'</td><td>'+l.title+'<span class="vsub">'+(l.variant||'')+'</span></td><td>'+(l.sku||'—')+'</td></tr>'}).join('')+
+  os.forEach(function(o,ix){
+   var ped=0,lleg=0,pzR=0,pzN=0,lnR=0,lnN=0;
+   o.lines.forEach(function(l){ped+=l.qty||0;if(l.arrived)lleg+=l.qty||0;
+     var t=tipoLinea(l);if(t[0]==='restock'){pzR+=l.qty||0;lnR++}else{pzN+=l.qty||0;lnN++}});
+   var com=ped-lleg;
+   h+='<div class="transitem"><span><b>'+o.name+'</b>'+(o.base?' <span class="chip bajo">de tus tablas</span>':'')+' · '+o.date+
+     '<span class="vsub"><b>'+ped+'</b> pzs pedidas · 🚚 <b>'+com+'</b> en camino · 🟢 <b>'+lleg+'</b> llegadas · 🔄 '+lnR+' líneas restock ('+pzR+' pzs) · 🆕 '+lnN+' nuevas ('+pzN+' pzs)</span></span><button onclick="delT('+ix+')">✕ quitar</button></div>';
+   det+='<div class="sec"><h3 class="ok">🚚 '+o.name+' — '+ped+' pzs pedidas · '+com+' en camino · '+lleg+' llegadas</h3><div class="tblwrap"><table><thead><tr><th>Estado</th><th>Tipo</th><th class="num">Cant pedida</th><th>Producto · variante</th><th>SKU</th></tr></thead><tbody>'+
+    o.lines.map(function(l){var t=tipoLinea(l);
+     return '<tr'+(l.arrived?' style="background:var(--ok-bg)"':'')+'><td>'+(l.arrived?'🟢 Ya llegó':'🚚 En camino')+'</td><td><span class="chip '+(t[0]==='restock'?'ok':'nuevo')+'">'+t[1]+'</span></td><td class="num"><b>'+(l.qty||'—')+'</b></td><td>'+l.title+'<span class="vsub">'+(l.variant||'')+'</span></td><td>'+(l.sku||'—')+'</td></tr>'}).join('')+
     '</tbody></table></div></div>';
   });
   document.getElementById('tlist').innerHTML=h;document.getElementById('tdetail').innerHTML=det;
