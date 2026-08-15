@@ -238,6 +238,7 @@ img.th{width:44px;height:44px;object-fit:cover;border-radius:8px;background:#eee
 .pill .r{color:var(--reb)}.pill .n{color:var(--ok)}.pill .c{color:var(--warn)}
 input.q{width:64px;font:inherit;font-weight:700;text-align:right;padding:6px;border:1.5px solid var(--line);border-radius:8px}
 input.q.hot{border-color:var(--a);color:var(--a)}
+input.q.edited{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-bg)}
 tr.gris td{background:#fafafa}
 .kpis{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 4px}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
@@ -275,9 +276,10 @@ tr.gris td{background:#fafafa}
     <select id="vsel"></select>
     <input type="search" id="oq" placeholder="Buscar producto o SKU…">
     <button class="act" id="xlsx">⬇ Descargar orden (Excel)</button>
-    <button class="act sec" id="reset">Restaurar sugeridos</button>
+    <button class="act sec" id="reset">🗑 Descartar borrador y volver a sugeridos</button>
   </div>
   <p class="note" id="osum"></p>
+  <p class="note" id="draft" style="background:var(--blue-bg);border-radius:8px;padding:8px 12px;color:var(--blue)"></p>
   <div id="ocont"></div>
 </div>
 
@@ -394,7 +396,12 @@ function goOrden(v){document.querySelector('.tab[data-p="orden"]').click();docum
 // ---- orden ----
 var vsel=document.getElementById('vsel');
 VENDORS.forEach(function(v){var o=document.createElement('option');o.value=o.textContent=v;vsel.appendChild(o)});
-var edits={};
+var EKEY='oc_edits_v1',ETKEY='oc_edits_ts';
+var edits={};try{edits=JSON.parse(localStorage.getItem(EKEY))||{}}catch(e){}
+function esave(){localStorage.setItem(EKEY,JSON.stringify(edits));localStorage.setItem(ETKEY,new Date().toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}))}
+function draftbar(){var n=Object.keys(edits).length;var el=document.getElementById('draft');
+ if(!n){el.innerHTML='';return}
+ el.innerHTML='💾 <b>Borrador guardado automáticamente</b> — '+n+' cantidad'+(n>1?'es':'')+' editada'+(n>1?'s':'')+' por ti · última edición: '+(localStorage.getItem(ETKEY)||'')+' · tus cambios se conservan aunque cierres la página o se actualicen los datos.';}
 function rowHTML(r,tm,noSug){
   var s=edits[r.k]!=null?edits[r.k]:(noSug?0:sug(r,tm));
   var t=inTransit(r,tm);
@@ -418,7 +425,7 @@ function rowHTML(r,tm,noSug){
    '<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.k||'—')+(r.m?' · '+r.m:'')+'</span></td>'+
    '<td class="num">'+r.u+piezasHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'+
    '<td class="num">'+r.q+'</td><td class="num">'+(t||'—')+'</td>'+
-   '<td class="num"><input class="q'+(s>0?' hot':'')+'" type="number" min="0" step="2" value="'+s+'"></td>'+
+   '<td class="num"><input class="q'+(s>0?' hot':'')+(edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="2" value="'+s+'"></td>'+
    '<td class="num">'+usd(r.c)+'</td><td class="num" data-tot>'+(r.c?usd(s*r.c):'—')+'</td>'+
    '<td>'+chips+(obs.length?'<span class="vsub">'+obs.join(' · ')+'</span>':'')+'</td></tr>';
 }
@@ -441,9 +448,9 @@ function renderOrden(){
   H+='<div class="sec"><h3 class="gray">⚖️ ESTANCADOS REALES — 0 ventas en 90 días, con stock ('+est.length+')</h3><div class="exp">Solo productos con <b>90+ días desde su alta</b> y <b>0 ventas en 90 días</b>. Los dados de alta hace poco NO aparecen aquí — son nuevos, no estancados. Los 🐢 lentos (40+ días sin venta) sí se pueden pedir y van marcados en su sección.</div>'+(est.length?tbl(est,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
   document.getElementById('ocont').innerHTML=H;
   document.querySelectorAll('#ocont input.q').forEach(function(inp){
-    inp.oninput=function(){var tr=inp.closest('tr');var k=tr.dataset.k;var val=parseInt(inp.value)||0;edits[k]=val;
-      var r=DATA.find(function(x){return x.k===k});inp.classList.toggle('hot',val>0);
-      tr.querySelector('[data-tot]').textContent=r&&r.c?usd(val*r.c):'—';sum()};
+    inp.oninput=function(){var tr=inp.closest('tr');var k=tr.dataset.k;var val=parseInt(inp.value)||0;edits[k]=val;esave();
+      var r=DATA.find(function(x){return x.k===k});inp.classList.toggle('hot',val>0);inp.classList.add('edited');
+      tr.querySelector('[data-tot]').textContent=r&&r.c?usd(val*r.c):'—';sum();draftbar()};
   });
   sum();
   function sum(){
@@ -456,7 +463,10 @@ function renderOrden(){
 }
 vsel.onchange=renderOrden;
 document.getElementById('oq').oninput=renderOrden;
-document.getElementById('reset').onclick=function(){edits={};renderOrden()};
+document.getElementById('reset').onclick=function(){
+ var n=Object.keys(edits).length;
+ if(n&&!confirm('Vas a borrar tu borrador ('+n+' cantidades editadas) y volver a las sugeridas. ¿Seguro?'))return;
+ edits={};localStorage.removeItem(EKEY);localStorage.removeItem(ETKEY);renderOrden();draftbar()};
 
 // ---- export EXCEL con fotos incrustadas ----
 document.getElementById('xlsx').onclick=async function(){
@@ -584,7 +594,7 @@ function renderMov(){
 }
 document.getElementById('mq').oninput=renderMov;document.getElementById('msel').onchange=renderMov;mvsel.onchange=renderMov;
 
-renderSem();renderOrden();renderT();renderMov();
+renderSem();renderOrden();renderT();renderMov();draftbar();
 </script></body></html>'''
 
 HTML = HTML.replace('__CORTE__', CORTE).replace('__XLSX_LIB__', XLSX_LIB).replace('__FECHA__', HOY.isoformat())
