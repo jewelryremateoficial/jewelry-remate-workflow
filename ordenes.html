@@ -94,7 +94,7 @@ tr.gris td{background:#fafafa}
 
 <div class="pane" id="camino">
   <h2>Órdenes en camino</h2>
-  <p class="note">Ya vienen precargadas las órdenes <b>NANCY 09/07/2026</b> y <b>CYNTHIA 07/07/2026</b> (de tus tablas; la de CYNTHIA sin cantidades). Si alguna ya llegó completa, quítala con ✕. Arrastra el Excel de cada orden que mandes: las filas <b>verdes</b> cuentan como "ya llegó", el resto se descuenta de lo sugerido. Se guarda en este navegador.</p>
+  <p class="note">Ya vienen precargadas las órdenes <b>NANCY 09/07/2026</b> y <b>CYNTHIA 07/07/2026</b> (de tus tablas; la de CYNTHIA sin cantidades). Si alguna ya llegó completa, quítala con ✕. Arrastra el Excel de cada orden que mandes: una fila cuenta como "ya llegó" SOLO si <b>toda la fila está en verde</b> (una sola celda verde no cuenta — los colores agrupan guías); el resto se descuenta de lo sugerido. Se guarda en este navegador.</p>
   <div class="uprow">
     <div class="drop" id="dropT"><b>Arrastra o haz clic</b><br><small>Puedes subir varias órdenes, una por una</small><input type="file" id="fileT" accept=".xlsx,.xls,.csv" hidden></div>
     <div class="sec" style="margin:0"><h3 class="ok">Órdenes cargadas</h3><div id="tlist"></div></div>
@@ -324,7 +324,20 @@ document.getElementById('xlsx').onclick=async function(){
 
 // ---- en camino: carga de excels ----
 function isGreen(rgb){if(!rgb)return false;var h=String(rgb);if(h.length>6)h=h.slice(h.length-6);var R=parseInt(h.slice(0,2),16),G=parseInt(h.slice(2,4),16),B=parseInt(h.slice(4,6),16);if(isNaN(R)||isNaN(G)||isNaN(B))return false;return G>R+15&&G>B+15&&G>80}
-function greenRow(ws,i){if(!ws||i==null)return false;for(var c=0;c<25;c++){var cell=ws[XLSX.utils.encode_cell({r:i,c:c})];if(cell&&cell.s&&cell.s.fgColor&&isGreen(cell.s.fgColor.rgb))return true}return false}
+function greenRow(ws,i){
+ // "Ya llego" SOLO si TODA la fila esta en verde: cada celda con contenido debe tener
+ // relleno verde. Una sola celda verde NO cuenta (los colores agrupan guias de envio).
+ if(!ws||i==null)return false;
+ var greens=0,badVals=0;
+ for(var c=0;c<25;c++){
+   var cell=ws[XLSX.utils.encode_cell({r:i,c:c})];
+   if(!cell)continue;
+   var g=cell.s&&cell.s.fgColor&&isGreen(cell.s.fgColor.rgb);
+   var hasVal=cell.v!==undefined&&String(cell.v).trim()!=='';
+   if(g)greens++;else if(hasVal)badVals++;
+ }
+ return greens>=3&&badVals===0;
+}
 function findCols(aoa){for(var i=0;i<Math.min(aoa.length,25);i++){var row=aoa[i].map(function(c){return String(c).toUpperCase()});
  var hasSku=row.some(function(c){return c.indexOf('SKU')>=0});var hasProd=row.some(function(c){return c.indexOf('PRODUCTO')>=0})||row.some(function(c){return c.indexOf('PEDIR')>=0});
  if(hasSku&&hasProd){var col=function(name){for(var j=0;j<row.length;j++){if(row[j].indexOf(name)>=0)return j}return -1};
