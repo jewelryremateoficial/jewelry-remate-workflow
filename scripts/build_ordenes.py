@@ -103,6 +103,28 @@ with open(SCRATCH + '/lineitems60.jsonl') as f:
         else:
             reb[sku]['n'] += q
 
+# ---- dias desde la ultima venta por SKU (del detalle de 60d) ----
+order_date = {}
+last_sale = {}
+with open(SCRATCH + '/lineitems60.jsonl') as f:
+    for line in f:
+        o = json.loads(line)
+        if '__parentId' not in o:
+            order_date[o['id']] = o.get('createdAt', '')[:10]
+        else:
+            sku = norm_sku(o.get('sku'))
+            if not sku: continue
+            d = order_date.get(o['__parentId'], '')
+            if d and (sku not in last_sale or d > last_sale[sku]):
+                last_sale[sku] = d
+
+def dsl_for(sku, u60, u90):
+    if sku in last_sale:
+        return (HOY - datetime.date.fromisoformat(last_sale[sku])).days
+    if u90 > 0:
+        return 61   # vendio en 90d pero no en 60d -> minimo 60+ dias sin venta
+    return 999
+
 # ---- costos, material ----
 cj = json.load(open(SCRATCH + '/costs.json'))
 costs, material = cj['costs'], cj['material']
@@ -142,6 +164,7 @@ for v in variants:
         'v': vendor or 'OTROS', 'st': st, 'q': v['inv'], 'p': v['price'], 'cap': v['cap'],
         'i': img_i(p['img']), 'u': (e60 or {}).get('u', 0), 'u9': (e90 or {}).get('u', 0),
         'a': a, 'rb': rb['r'], 'pn': rb['n'], 'cd': rb['c'], 'ra': ra,
+        'dsl': dsl_for(sku, (e60 or {}).get('u', 0), (e90 or {}).get('u', 0)),
         'c': round(c['best'], 2) if c else None, 'm': material.get(sku, ''),
         'dup': 1 if (st == '' and norm_t(v['title']) in dups) else 0,
     })
@@ -149,7 +172,9 @@ for v in variants:
 print('variantes:', len(rows), '| activas:', sum(1 for r in rows if r['st']==''),
       '| con rebaja vendida:', sum(1 for r in rows if r['rb']>0),
       '| rebaja activa hoy:', sum(1 for r in rows if r['ra'] and r['st']=='')),
-print('| estancadas reales:', sum(1 for r in rows if r['st']=='' and r['u9']==0 and r['a']>=30 and r['q']>0))
+print('| estancadas reales (90+d alta, 0 ventas 90d):', sum(1 for r in rows if r['st']=='' and r['u9']==0 and r['a']>=90 and r['q']>0),
+      '| nuevas sin venta (<90d alta):', sum(1 for r in rows if r['st']=='' and r['u9']==0 and r['a']<90 and r['q']>0),
+      '| lentas (40+d sin venta):', sum(1 for r in rows if r['st']=='' and r['q']>0 and not (r['u9']==0 and r['a']>=90) and ((r['u']>0 and r['dsl']>=40) or (r['u']==0 and r['u9']>0))))
 
 DATA_JSON = json.dumps(rows, ensure_ascii=False, separators=(',', ':'))
 IMGS_JSON = json.dumps(imgs, ensure_ascii=False, separators=(',', ':'))
@@ -305,7 +330,8 @@ function inTransit(r,tm){return tm[r.k]||tm[normT(r.t)+'|'+normT(r.vt)]||0}
 function inTAny(r,tm){return tm.__any[r.k]||tm.__any[normT(r.t)+'|'+normT(r.vt)]||0}
 
 // ---- clasificacion ----
-function isEst(r){return r.st===''&&r.u9===0&&r.a>=30&&r.q>0}
+function isEst(r){return r.st===''&&r.u9===0&&r.a>=90&&r.q>0}
+function isLento(r){return r.st===''&&r.q>0&&!isEst(r)&&((r.u>0&&r.dsl>=40)||(r.u===0&&r.u9>0))}
 function isReb(r){return r.st===''&&(r.rb>0||r.ra===1)}
 function movLabel(r){var d=Math.min(r.a,90);if(d<=0)d=1;var vel=r.u9/d*7;
  if(r.u9===0)return r.a<30?['nuevo','Nuevo ('+r.a+'d)']:['gris','Nada'];
@@ -314,7 +340,7 @@ function sug(r,tm){
   var t=inTransit(r,tm);
   if(r.u>0){var vel=r.u/60*7,need=vel*WEEKS;if(r.u>TOP_U)need*=TOP_MULT;
     var s=Math.ceil(need-r.q-t);if(s<=0)return 0;return Math.ceil(s/2)*2}
-  if(r.q<=0&&t<=0&&!inTAny(r,tm))return 2;
+  if(r.q<=0&&t<=0)return 2;
   return 0;
 }
 function cobertura(r){if(r.u9<=0)return r.q>0?9999:0;return Math.round(r.q/(r.u9/Math.min(r.a,90)))}
@@ -339,7 +365,7 @@ function renderSem(){
   var tm=transitMap();var totalPz=0,totalUS=0,html='';
   var cards=VENDORS.map(function(v){
     var rs=vendRows(v).filter(function(r){return r.st===''});
-    var urgN=rs.filter(function(r){return r.q<=0&&r.u>0&&inTransit(r,tm)<=0&&!inTAny(r,tm)&&!isReb(r)}).length;
+    var urgN=rs.filter(function(r){return r.q<=0&&r.u>0&&inTransit(r,tm)<=0&&!isReb(r)}).length;
     var crit=rs.filter(function(r){return r.u9>0&&r.q>0&&cobertura(r)<14}).length;
     var rebN=rs.filter(function(r){return isReb(r)}).length;
     var pz=0,us=0,ln=0;
@@ -380,7 +406,8 @@ function rowHTML(r,tm,noSug){
   if(r.st==='D')chips+=' <span class="chip gris">Borrador</span>';
   if(r.st==='A')chips+=' <span class="chip gris">Archivado</span>';
   if(r.st!==''&&r.u>0)chips+=' <span class="chip warn" style="color:var(--warn);background:var(--warn-bg)">vendió '+r.u+' pzs estando activo</span>';
-  if(isEst(r))chips+=' <span class="chip gris">Estancado real: 0 ventas en '+Math.min(r.a,90)+'d</span>';
+  if(isEst(r))chips+=' <span class="chip gris">Estancado real: 90+ días de alta y 0 ventas en 90d</span>';
+  if(isLento(r))chips+=' <span class="chip bajo">🐢 Lento — '+(r.dsl>=90?'90+':r.dsl)+' días sin venta</span>';
   if(r.a<90&&r.a>=0&&r.st==='')chips+=' <span class="chip nuevo">'+r.a+' días activo</span>';
   var obs=[];
   if(r.u===0&&r.q<=0&&r.st==='')obs.push('agotado sin venta reciente — prueba');
@@ -390,7 +417,7 @@ function rowHTML(r,tm,noSug){
    '<td>'+img(r.i)+'</td>'+
    '<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.k||'—')+(r.m?' · '+r.m:'')+'</span></td>'+
    '<td class="num">'+r.u+piezasHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'+
-   '<td class="num">'+r.q+'</td><td class="num">'+(t?t:(inTAny(r,tm)?'🚚 pedido':'—'))+'</td>'+
+   '<td class="num">'+r.q+'</td><td class="num">'+(t||'—')+'</td>'+
    '<td class="num"><input class="q'+(s>0?' hot':'')+'" type="number" min="0" step="2" value="'+s+'"></td>'+
    '<td class="num">'+usd(r.c)+'</td><td class="num" data-tot>'+(r.c?usd(s*r.c):'—')+'</td>'+
    '<td>'+chips+(obs.length?'<span class="vsub">'+obs.join(' · ')+'</span>':'')+'</td></tr>';
@@ -400,7 +427,7 @@ function renderOrden(){
   var v=vsel.value,tm=transitMap(),q=normT(document.getElementById('oq').value);
   var rs=vendRows(v).filter(function(r){return !q||normT(r.t).indexOf(q)>=0||r.k.indexOf(q)>=0});
   var act=rs.filter(function(r){return r.st===''});
-  var pedir=act.filter(function(r){return r.u>0&&!isReb(r)&&!isEst(r)}).sort(function(a,b){return b.u-a.u});
+  var pedir=act.filter(function(r){return (r.u>0||r.u9>0)&&!isReb(r)&&!isEst(r)}).sort(function(a,b){return b.u-a.u||b.u9-a.u9});
   var prueba=act.filter(function(r){return r.u===0&&r.q<=0&&!isReb(r)&&sug(r,tm)>0}).sort(function(a,b){return (b.u9-a.u9)||(a.a-b.a)});
   var rebL=act.filter(function(r){return isReb(r)}).sort(function(a,b){return b.rb-a.rb||b.u-a.u});
   var est=act.filter(function(r){return isEst(r)&&!isReb(r)}).sort(function(a,b){return b.q*b.p-a.q*a.p});
@@ -411,7 +438,7 @@ function renderOrden(){
   H+='<div class="sec"><h3 class="warn">🧪 AGOTADOS SIN VENTA RECIENTE — 2 pzs de prueba ('+prueba.length+')</h3><div class="exp">Activos, en cero y sin venta en 60 días. Ordenados por movimiento 90d y por lo más nuevo.</div>'+(prueba.length?tbl(prueba,false):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
   H+='<div class="sec"><h3 class="reb">🏷️ REBAJA 30%+ (precio de comparación) — tu criterio ('+rebL.length+')</h3><div class="exp">Pieza por pieza en 60 días: 🏷️ vendidas con rebaja · 💵 a precio normal · 🎟️ por código de descuento (NO cuenta como rebaja). También los que están rebajados 30%+ ahorita. Sin cantidad sugerida.</div>'+(rebL.length?tbl(rebL,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
   H+='<div class="sec"><h3 class="gray">📝 EN BORRADOR / ARCHIVADOS de este proveedor ('+drafts.length+')</h3><div class="exp">No se piden por default (tu criterio del porqué están en borrador). Si uno vendió estando activo, viene marcado.</div>'+(drafts.length?tbl(drafts,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
-  H+='<div class="sec"><h3 class="gray">⚖️ ESTANCADOS REALES — 0 ventas en 90 días, con stock ('+est.length+')</h3><div class="exp">Ajustado a la edad real del SKU (si lleva menos de 90 días activo, se cuenta desde que se activó; con menos de 30 días se marca "Nuevo", no estancado).</div>'+(est.length?tbl(est,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
+  H+='<div class="sec"><h3 class="gray">⚖️ ESTANCADOS REALES — 0 ventas en 90 días, con stock ('+est.length+')</h3><div class="exp">Solo productos con <b>90+ días desde su alta</b> y <b>0 ventas en 90 días</b>. Los dados de alta hace poco NO aparecen aquí — son nuevos, no estancados. Los 🐢 lentos (40+ días sin venta) sí se pueden pedir y van marcados en su sección.</div>'+(est.length?tbl(est,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
   document.getElementById('ocont').innerHTML=H;
   document.querySelectorAll('#ocont input.q').forEach(function(inp){
     inp.oninput=function(){var tr=inp.closest('tr');var k=tr.dataset.k;var val=parseInt(inp.value)||0;edits[k]=val;
