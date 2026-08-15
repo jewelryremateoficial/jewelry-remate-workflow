@@ -3,7 +3,11 @@
 """Costos USD por SKU (mejor y último) + material, desde tablas mensuales + historial."""
 import openpyxl, glob, json, re, datetime
 
+import os as _os
+_REPO_DATOS = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), 'datos')
 DL = '/Users/eduardozayas/Downloads'
+if not _os.path.isdir(DL + '/TABLAS DE PRECIOS') and _os.path.isdir(_REPO_DATOS + '/TABLAS DE PRECIOS'):
+    DL = _REPO_DATOS   # en otra compu: usa los Excel guardados en el repo
 SCRATCH = '/private/tmp/claude-502/-Users-eduardozayas-Documents-Jewelry-2026/fb54aa9f-28de-430d-abc2-8da98e46fa95/scratchpad'
 
 def norm_sku(v):

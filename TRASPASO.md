@@ -74,4 +74,11 @@ Eduardo Zayas dirige **Jewelry Remate MX** (tienda Shopify: jewelryrematemx.com,
 2. Conectar el conector de **Shopify** en claude.ai (Configuración → Conectores) — sin él no hay datos.
 3. Cuando Eduardo diga **"actualiza órdenes"**: seguir `scripts/ACTUALIZAR.md` al pie de la letra (solo datos, cero cambios de lógica).
 4. Guardar la sección 2 de este documento en la memoria persistente como reglas tipo feedback (nombre sugerido: `reglas-centro-ordenes`) y la sección 1 como contexto de proyecto.
-5. Los archivos fuente de costos (TABLAS DE PRECIOS, historial) están en `~/Downloads` de la compu ORIGINAL; si no están aquí, usar `scripts/costs.json` (los costos no cambian a diario).
+5. **TODOS los archivos fuente YA VIENEN EN EL REPO, carpeta `datos/`** (no dependen de la compu original):
+   - `datos/TABLAS DE PRECIOS/` — las 13 tablas mensuales de órdenes (may 2025–jul 2026)
+   - `datos/HISTORIAL_PRECIOS_PROVEEDORES_2024-JUL2026.xlsx` — el consolidado con ALERTA ROAS
+   - `datos/HISTORIA PRECIOS NO ACTUALIZADO.xlsx` — el historial original
+   - `datos/costos-promedio/` — costos promedio de toda la tienda, historial y costo promedio actualizado 11 ago, inventario con costo promedio 12 ago, métrica proveedores con costos
+   - `datos/ordenes/` — órdenes de compra recientes: CYNTHIA070726 ACT2 (en camino), HAIFENG110726 (en camino), HAIFENG120826 (la orden en revisión/preparación, en 2 versiones)
+   `scripts/dump_costs.py` ya sabe leer de `datos/` automáticamente cuando no existe `~/Downloads/TABLAS DE PRECIOS`.
+6. **RUTINA DIARIA — DEBE VIVIR EN LA COMPU NUEVA (decisión de Eduardo):** crear ahí una scheduled task local llamada `actualizar-ordenes-diario`, cron `0 23 * * *` (11 PM Hermosillo), con este encargo: "Actualización DIARIA de datos del Centro de órdenes de compra. REGLA CERO: no cambiar nada de lógica/diseño. Seguir EXACTAMENTE scripts/ACTUALIZAR.md del repo (clonado localmente): descargar de Shopify ventas 60d y 90d, catálogo completo de variantes, bulk de line items 60d y productos nuevos 90d; correr scripts/dump_costs.py (usa datos/ del repo si no hay Downloads); regenerar ordenes.html con scripts/build_ordenes.py (solo cambiando SCRATCH, CORTE y HOY); git push; verificar el sitio con curl. Si algo falla, no publicar a medias y reportar." Después de crearla y correrla una vez con éxito, avisar a Eduardo para APAGAR la rutina de la compu original (no deben correr las dos).
