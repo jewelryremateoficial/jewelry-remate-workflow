@@ -82,3 +82,14 @@ Eduardo Zayas dirige **Jewelry Remate MX** (tienda Shopify: jewelryrematemx.com,
    - `datos/ordenes/` — órdenes de compra recientes: CYNTHIA070726 ACT2 (en camino), HAIFENG110726 (en camino), HAIFENG120826 (la orden en revisión/preparación, en 2 versiones)
    `scripts/dump_costs.py` ya sabe leer de `datos/` automáticamente cuando no existe `~/Downloads/TABLAS DE PRECIOS`.
 6. **RUTINA DIARIA — DEBE VIVIR EN LA COMPU NUEVA (decisión de Eduardo):** crear ahí una scheduled task local llamada `actualizar-ordenes-diario`, cron `0 23 * * *` (11 PM Hermosillo), con este encargo: "Actualización DIARIA de datos del Centro de órdenes de compra. REGLA CERO: no cambiar nada de lógica/diseño. Seguir EXACTAMENTE scripts/ACTUALIZAR.md del repo (clonado localmente): descargar de Shopify ventas 60d y 90d, catálogo completo de variantes, bulk de line items 60d y productos nuevos 90d; correr scripts/dump_costs.py (usa datos/ del repo si no hay Downloads); regenerar ordenes.html con scripts/build_ordenes.py (solo cambiando SCRATCH, CORTE y HOY); git push; verificar el sitio con curl. Si algo falla, no publicar a medias y reportar." Después de crearla y correrla una vez con éxito, avisar a Eduardo para APAGAR la rutina de la compu original (no deben correr las dos).
+
+
+---
+
+## 6. RESPALDO EN EL VPS (Hostinger)
+
+- Servidor: **srv1825096.hstgr.cloud** · IP **2.24.199.94** · usuario `root` (Ubuntu 24.04). OJO: la IP 148.230.84.14 que aparece en registros viejos es de un VPS ANTERIOR que ya no existe.
+- Respaldo completo (sitio + datos + chat + traspaso) en: `/root/respaldos/jewelry-remate-workflow/`
+- Acceso por llave SSH (la llave "claude-backup-jewelry" de la compu original y la "eduardo-horizen-vps" de la otra están autorizadas en el panel de Hostinger). Si una compu nueva necesita acceso: agregar su llave pública en hPanel → VPS → Claves SSH.
+- Para bajar el respaldo desde cualquier compu: `scp -r root@2.24.199.94:/root/respaldos/jewelry-remate-workflow ~/Documents/`
+- Para actualizar el respaldo desde la compu que tenga el repo: `rsync -az --delete --exclude 'jewelry-remate-workflow/' ~/Documents/"Jewelry 2026"/ root@2.24.199.94:/root/respaldos/jewelry-remate-workflow/`
