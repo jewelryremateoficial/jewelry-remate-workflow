@@ -7,13 +7,20 @@
 - Borradores/archivados: apartado propio por proveedor, marcando ventas estando activo.
 - Export .xlsx con foto incrustada: #, FOTO, PRODUCTO, VARIANTE, SKU, PEDIR, COSTO US, TOTAL US, MATERIAL, OBS.
 """
-import json, glob, re, unicodedata, datetime
+import json, glob, re, unicodedata, datetime, os
 from collections import defaultdict
 
-SCRATCH = '/private/tmp/claude-502/-Users-eduardozayas-Documents-Jewelry-2026/fb54aa9f-28de-430d-abc2-8da98e46fa95/scratchpad'
-REPO = '/Users/eduardozayas/Documents/Jewelry 2026'
-CORTE = '14 ago 2026'
-HOY = datetime.date(2026, 8, 14)
+# Rutas portables: funcionan en cualquier compu sin editar el archivo.
+#   REPO    = la raiz del repo (se deduce de la ubicacion de este script)
+#   SCRATCH = OC_SCRATCH si esta definido; si no, <REPO>/.scratch
+#   HOY     = OC_HOY (AAAA-MM-DD) si esta definido; si no, la fecha de hoy
+#   CORTE   = se arma solo a partir de HOY (ej. "15 ago 2026")
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCRATCH = os.environ.get('OC_SCRATCH') or os.path.join(REPO, '.scratch')
+HOY = (datetime.date.fromisoformat(os.environ['OC_HOY'])
+       if os.environ.get('OC_HOY') else datetime.date.today())
+_MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+CORTE = '%d %s %d' % (HOY.day, _MESES[HOY.month - 1], HOY.year)
 
 def norm_sku(v):
     s = str(v or '').strip()
@@ -181,7 +188,11 @@ IMGS_JSON = json.dumps(imgs, ensure_ascii=False, separators=(',', ':'))
 VEND_JSON = json.dumps(ACTIVE_VENDORS, ensure_ascii=False)
 # REGLA FIJA: "ya llego" SOLO si la fila esta 100% en verde en el Excel de la orden.
 # Ninguna inferencia por stock. Los flags arrived vienen tal cual del parseo de los Excel.
-tb = json.load(open(SCRATCH + '/transit_base.json'))
+# El "en camino" bueno (3 ordenes con cantidades) vive en scripts/transit_base.json y es la fuente
+# de verdad. Solo se usa una copia del SCRATCH si existe (para pruebas); si no, la del repo.
+_tb_scratch = SCRATCH + '/transit_base.json'
+_tb_path = _tb_scratch if os.path.isfile(_tb_scratch) else REPO + '/scripts/transit_base.json'
+tb = json.load(open(_tb_path))
 TBASE_JSON = json.dumps(tb, ensure_ascii=False)
 
 cv = open(REPO + '/centro-variantes.html', encoding='utf-8').read()

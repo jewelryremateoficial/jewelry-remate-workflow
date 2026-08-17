@@ -12,3 +12,6 @@
 *.log
 *.tmp
 jewelry-remate-workflow/
+
+# directorio de trabajo de la actualizacion diaria
+.scratch/

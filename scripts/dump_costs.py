@@ -5,10 +5,13 @@ import openpyxl, glob, json, re, datetime
 
 import os as _os
 _REPO_DATOS = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), 'datos')
-DL = '/Users/eduardozayas/Downloads'
+_REPO = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+DL = _os.path.expanduser('~/Downloads')
 if not _os.path.isdir(DL + '/TABLAS DE PRECIOS') and _os.path.isdir(_REPO_DATOS + '/TABLAS DE PRECIOS'):
     DL = _REPO_DATOS   # en otra compu: usa los Excel guardados en el repo
-SCRATCH = '/private/tmp/claude-502/-Users-eduardozayas-Documents-Jewelry-2026/fb54aa9f-28de-430d-abc2-8da98e46fa95/scratchpad'
+# Rutas portables (igual que build_ordenes.py): OC_SCRATCH o <REPO>/.scratch
+SCRATCH = _os.environ.get('OC_SCRATCH') or _os.path.join(_REPO, '.scratch')
+_os.makedirs(SCRATCH, exist_ok=True)
 
 def norm_sku(v):
     s = str(v or '').strip()
@@ -91,5 +94,9 @@ for r in it:
 wb.close()
 base = [{'name': 'NANCY 09/07/2026 (precargada)', 'date': '2026-07-09', 'base': 1, 'lines': nancy},
         {'name': 'CYNTHIA 07/07/2026 (precargada, sin cantidades)', 'date': '2026-07-07', 'base': 1, 'lines': cyn_jul}]
-json.dump(base, open(SCRATCH + '/transit_base.json', 'w'), ensure_ascii=False)
+# OJO: este "base" se arma SOLO con NANCY 09/07 + CYNTHIA 07/07 (sin cantidades) y NO incluye
+# HAIFENG 11/07. El transit_base.json bueno (las 3 ordenes, con cantidades) se armo a mano desde
+# los Excel de Eduardo y vive en scripts/transit_base.json. Por eso aqui se escribe a un archivo
+# APARTE: sobrescribir transit_base.json borraria el "en camino" y haria sobre-pedir mercancia.
+json.dump(base, open(SCRATCH + '/transit_base_auto.json', 'w'), ensure_ascii=False)
 print('costos:', len(costs), '| materiales:', len(material), '| transito NANCY:', len(nancy), 'CYNTHIA:', len(cyn_jul))
