@@ -22,6 +22,21 @@ HOY = (datetime.date.fromisoformat(os.environ['OC_HOY'])
 _MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 CORTE = '%d %s %d' % (HOY.day, _MESES[HOY.month - 1], HOY.year)
 
+# Sello de actualizacion (pedido de Eduardo, 17 ago 2026): dia Y hora en que se corrio.
+# OC_HORA (HH:MM) permite fijarla; si no, se toma la hora del momento en que corre.
+_MESES_L = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+            'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+if os.environ.get('OC_HORA'):
+    _hh, _mm = (int(x) for x in os.environ['OC_HORA'].split(':'))
+else:
+    _n = datetime.datetime.now()
+    _hh, _mm = _n.hour, _n.minute
+_ampm = 'AM' if _hh < 12 else 'PM'
+_h12 = _hh % 12 or 12
+ACTUALIZADO = '%d de %s de %d, %s %d:%02d %s' % (
+    HOY.day, _MESES_L[HOY.month - 1], HOY.year,
+    'a la' if _h12 == 1 else 'a las', _h12, _mm, _ampm)
+
 def norm_sku(v):
     s = str(v or '').strip()
     if s.endswith('.0'): s = s[:-2]
@@ -212,6 +227,7 @@ HTML = r'''<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name
 .wrap{max-width:1280px;margin:0 auto;padding:20px 18px 90px}
 h2{margin:6px 0 4px;font-size:21px}
 .note{color:var(--muted);font-size:13px;margin:2px 0 14px;max-width:100ch}
+.note.upd{margin:2px 0 6px}.note.upd b{color:var(--ink)}
 .pane{display:none}.pane.on{display:block}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin:14px 0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;border-left:6px solid var(--line)}
@@ -282,6 +298,7 @@ tr.gris td{background:#fafafa}
 
 <div class="pane" id="orden">
   <h2>Orden sugerida por proveedor</h2>
+  <p class="note upd">🕐 Actualizado el <b>__ACTUALIZADO__</b></p>
   <p class="note">Ajusta <b>PEDIR</b> a tu criterio. Las secciones de rebaja, borradores y estancados no traen cantidad sugerida — son tu decisión. La descarga es un <b>Excel con las fotos incrustadas</b>.</p>
   <div class="controls">
     <select id="vsel"></select>
@@ -608,7 +625,7 @@ document.getElementById('mq').oninput=renderMov;document.getElementById('msel').
 renderSem();renderOrden();renderT();renderMov();draftbar();
 </script></body></html>'''
 
-HTML = HTML.replace('__CORTE__', CORTE).replace('__XLSX_LIB__', XLSX_LIB).replace('__FECHA__', HOY.isoformat())
+HTML = HTML.replace('__CORTE__', CORTE).replace('__ACTUALIZADO__', ACTUALIZADO).replace('__XLSX_LIB__', XLSX_LIB).replace('__FECHA__', HOY.isoformat())
 HTML = HTML.replace('__DATA__', DATA_JSON).replace('__IMGS__', IMGS_JSON).replace('__VENDORS__', VEND_JSON).replace('__TBASE__', TBASE_JSON)
 open(REPO + '/ordenes.html', 'w', encoding='utf-8').write(HTML)
 print('ordenes.html v2:', len(HTML), 'bytes | imgs:', len(imgs))
