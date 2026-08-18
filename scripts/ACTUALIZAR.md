@@ -11,7 +11,7 @@ en la memoria (reglas-centro-ordenes) y en el encabezado de scripts/build_ordene
    - Igual pero `WHERE product_vendor != 'HAIFENG'` y con `product_vendor` en el GROUP BY → `sales_OTROS.json`
 2. **Ventas 90 días**: mismas dos consultas con `SINCE -90d` → `sales90_HAIFENG.json`, `sales90_OTROS.json`
 3. **Catálogo completo** (paginado de 250 en 250 hasta hasNextPage=false) → `vp_001.json`, `vp_002.json`, …:
-   `query($after:String){ productVariants(first:250, after:$after){ pageInfo{hasNextPage endCursor} nodes{ id sku price compareAtPrice inventoryQuantity product{ id title vendor status featuredImage{ url(transform:{maxWidth:120,maxHeight:120}) } } } } }`
+   `query($after:String){ productVariants(first:250, after:$after){ pageInfo{hasNextPage endCursor} nodes{ id title sku price compareAtPrice inventoryQuantity product{ id title vendor status featuredImage{ url(transform:{maxWidth:120,maxHeight:120}) } } } } }`
    (si la última página llega inline, repetirla agregando campos barcode/createdAt/updatedAt/handle para forzar el guardado a archivo)
 4. **Línea por línea 60d para rebaja** (bulk): mutación `bulkOperationRunQuery` con
    `{ orders(query:"created_at:>=<HOY-60d>") { edges { node { id createdAt lineItems { edges { node { sku quantity originalUnitPriceSet{shopMoney{amount}} discountedUnitPriceSet{shopMoney{amount}} } } } } } } }`

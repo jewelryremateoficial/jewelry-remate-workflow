@@ -77,6 +77,9 @@ for f in sorted(glob.glob(SCRATCH + '/vp_0*.json')):
         if vid in seen: continue
         seen.add(vid)
         variants.append({'vid': vid, 'sku': norm_sku(n.get('sku')),
+                         # nombre de la variante DESDE EL CATALOGO. Antes solo venia de los datos
+                         # de ventas, asi que los productos sin ventas salian sin variante.
+                         'vtitle': (n.get('title') or '').strip(),
                          'price': float(n['price'] or 0),
                          'cap': float(n['compareAtPrice'] or 0) if n.get('compareAtPrice') else 0,
                          'inv': n.get('inventoryQuantity') or 0,
@@ -176,7 +179,8 @@ for v in variants:
     if vendor == 'M0LLY': vendor = 'MOLLY'
     sku = v['sku']
     e60 = s60.get(sku); e90 = s90.get(sku)
-    vt = (e60 or e90 or {}).get('vt') or ''
+    # El catalogo manda; las ventas solo rellenan si el catalogo no trajo el titulo.
+    vt = v.get('vtitle') or (e60 or e90 or {}).get('vt') or ''
     c = costs.get(sku)
     rb = reb.get(sku, {'r': 0, 'n': 0, 'c': 0})
     a = age.get(v['pid'], 999)
