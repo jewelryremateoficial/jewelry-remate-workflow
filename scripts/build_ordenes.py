@@ -550,7 +550,7 @@ document.getElementById('xlsx').onclick=async function(){
     for(var i=0;i<items.length;i++){
       var it=items[i],r=it.r,rowN=i+2;
       var row=ws.addRow([i+1,'',r.t,r.vt||'',r.ns?'':r.k,it.val,r.c!=null?r.c:'',r.c!=null?+(it.val*r.c).toFixed(2):'',r.m||'',it.obs]);
-      row.height=96;row.alignment={vertical:'middle',wrapText:true};
+      row.height=44;row.alignment={vertical:'middle',wrapText:true};
       row.getCell(7).numFmt='$#,##0.00';row.getCell(8).numFmt='$#,##0.00';
     }
     // fotos
@@ -608,16 +608,19 @@ document.getElementById('xlsx').onclick=async function(){
         return {buf:buf,ext:ext,w:r.w,h:r.h};
       }catch(e){return null}
     }));
-    // Medidas del hueco de la foto: ancho de columna 19 (~138 px) y alto de fila 96 pt (~128 px).
-    var FOTO_COL_PX=138, FOTO_FILA_PX=128, FOTO_CAJA=120;
+    // Cada fila se ajusta a la altura de SU foto, con un margencito blanco (Eduardo, 18 ago 2026:
+    // "que esté un poquito más alta que la imagen del producto, pero no mucho").
+    var FOTO_COL_PX=138, FOTO_CAJA=120, MARGEN=16;   // 16 px = 8 arriba y 8 abajo
     imgResults.forEach(function(im,i){
       if(!im)return;
       var id=wb.addImage({buffer:im.buf,extension:im.ext});
-      // La foto se ajusta al hueco respetando su proporcion, y se centra en la celda.
+      // La foto conserva su proporcion, se ajusta a la caja y se centra en la celda.
       var esc=Math.min(FOTO_CAJA/(im.w||FOTO_CAJA),FOTO_CAJA/(im.h||FOTO_CAJA));
       var aw=Math.round((im.w||FOTO_CAJA)*esc), ah=Math.round((im.h||FOTO_CAJA)*esc);
+      var filaPx=ah+MARGEN;
+      ws.getRow(i+2).height=Math.max(34,Math.round(filaPx*0.75));   // px -> puntos
       ws.addImage(id,{tl:{col:1+Math.max(0,(FOTO_COL_PX-aw)/2)/FOTO_COL_PX,
-                          row:i+1+Math.max(0,(FOTO_FILA_PX-ah)/2)/FOTO_FILA_PX},
+                          row:i+1+(MARGEN/2)/filaPx},
                       ext:{width:aw,height:ah},editAs:'oneCell'});
     });
     var out=await wb.xlsx.writeBuffer();
