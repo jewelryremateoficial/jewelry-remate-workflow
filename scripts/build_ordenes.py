@@ -480,8 +480,12 @@ function renderOrden(){
   // Si vendio (60d o 90d) va en PEDIR; si nunca vendio va en PRUEBA; si trae rebaja va
   // SOLO en REBAJA. Antes, los que vendieron en 90d pero no en 60d salian en PEDIR y en
   // PRUEBA a la vez: se contaban doble en el total y salian dos veces en el Excel.
-  var pedir=act.filter(function(r){return (r.u>0||r.u9>0)&&!isReb(r)&&!isEst(r)}).sort(byName);
-  var prueba=act.filter(function(r){return r.u===0&&r.u9===0&&r.q<=0&&!isReb(r)&&sug(r,tm)>0}).sort(byName);
+  // PEDIR = SOLO lo que vendio en los ultimos 60 dias (Eduardo, 18 ago 2026: "no me pongas
+  // productos sin venta en el area de se venden"). Lo que vendio hace mas de 60 dias se va
+  // a AGOTADOS si esta en cero, o a LENTOS si todavia tiene stock.
+  var pedir=act.filter(function(r){return r.u>0&&!isReb(r)&&!isEst(r)}).sort(byName);
+  var prueba=act.filter(function(r){return r.u===0&&r.q<=0&&!isReb(r)&&sug(r,tm)>0}).sort(byName);
+  var lentos=act.filter(function(r){return r.u===0&&r.u9>0&&r.q>0&&!isReb(r)&&!isEst(r)}).sort(byName);
   var rebL=act.filter(function(r){return isReb(r)}).sort(byName);
   var est=act.filter(function(r){return isEst(r)&&!isReb(r)}).sort(byName);
   var drafts=rs.filter(function(r){return r.st!==''}).sort(byName);
@@ -489,6 +493,7 @@ function renderOrden(){
   var H='';
   H+='<div class="sec"><h3 class="ok">✅ PEDIR — se venden y hay que resurtir ('+pedir.length+')</h3>'+(pedir.length?tbl(pedir,false):'<div class="exp" style="padding-bottom:12px">Nada pendiente.</div>')+'</div>';
   H+='<div class="sec"><h3 class="warn">🧪 AGOTADOS SIN VENTA RECIENTE — 2 pzs de prueba ('+prueba.length+')</h3><div class="exp">Activos, en cero y sin venta en 60 días. Ordenados por movimiento 90d y por lo más nuevo.</div>'+(prueba.length?tbl(prueba,false):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
+  H+='<div class="sec"><h3 class="bajo">🐢 LENTOS CON STOCK — vendieron hace más de 60 días ('+lentos.length+')</h3><div class="exp">Sin ventas en los últimos 60 días pero con historial en 90 y con existencia. No traen cantidad sugerida: ya tienes producto. Si quieres resurtir alguno, la cantidad la pones tú.</div>'+(lentos.length?tbl(lentos,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
   H+='<div class="sec"><h3 class="reb">🏷️ REBAJA 30%+ (precio de comparación) — tu criterio ('+rebL.length+')</h3><div class="exp">Pieza por pieza en 60 días: 🏷️ vendidas con rebaja · 💵 a precio normal · 🎟️ por código de descuento (NO cuenta como rebaja). También los que están rebajados 30%+ ahorita. Sin cantidad sugerida.</div>'+(rebL.length?tbl(rebL,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
   H+='<div class="sec"><h3 class="gray">📝 EN BORRADOR / ARCHIVADOS de este proveedor ('+drafts.length+')</h3><div class="exp">No se piden por default (tu criterio del porqué están en borrador). Si uno vendió estando activo, viene marcado.</div>'+(drafts.length?tbl(drafts,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
   H+='<div class="sec"><h3 class="gray">⚖️ ESTANCADOS REALES — 0 ventas en 90 días, con stock ('+est.length+')</h3><div class="exp">Solo productos con <b>90+ días desde su alta</b> y <b>0 ventas en 90 días</b>. Los dados de alta hace poco NO aparecen aquí — son nuevos, no estancados. Los 🐢 lentos (40+ días sin venta) sí se pueden pedir y van marcados en su sección.</div>'+(est.length?tbl(est,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
