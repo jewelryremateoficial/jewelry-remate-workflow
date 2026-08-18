@@ -453,7 +453,7 @@ function rowHTML(r,tm,noSug){
    '<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.k||'—')+(r.m?' · '+r.m:'')+'</span></td>'+
    '<td class="num">'+r.u+piezasHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'+
    '<td class="num">'+r.q+'</td><td class="num">'+(t||'—')+'</td>'+
-   '<td class="num"><input class="q'+(s>0?' hot':'')+(edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="2" value="'+s+'"></td>'+
+   '<td class="num"><input class="q'+(s>0?' hot':'')+(edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="1" value="'+s+'"></td>'+
    '<td class="num">'+usd(r.c)+'</td><td class="num" data-tot>'+(r.c?usd(s*r.c):'—')+'</td>'+
    '<td>'+chips+(obs.length?'<span class="vsub">'+obs.join(' · ')+'</span>':'')+'</td></tr>';
 }
