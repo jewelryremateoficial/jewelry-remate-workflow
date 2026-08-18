@@ -182,7 +182,11 @@ for v in variants:
     a = age.get(v['pid'], 999)
     ra = 1 if (v['cap'] > 0 and v['price'] > 0 and v['price'] <= 0.705 * v['cap']) else 0
     rows.append({
-        'k': sku, 't': v['title'], 'vt': vt if vt != 'Default Title' else '',
+        # La llave 'k' identifica la fila y es con la que se guarda el borrador. Los productos
+        # SIN SKU en Shopify (82 al 18 ago 2026) compartian la llave vacia: escribir una cantidad
+        # en uno se la ponia a TODOS. Por eso, si no hay SKU se usa el id de variante.
+        'k': sku or ('SINSKU-' + str(v['vid'])), 'ns': 0 if sku else 1,
+        't': v['title'], 'vt': vt if vt != 'Default Title' else '',
         'v': vendor or 'OTROS', 'st': st, 'q': v['inv'], 'p': v['price'], 'cap': v['cap'],
         'i': img_i(p['img']), 'u': (e60 or {}).get('u', 0), 'u9': (e90 or {}).get('u', 0),
         'a': a, 'rb': rb['r'], 'pn': rb['n'], 'cd': rb['c'], 'ra': ra,
@@ -264,6 +268,7 @@ img.th{width:44px;height:44px;object-fit:cover;border-radius:8px;background:#eee
 .pill{font-size:11px;font-weight:600}
 .pill .r{color:var(--reb)}.pill .n{color:var(--ok)}.pill .c{color:var(--warn)}
 input.q{width:64px;font:inherit;font-weight:700;text-align:right;padding:6px;border:1.5px solid var(--line);border-radius:8px}
+input.q:disabled{background:var(--gray-bg);color:var(--muted);border-style:dashed;cursor:not-allowed;font-weight:400}
 input.q.hot{border-color:var(--a);color:var(--a)}
 input.q.edited{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-bg)}
 tr.gris td{background:#fafafa}
@@ -363,6 +368,12 @@ function inTAny(r,tm){return tm.__any[r.k]||tm.__any[normT(r.t)+'|'+normT(r.vt)]
 function isEst(r){return r.st===''&&r.u9===0&&r.a>=90&&r.q>0}
 function isLento(r){return r.st===''&&r.q>0&&!isEst(r)&&((r.u>0&&r.dsl>=40)||(r.u===0&&r.u9>0))}
 function isReb(r){return r.st===''&&(r.rb>0||r.ra===1)}
+// OUTLET: la marca vive en el nombre de la variante. No se piden ni se editan (Eduardo, 18 ago 2026).
+// La marca OUTLET aparece en la variante Y a veces pegada al final del SKU (13096811034113OUTLET).
+function isOutlet(r){return /OUTLET/i.test(r.vt||'')||/OUTLET/i.test(r.k||'')||/OUTLET/i.test(r.t||'')}
+// Orden alfabetico: primero por nombre de producto, la variante solo desempata (Eduardo, 18 ago 2026).
+function byName(a,b){var n=(a.t||'').localeCompare(b.t||'','es',{numeric:true,sensitivity:'base'});
+ return n||(a.vt||'').localeCompare(b.vt||'','es',{numeric:true,sensitivity:'base'})}
 function movLabel(r){var d=Math.min(r.a,90);if(d<=0)d=1;var vel=r.u9/d*7;
  if(r.u9===0)return r.a<30?['nuevo','Nuevo ('+r.a+'d)']:['gris','Nada'];
  if(vel>=2)return ['top','Mucho'];if(vel>=0.7)return ['ok','Más o menos'];return ['bajo','Poco']}
@@ -431,9 +442,11 @@ function draftbar(){var n=Object.keys(edits).length;var el=document.getElementBy
  if(!n){el.innerHTML='';return}
  el.innerHTML='💾 <b>Borrador guardado automáticamente</b> — '+n+' cantidad'+(n>1?'es':'')+' editada'+(n>1?'s':'')+' por ti · última edición: '+(localStorage.getItem(ETKEY)||'')+' · tus cambios se conservan aunque cierres la página o se actualicen los datos.';}
 function rowHTML(r,tm,noSug){
-  var s=edits[r.k]!=null?edits[r.k]:(noSug?0:sug(r,tm));
+  var out=isOutlet(r);
+  var s=out?0:(edits[r.k]!=null?edits[r.k]:(noSug?0:sug(r,tm)));
   var t=inTransit(r,tm);
   var chips='';var u=urg(r);
+  if(out)chips+=' <span class="chip gris" style="color:var(--a);background:var(--a-bg)">🚫 OUTLET — no se pide</span>';
   if(r.st===''&&r.u>0&&(u==='agotado'||u==='critico'))chips+=' <span class="chip '+u+'">'+CH[u]+'</span>';
   if(r.u>TOP_U)chips+=' <span class="chip top">TOP +20%</span>';
   if(r.ra)chips+=' <span class="chip reb">Rebaja activa hoy −'+Math.round((1-r.p/r.cap)*100)+'%</span>';
@@ -446,14 +459,15 @@ function rowHTML(r,tm,noSug){
   if(r.a<90&&r.a>=0&&r.st==='')chips+=' <span class="chip nuevo">'+r.a+' días activo</span>';
   var obs=[];
   if(r.u===0&&r.q<=0&&r.st==='')obs.push('agotado sin venta reciente — prueba');
+  if(r.ns)obs.push('SIN SKU en Shopify — conviene ponérselo');
   if(r.dup)obs.push('nombre duplicado, revisar cuál pedir');
   if(r.c==null)obs.push('SIN COSTO en historial');
   return '<tr'+(noSug?' class="gris"':'')+' data-k="'+r.k+'">'+
    '<td>'+img(r.i)+'</td>'+
-   '<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.k||'—')+(r.m?' · '+r.m:'')+'</span></td>'+
+   '<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.ns?'—':r.k)+(r.m?' · '+r.m:'')+'</span></td>'+
    '<td class="num">'+r.u+piezasHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'+
    '<td class="num">'+r.q+'</td><td class="num">'+(t||'—')+'</td>'+
-   '<td class="num"><input class="q'+(s>0?' hot':'')+(edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="1" value="'+s+'"></td>'+
+   '<td class="num"><input class="q'+(s>0?' hot':'')+(!out&&edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="1" value="'+s+'"'+(out?' disabled title="Los OUTLET no se piden"':'')+'></td>'+
    '<td class="num">'+usd(r.c)+'</td><td class="num" data-tot>'+(r.c?usd(s*r.c):'—')+'</td>'+
    '<td>'+chips+(obs.length?'<span class="vsub">'+obs.join(' · ')+'</span>':'')+'</td></tr>';
 }
@@ -462,11 +476,15 @@ function renderOrden(){
   var v=vsel.value,tm=transitMap(),q=normT(document.getElementById('oq').value);
   var rs=vendRows(v).filter(function(r){return !q||normT(r.t).indexOf(q)>=0||r.k.indexOf(q)>=0});
   var act=rs.filter(function(r){return r.st===''});
-  var pedir=act.filter(function(r){return (r.u>0||r.u9>0)&&!isReb(r)&&!isEst(r)}).sort(function(a,b){return b.u-a.u||b.u9-a.u9});
-  var prueba=act.filter(function(r){return r.u===0&&r.q<=0&&!isReb(r)&&sug(r,tm)>0}).sort(function(a,b){return (b.u9-a.u9)||(a.a-b.a)});
-  var rebL=act.filter(function(r){return isReb(r)}).sort(function(a,b){return b.rb-a.rb||b.u-a.u});
-  var est=act.filter(function(r){return isEst(r)&&!isReb(r)}).sort(function(a,b){return b.q*b.p-a.q*a.p});
-  var drafts=rs.filter(function(r){return r.st!==''}).sort(function(a,b){return b.u-a.u});
+  // SECCIONES EXCLUYENTES (Eduardo, 18 ago 2026): un SKU vive en UNA sola seccion.
+  // Si vendio (60d o 90d) va en PEDIR; si nunca vendio va en PRUEBA; si trae rebaja va
+  // SOLO en REBAJA. Antes, los que vendieron en 90d pero no en 60d salian en PEDIR y en
+  // PRUEBA a la vez: se contaban doble en el total y salian dos veces en el Excel.
+  var pedir=act.filter(function(r){return (r.u>0||r.u9>0)&&!isReb(r)&&!isEst(r)}).sort(byName);
+  var prueba=act.filter(function(r){return r.u===0&&r.u9===0&&r.q<=0&&!isReb(r)&&sug(r,tm)>0}).sort(byName);
+  var rebL=act.filter(function(r){return isReb(r)}).sort(byName);
+  var est=act.filter(function(r){return isEst(r)&&!isReb(r)}).sort(byName);
+  var drafts=rs.filter(function(r){return r.st!==''}).sort(byName);
   function tbl(list,g){return '<div class="tblwrap"><table>'+THEAD+'<tbody>'+list.map(function(r){return rowHTML(r,tm,g)}).join('')+'</tbody></table></div>'}
   var H='';
   H+='<div class="sec"><h3 class="ok">✅ PEDIR — se venden y hay que resurtir ('+pedir.length+')</h3>'+(pedir.length?tbl(pedir,false):'<div class="exp" style="padding-bottom:12px">Nada pendiente.</div>')+'</div>';
@@ -482,10 +500,12 @@ function renderOrden(){
   });
   sum();
   function sum(){
-    var pz=0,us=0,ln=0;
+    var pz=0,us=0,ln=0,vistos={};
     document.querySelectorAll('#ocont tr[data-k]').forEach(function(tr){
+      var k=tr.dataset.k;
+      if(vistos[k])return;            // mismo SKU repetido en el catalogo: se cuenta UNA vez
       var val=parseInt(tr.querySelector('input.q').value)||0;
-      if(val>0){pz+=val;ln++;var r=DATA.find(function(x){return x.k===tr.dataset.k});if(r&&r.c)us+=val*r.c}});
+      if(val>0){vistos[k]=1;pz+=val;ln++;var r=DATA.find(function(x){return x.k===k});if(r&&r.c)us+=val*r.c}});
     document.getElementById('osum').innerHTML='Orden <b>'+v+'</b>: <b>'+ln+'</b> líneas · <b>'+pz+'</b> piezas · costo estimado <b>'+usd(us)+' USD</b> (mejor precio histórico).';
   }
 }
@@ -500,10 +520,13 @@ document.getElementById('reset').onclick=function(){
 document.getElementById('xlsx').onclick=async function(){
   var btn=this;btn.disabled=true;btn.textContent='Generando Excel…';
   try{
-    var v=vsel.value;var items=[];
+    var v=vsel.value;var items=[];var vistos={};
     document.querySelectorAll('#ocont tr[data-k]').forEach(function(tr){
+      var k=tr.dataset.k;
+      if(vistos[k])return;            // un SKU sale UNA sola vez en el Excel, nunca duplicado
       var val=parseInt(tr.querySelector('input.q').value)||0;if(val<=0)return;
-      var r=DATA.find(function(x){return x.k===tr.dataset.k});if(!r)return;
+      var r=DATA.find(function(x){return x.k===k});if(!r)return;
+      vistos[k]=1;
       var obs=[];if(r.dup)obs.push('DUPLICADO');if(r.rb>0)obs.push(r.rb+' pzs con rebaja 30%+');if(r.ra)obs.push('rebaja activa hoy');
       if(r.cd>0)obs.push(r.cd+' pzs por código (no rebaja)');if(isEst(r))obs.push('estancado');if(r.st!=='')obs.push(r.st==='D'?'BORRADOR':'ARCHIVADO');
       if(r.u===0&&r.q<=0&&r.st==='')obs.push('prueba');
@@ -517,7 +540,7 @@ document.getElementById('xlsx').onclick=async function(){
     ws.getRow(1).font={bold:true};ws.getRow(1).alignment={horizontal:'center'};
     for(var i=0;i<items.length;i++){
       var it=items[i],r=it.r,rowN=i+2;
-      var row=ws.addRow([i+1,'',r.t,r.vt||'',r.k,it.val,r.c!=null?r.c:'',r.c!=null?+(it.val*r.c).toFixed(2):'',r.m||'',it.obs]);
+      var row=ws.addRow([i+1,'',r.t,r.vt||'',r.ns?'':r.k,it.val,r.c!=null?r.c:'',r.c!=null?+(it.val*r.c).toFixed(2):'',r.m||'',it.obs]);
       row.height=62;row.alignment={vertical:'middle',wrapText:true};
       row.getCell(7).numFmt='$#,##0.00';row.getCell(8).numFmt='$#,##0.00';
     }
