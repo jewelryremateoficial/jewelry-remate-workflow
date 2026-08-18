@@ -543,14 +543,14 @@ document.getElementById('xlsx').onclick=async function(){
     });
     if(!items.length){alert('No hay líneas con PEDIR > 0.');return}
     var wb=new ExcelJS.Workbook();var ws=wb.addWorksheet('ORDEN '+v);
-    ws.columns=[{header:'#',width:5},{header:'FOTO',width:30},{header:'PRODUCTO',width:44},{header:'VARIANTE',width:20},
+    ws.columns=[{header:'#',width:5},{header:'FOTO',width:19},{header:'PRODUCTO',width:44},{header:'VARIANTE',width:20},
       {header:'SKU',width:18},{header:'PEDIR',width:8},{header:'COSTO UNIT (US)',width:14},{header:'TOTAL (US)',width:12},
       {header:'MATERIAL',width:18},{header:'OBSERVACIONES',width:30}];
     ws.getRow(1).font={bold:true};ws.getRow(1).alignment={horizontal:'center'};
     for(var i=0;i<items.length;i++){
       var it=items[i],r=it.r,rowN=i+2;
       var row=ws.addRow([i+1,'',r.t,r.vt||'',r.ns?'':r.k,it.val,r.c!=null?r.c:'',r.c!=null?+(it.val*r.c).toFixed(2):'',r.m||'',it.obs]);
-      row.height=150;row.alignment={vertical:'middle',wrapText:true};
+      row.height=96;row.alignment={vertical:'middle',wrapText:true};
       row.getCell(7).numFmt='$#,##0.00';row.getCell(8).numFmt='$#,##0.00';
     }
     // fotos
@@ -576,19 +576,22 @@ document.getElementById('xlsx').onclick=async function(){
           if(i<minX)minX=i; if(i>maxX)maxX=i; if(j<minY)minY=j; if(j>maxY)maxY=j;}
       }}
       // si no encontro producto, o ya venia ajustada, se deja igual
-      if(maxX<0||(maxX-minX)<W*0.04||(maxY-minY)<H*0.04)return blob;
+      if(maxX<0||(maxX-minX)<W*0.04||(maxY-minY)<H*0.04)return {blob:blob,w:W,h:H};
       var pad=Math.round(Math.max(maxX-minX,maxY-minY)*0.04);
       minX=Math.max(0,minX-pad); minY=Math.max(0,minY-pad);
       maxX=Math.min(W-1,maxX+pad); maxY=Math.min(H-1,maxY+pad);
-      var cw=maxX-minX+1, ch=maxY-minY+1, lado=Math.max(cw,ch);
-      var out=Math.min(lado,560);           // suficiente para verse nitido sin inflar el archivo
-      var o2=document.createElement('canvas');o2.width=o2.height=out;
+      // Se respeta la forma real del producto: nada de cuadrar con blanco, porque un anillo
+      // ancho y bajito quedaba diminuto en medio de una celda enorme.
+      var cw=maxX-minX+1, ch=maxY-minY+1;
+      var esc=Math.min(1,560/Math.max(cw,ch));   // nitido sin inflar el archivo
+      var ow=Math.max(1,Math.round(cw*esc)), oh=Math.max(1,Math.round(ch*esc));
+      var o2=document.createElement('canvas');o2.width=ow;o2.height=oh;
       var g2=o2.getContext('2d');
       g2.imageSmoothingQuality='high';
-      g2.fillStyle='#ffffff';g2.fillRect(0,0,out,out);
-      var esc=out/lado;
-      g2.drawImage(bmp,minX,minY,cw,ch,Math.round((out-cw*esc)/2),Math.round((out-ch*esc)/2),Math.round(cw*esc),Math.round(ch*esc));
-      return await new Promise(function(res){o2.toBlob(function(b){res(b||blob)},'image/jpeg',0.92)});
+      g2.fillStyle='#ffffff';g2.fillRect(0,0,ow,oh);
+      g2.drawImage(bmp,minX,minY,cw,ch,0,0,ow,oh);
+      var b2=await new Promise(function(res){o2.toBlob(function(b){res(b)},'image/jpeg',0.92)});
+      return {blob:b2||blob,w:ow,h:oh};
     }
     var imgResults=await Promise.all(items.map(async function(it){
       if(it.r.i<0)return null;
@@ -598,16 +601,24 @@ document.getElementById('xlsx').onclick=async function(){
         if(!resp.ok)resp=await fetch(url);       // si no existe el grande, la miniatura
         if(!resp.ok)return null;
         var blob=await resp.blob();
-        try{blob=await recorta(blob)}catch(e){}
-        var buf=await blob.arrayBuffer();
-        var ext=(blob.type||'').indexOf('png')>=0?'png':'jpeg';
-        return {buf:buf,ext:ext};
+        var r={blob:blob,w:0,h:0};
+        try{r=await recorta(blob)}catch(e){var bm=await createImageBitmap(blob);r={blob:blob,w:bm.width,h:bm.height}}
+        var buf=await r.blob.arrayBuffer();
+        var ext=(r.blob.type||'').indexOf('png')>=0?'png':'jpeg';
+        return {buf:buf,ext:ext,w:r.w,h:r.h};
       }catch(e){return null}
     }));
+    // Medidas del hueco de la foto: ancho de columna 19 (~138 px) y alto de fila 96 pt (~128 px).
+    var FOTO_COL_PX=138, FOTO_FILA_PX=128, FOTO_CAJA=120;
     imgResults.forEach(function(im,i){
       if(!im)return;
       var id=wb.addImage({buffer:im.buf,extension:im.ext});
-      ws.addImage(id,{tl:{col:1.06,row:i+1.04},ext:{width:196,height:196},editAs:'oneCell'});
+      // La foto se ajusta al hueco respetando su proporcion, y se centra en la celda.
+      var esc=Math.min(FOTO_CAJA/(im.w||FOTO_CAJA),FOTO_CAJA/(im.h||FOTO_CAJA));
+      var aw=Math.round((im.w||FOTO_CAJA)*esc), ah=Math.round((im.h||FOTO_CAJA)*esc);
+      ws.addImage(id,{tl:{col:1+Math.max(0,(FOTO_COL_PX-aw)/2)/FOTO_COL_PX,
+                          row:i+1+Math.max(0,(FOTO_FILA_PX-ah)/2)/FOTO_FILA_PX},
+                      ext:{width:aw,height:ah},editAs:'oneCell'});
     });
     var out=await wb.xlsx.writeBuffer();
     var blob=new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
