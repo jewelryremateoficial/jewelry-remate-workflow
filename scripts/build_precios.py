@@ -49,8 +49,21 @@ for f in sorted(glob.glob(SCRATCH + '/vp_0*.json')):
             pass
         titulo_shopify[sk] = (n['product']['title'] or '').strip()
 
-ordenes = json.load(open(os.path.join(DATOS, 'zoey_ordenes.json')))
-inversion = json.load(open(os.path.join(DATOS, 'zoey_inversion.json')))
+import re as _re
+ordenes = {}
+for k, v in json.load(open(os.path.join(DATOS, 'zoey_ordenes.json'))).items():
+    ordenes[k] = dict(v, proveedor='ZOEY')
+ordenes.update(json.load(open(os.path.join(DATOS, 'otros_ordenes.json'))))
+
+_inf = json.load(open(os.path.join(DATOS, 'informe_2026.json')))
+def _norm(x):
+    return _re.sub(r'[^A-Z0-9]', '', x.upper())
+inversion = {}
+for k, v in _inf['inv'].items():
+    inversion[k] = {'total_usd': v['usd'], 'total_mxn': v['mxn'],
+                    'pagos': v['pagos'], 'mes': v['mes']}
+
+ORDEN_PROV = ['HAIFENG', 'ZOEY', 'CYNTHIA CAO', 'NANCY VIP', 'DINA DU', 'COCOMA', 'MOLLY']
 
 
 def calcula(o):
@@ -93,17 +106,25 @@ def semaforo(f):
     return 'bueno', 'Vende a %.1f× el costo' % r
 
 
-bloques, tarjetas = [], []
+from collections import defaultdict
+por_prov = defaultdict(lambda: {'tarjetas': [], 'bloques': [], 'inv': 0.0,
+                                'ordenes': 0, 'lineas': 0, 'pzs': 0})
 datos_js = {}          # datos crudos por orden, para armar el Excel con formulas
 tot_inv_mxn = 0.0
 
-for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
+def _clave(k):
+    d = k[-6:]
+    return (d[4:6], d[2:4], d[0:2]) if d.isdigit() else ('99', '99', k)
+
+for nombre in sorted(ordenes, key=_clave):
     o = ordenes[nombre]
+    prov = o.get('proveedor', 'ZOEY')
+    P = por_prov[prov]
     filas, tot_I = calcula(o)
-    inv = inversion.get(nombre, {})
-    inv_mxn = inv.get('total_mxn')
+    inv = inversion.get(_norm(nombre), {})
+    inv_mxn = inv.get('total_mxn') or None
     if inv_mxn:
-        tot_inv_mxn += inv_mxn
+        P['inv'] += inv_mxn
 
     pzs = sum(f['cant'] for f in filas)
     compra_mxn = sum(f['J'] for f in filas)          # J6 de la hoja de Eduardo
@@ -119,7 +140,10 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
                     'pant': round(f['pant'], 2) if f['pant'] else None} for f in filas]}
     sin_sku = sum(1 for f in filas if not f['en_shopify'])
 
-    tarjetas.append(
+    P['ordenes'] += 1
+    P['lineas'] += len(filas)
+    P['pzs'] += pzs
+    P['tarjetas'].append(
         '<button class="ocard" data-ir="%s"><b>%s</b>'
         '<span>%d líneas · %d pzs</span>'
         '<span class="mx">$%s MXN invertidos</span></button>'
@@ -157,7 +181,7 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
                  'así que no tienen precio de venta que mostrar.</div>'
                  % (sin_sku, 's' if sin_sku > 1 else '', 'n' if sin_sku > 1 else ''))
 
-    bloques.append("""
+    P['bloques'].append("""
 <section class="orden cerrada" id="%s">
   <div class="cab">
     <h2>%s</h2>
@@ -198,8 +222,24 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
 
 CORTE = '%d de %s de %d' % (HOY.day, _MESES_L[HOY.month - 1], HOY.year)
 
-# OJO: plantilla CRUDA (r"""). Sin la r, Python convierte los \n y ﻿ del
-# JavaScript en saltos de linea reales y rompe el script de la pagina.
+provs = [p for p in ORDEN_PROV if p in por_prov] + \
+        [p for p in sorted(por_prov) if p not in ORDEN_PROV]
+tot_inv_mxn = sum(por_prov[p]['inv'] for p in provs)
+tot_ord = sum(por_prov[p]['ordenes'] for p in provs)
+tot_lin = sum(por_prov[p]['lineas'] for p in provs)
+
+botones, secciones = [], []
+for i, p in enumerate(provs):
+    P = por_prov[p]
+    botones.append('<button class="ptab%s" data-p="%s">%s <i>%d</i></button>'
+                   % (' on' if i == 0 else '', p, p, P['ordenes']))
+    secciones.append(
+        '<div class="prov%s" data-p="%s">'
+        '<h2>%s · %d órdenes · %d productos · $%s MXN invertidos en 2026</h2>'
+        '<div class="cards">%s</div>%s</div>'
+        % (' on' if i == 0 else '', p, p, P['ordenes'], P['lineas'],
+           money(P['inv'], 0), ''.join(P['tarjetas']), ''.join(P['bloques'])))
+
 HTML = r"""<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jewelry Remate MX — Tablas de precios</title><style>
@@ -218,6 +258,13 @@ h2{font-size:19px;margin:0 0 10px}
 .intro b{color:var(--ink)}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
 input[type=search]{flex:1;min-width:240px;font:inherit;padding:9px 12px;border:1.5px solid var(--line);border-radius:9px}
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.ptab{font:inherit;font-size:13px;font-weight:700;padding:9px 15px;border-radius:10px;cursor:pointer;
+border:1.5px solid var(--line);background:var(--card);color:var(--muted)}
+.ptab i{font-style:normal;font-weight:500;opacity:.7}
+.ptab:hover{border-color:var(--blue)}
+.ptab.on{background:#141a33;border-color:#141a33;color:#fff}
+.prov{display:none}.prov.on{display:block}
 .cards{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));margin-bottom:20px}
 .ocard{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:11px;
 padding:11px 13px;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:2px}
@@ -290,10 +337,8 @@ para que el costo sea siempre comparable entre órdenes.</p>
   <input type="search" id="q" placeholder="Buscar producto o SKU en todas las órdenes…">
 </div>
 
-<h2>ZOEY · __NORD__ órdenes · $__TOTINV__ MXN invertidos en 2026</h2>
-<div class="cards">__TARJETAS__</div>
-
-__BLOQUES__
+<div class="ptabs">__BOTONES__</div>
+__SECCIONES__
 
 <div class="foot">Datos al __CORTE__ · Precios de venta tomados de Shopify ·
 Shop and Cross tomado del Informe de Inversión 2026</div>
@@ -306,11 +351,21 @@ q.oninput=function(){
   var t=q.value.trim().toUpperCase();
   document.querySelectorAll('tr[data-b]').forEach(function(tr){
     tr.style.display=(!t||tr.dataset.b.indexOf(t)>=0)?'':'none';});
+  document.querySelectorAll('.prov').forEach(function(p){
+    p.classList.toggle('on', !t ? p.dataset.p===document.querySelector('.ptab.on').dataset.p : true);});
   document.querySelectorAll('.orden').forEach(function(s){
     var vis=[].some.call(s.querySelectorAll('tr[data-b]'),function(tr){return tr.style.display!=='none'});
     s.style.display=(!t||vis)?'':'none';
     if(t&&vis)s.classList.remove('cerrada');});
 };
+document.querySelectorAll('.ptab').forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('.ptab').forEach(function(x){x.classList.toggle('on',x===b)});
+    document.querySelectorAll('.prov').forEach(function(s){
+      s.classList.toggle('on',s.dataset.p===b.dataset.p)});
+    if(q.value)q.oninput();
+  };
+});
 document.querySelectorAll('.toggle').forEach(function(b){
   b.onclick=function(){
     var s=b.closest('.orden');
@@ -403,10 +458,8 @@ document.querySelectorAll('.ocard').forEach(function(b){
   b.onclick=function(){var el=document.getElementById(b.dataset.ir);
     if(el)el.scrollIntoView({behavior:'smooth',block:'start'});};});
 </script></body></html>"""
-HTML = (HTML.replace('__NORD__', str(len(ordenes)))
-            .replace('__TOTINV__', money(tot_inv_mxn, 0))
-            .replace('__TARJETAS__', ''.join(tarjetas))
-            .replace('__BLOQUES__', ''.join(bloques))
+HTML = (HTML.replace('__BOTONES__', ''.join(botones))
+            .replace('__SECCIONES__', ''.join(secciones))
             .replace('__CORTE__', CORTE)
             .replace('__DATOS__', json.dumps(datos_js, ensure_ascii=False, separators=(',', ':'))))
 
