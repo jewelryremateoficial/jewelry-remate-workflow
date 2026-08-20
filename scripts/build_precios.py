@@ -94,6 +94,7 @@ def semaforo(f):
 
 
 bloques, tarjetas = [], []
+datos_js = {}          # datos crudos por orden, para armar el Excel con formulas
 tot_inv_mxn = 0.0
 
 for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
@@ -105,7 +106,17 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
         tot_inv_mxn += inv_mxn
 
     pzs = sum(f['cant'] for f in filas)
-    costo_total_mxn = sum(f['J'] for f in filas) + o['sc']
+    compra_mxn = sum(f['J'] for f in filas)          # J6 de la hoja de Eduardo
+    costo_total_mxn = compra_mxn + o['sc']
+    pct_ship = o['shipping'] / o['costo'] if o['costo'] else 0
+    pct_sc = o['sc'] / compra_mxn if compra_mxn else 0     # J3 = L6/J6
+    datos_js[nombre] = {
+        'costo': round(o['costo'], 2), 'shipping': round(o['shipping'], 2),
+        'sc': round(o['sc'], 2), 'tc': TC, 'alibaba': ALIBABA,
+        'lineas': [{'sku': f['sku'], 'prod': f['prod'], 'var': f['var'],
+                    'cant': f['cant'], 'cu': round(f['cu'], 4),
+                    'pact': round(f['pact'], 2) if f['pact'] else None,
+                    'pant': round(f['pant'], 2) if f['pant'] else None} for f in filas]}
     sin_sku = sum(1 for f in filas if not f['en_shopify'])
 
     tarjetas.append(
@@ -157,9 +168,11 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
   </div>
   <div class="resumen">
     <div class="dato"><span>Costo de la orden</span><b>$%s <i>US</i></b></div>
-    <div class="dato"><span>Shipping</span><b>$%s <i>US</i></b><i class="sub">%.2f%% del costo</i></div>
+    <div class="dato"><span>Shipping</span><b>$%s <i>US</i></b></div>
+    <div class="dato pct"><span>%% de shipping</span><b>%.2f%%</b><i class="sub">shipping ÷ costo</i></div>
     <div class="dato"><span>Comisión Alibaba</span><b>3%%</b></div>
     <div class="dato"><span>Shop and Cross</span><b>$%s <i>MXN</i></b></div>
+    <div class="dato pct"><span>%% Shop and Cross</span><b>%.2f%%</b><i class="sub">aduana ÷ compra en pesos</i></div>
     <div class="dato"><span>Tipo de cambio</span><b>%.0f</b></div>
     <div class="dato fuerte"><span>Costo total puesto</span><b>$%s <i>MXN</i></b></div>
     <div class="dato inv"><span>Lo que realmente se pagó</span><b>$%s <i>MXN</i></b><i class="sub">%s pagos a Alibaba</i></div>
@@ -179,8 +192,7 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
     <tbody>%s</tbody>
   </table></div></div>
 </section>""" % (nombre, nombre, nombre, money(o['costo']), money(o['shipping']),
-                 o['shipping'] / o['costo'] * 100 if o['costo'] else 0,
-                 money(o['sc']), TC, money(costo_total_mxn, 0),
+                 pct_ship * 100, money(o['sc']), pct_sc * 100, TC, money(costo_total_mxn, 0),
                  money(inv_mxn, 0) if inv_mxn else '—', inv.get('pagos', '—'),
                  aviso, ''.join(trs)))
 
@@ -231,6 +243,7 @@ border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
 .dato b i{font-size:11px}
 .dato.fuerte{background:var(--blue-bg)}.dato.fuerte b{color:var(--blue)}
 .dato.inv{background:var(--ok-bg)}.dato.inv b{color:var(--ok)}
+.dato.pct{background:var(--reb-bg)}.dato.pct b{color:var(--reb)}
 .aviso{background:var(--a-bg);color:var(--a);border-radius:9px;padding:9px 12px;font-size:13px;margin-bottom:10px}
 .aviso.leve{background:var(--warn-bg);color:var(--warn)}
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
@@ -285,6 +298,8 @@ __BLOQUES__
 <div class="foot">Datos al __CORTE__ · Precios de venta tomados de Shopify ·
 Shop and Cross tomado del Informe de Inversión 2026</div>
 </div>
+<script src="exceljs.min.js"></script>
+<script>var ORD=__DATOS__;</script>
 <script>
 var q=document.getElementById('q');
 q.oninput=function(){
@@ -303,24 +318,85 @@ document.querySelectorAll('.toggle').forEach(function(b){
     b.textContent=s.classList.contains('cerrada')?'Ver tabla':'Ocultar tabla';
   };
 });
-function csvCell(v){v=(v==null?'':String(v)).replace(/\u00a0/g,' ').trim();
-  return /[",;\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+// Excel CON FORMULAS, igual que la hoja del Drive: los datos van arriba en el
+// encabezado y cada columna se calcula jalando de ahi. Si Eduardo cambia el
+// costo, el shipping o el Shop and Cross, TODA la tabla se recalcula sola.
 document.querySelectorAll('.desc').forEach(function(b){
-  b.onclick=function(){
-    var s=b.closest('.orden'), nom=b.dataset.csv;
-    var filas=[];
-    s.querySelectorAll('table tr').forEach(function(tr){
-      if(tr.style.display==='none')return;
-      var c=[];
-      tr.querySelectorAll('th,td').forEach(function(td){
-        c.push(csvCell(td.innerText.replace(/\n/g,' ')));});
-      filas.push(c.join(','));
-    });
-    var csv='\ufeff'+filas.join('\r\n');
-    var a=document.createElement('a');
-    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
-    a.download='TABLA PRECIOS '+nom+'.csv';
-    a.click();
+  b.onclick=async function(){
+    var nom=b.dataset.csv, d=ORD[nom];
+    if(!d){alert('No encontr\u00e9 los datos de esa orden.');return}
+    var txt=b.textContent; b.disabled=true; b.textContent='Generando\u2026';
+    try{
+      var wb=new ExcelJS.Workbook(), ws=wb.addWorksheet(nom);
+      var n=d.lineas.length, ini=8, fin=ini+n-1;   // los productos van de la fila 8 en adelante
+
+      ws.columns=[{width:20},{width:44},{width:20},{width:9},{width:13},{width:13},
+                  {width:15},{width:13},{width:16},{width:16},{width:14},{width:16},
+                  {width:17},{width:12},{width:12},{width:12},{width:13},{width:13}];
+
+      // \u2500\u2500 encabezado: aqui viven los datos de los que jala todo lo demas
+      ws.getCell('A2').value='JEWELRY REMATE';
+      ws.getCell('E2').value='COSTO ORDEN';        ws.getCell('F2').value=d.costo;
+      ws.getCell('G2').value='% DE SHIPPING';      ws.getCell('H2').value={formula:'F3/F2'};
+      ws.getCell('I2').value='% ALIBABA';          ws.getCell('J2').value=d.alibaba;
+      ws.getCell('A3').value='TABLA DE PRECIOS AL CLIENTE';
+      ws.getCell('E3').value='SHIPPING';           ws.getCell('F3').value=d.shipping;
+      ws.getCell('G3').value='COSTO TOTAL DE ORDEN'; ws.getCell('H3').value={formula:'F2+F3+H6'};
+      ws.getCell('I3').value='% SHOP AND CROSS';   ws.getCell('J3').value={formula:'L6/J6'};
+      ws.getCell('A4').value='DESGLOSE DE COSTO INCLUYENDO SHIPPING Y PAGO DE ALIBABA';
+      ws.getCell('G4').value='DOLLAR';             ws.getCell('H4').value=d.tc;
+      ws.getCell('A6').value='ORDEN DE COMPRA:';   ws.getCell('B6').value=nom;
+      ['D','E','F','G','H','I','J','K','M'].forEach(function(c){
+        ws.getCell(c+'6').value={formula:'SUM('+c+ini+':'+c+fin+')'};});
+      ws.getCell('L6').value=d.sc;                 // el Shop and Cross de la orden
+      [ 'H2','J2','J3' ].forEach(function(c){ws.getCell(c).numFmt='0.00%'});
+      ['A2','A3','A4','A6','E2','E3','G2','G3','G4','I2','I3'].forEach(function(c){
+        ws.getCell(c).font={bold:true}});
+
+      ws.getRow(7).values=['SKU','PRODUCTO','VARIANTE','CANTIDAD','COSTO UNITARIO (US)',
+        'COSTO TOTAL (US)','COSTO CON ENVIO X TOTAL PCS (US)','% ALIBABA (US)',
+        'COSTO DE COMPRA ALIBABA (US)','COSTO DE COMPRA (MXN) TC=20','% SOBRE EL COSTO TOTAL (US)',
+        'SHOP AND CROSS (MXN)','COSTO UNIT TOTAL (MXN)','ROAS 3','ROAS 3.5','ROAS 4',
+        'PRECIO ACTUAL','PRECIO ANTIGUO'];
+      ws.getRow(7).font={bold:true};
+      ws.getRow(7).alignment={wrapText:true,vertical:'middle'};
+      ws.getRow(7).height=34;
+
+      // \u2500\u2500 productos: puros datos base + formulas, iguales a las del Drive
+      d.lineas.forEach(function(l,i){
+        var r=ini+i, row=ws.getRow(r);
+        row.getCell(1).value=l.sku||'';
+        row.getCell(2).value=l.prod||'';
+        row.getCell(3).value=l.var||'';
+        row.getCell(4).value=l.cant;
+        row.getCell(5).value=l.cu;
+        row.getCell(6).value={formula:'E'+r+'*D'+r};
+        row.getCell(7).value={formula:'F'+r+'*$H$2'};
+        row.getCell(8).value={formula:'(F'+r+'+G'+r+')*$J$2'};
+        row.getCell(9).value={formula:'SUM(F'+r+':H'+r+')'};
+        row.getCell(10).value={formula:'I'+r+'*$H$4'};
+        row.getCell(11).value={formula:'I'+r+'/$I$6'};
+        row.getCell(12).value={formula:'$L$6*K'+r};
+        row.getCell(13).value={formula:'(J'+r+'+L'+r+')/D'+r};
+        row.getCell(14).value={formula:'M'+r+'*3'};
+        row.getCell(15).value={formula:'M'+r+'*3.5'};
+        row.getCell(16).value={formula:'M'+r+'*4'};
+        if(l.pact!=null)row.getCell(17).value=l.pact;
+        if(l.pant!=null)row.getCell(18).value=l.pant;
+        [5,6,7,8,9,10,12,13,14,15,16,17,18].forEach(function(c){
+          row.getCell(c).numFmt='#,##0.00'});
+        row.getCell(11).numFmt='0.0000%';
+      });
+      ws.views=[{state:'frozen',ySplit:7}];
+
+      var buf=await wb.xlsx.writeBuffer();
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(new Blob([buf],
+        {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+      a.download='TABLA PRECIOS '+nom+'.xlsx';
+      a.click();
+    }catch(e){alert('No se pudo generar el Excel: '+e.message);}
+    b.disabled=false; b.textContent=txt;
   };
 });
 document.querySelectorAll('.ocard').forEach(function(b){
@@ -331,7 +407,8 @@ HTML = (HTML.replace('__NORD__', str(len(ordenes)))
             .replace('__TOTINV__', money(tot_inv_mxn, 0))
             .replace('__TARJETAS__', ''.join(tarjetas))
             .replace('__BLOQUES__', ''.join(bloques))
-            .replace('__CORTE__', CORTE))
+            .replace('__CORTE__', CORTE)
+            .replace('__DATOS__', json.dumps(datos_js, ensure_ascii=False, separators=(',', ':'))))
 
 open(os.path.join(REPO, 'precios.html'), 'w', encoding='utf-8').write(HTML)
 print('precios.html: %d bytes | %d ordenes | %d lineas | invertido $%s MXN'
