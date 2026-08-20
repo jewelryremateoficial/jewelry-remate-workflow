@@ -1,0 +1,50 @@
+{
+ "ZOEY200126": {
+  "total_usd": 2332.74,
+  "total_mxn": 40930.63,
+  "pagos": 4,
+  "mes": "2026-02"
+ },
+ "ZOEY020326": {
+  "total_usd": 7415.33,
+  "total_mxn": 133666.63,
+  "pagos": 10,
+  "mes": "2026-03"
+ },
+ "ZOEY190326": {
+  "total_usd": 5489.81,
+  "total_mxn": 99206.46,
+  "pagos": 8,
+  "mes": "2026-03"
+ },
+ "ZOEY200426": {
+  "total_usd": 11699.75,
+  "total_mxn": 206980.09,
+  "pagos": 17,
+  "mes": "2026-04"
+ },
+ "ZOEY150526": {
+  "total_usd": 10474.09,
+  "total_mxn": 185229.88,
+  "pagos": 15,
+  "mes": "2026-05"
+ },
+ "ZOEY080626": {
+  "total_usd": 14830.56,
+  "total_mxn": 262596.59,
+  "pagos": 20,
+  "mes": "2026-06"
+ },
+ "ZOEY140726": {
+  "total_usd": 8592.51,
+  "total_mxn": 153002.57,
+  "pagos": 12,
+  "mes": "2026-07"
+ },
+ "ZOEY300726": {
+  "total_usd": 12864.5,
+  "total_mxn": 226313.47,
+  "pagos": 20,
+  "mes": "2026-07"
+ }
+}
