@@ -147,8 +147,14 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
                  % (sin_sku, 's' if sin_sku > 1 else '', 'n' if sin_sku > 1 else ''))
 
     bloques.append("""
-<section class="orden" id="%s">
-  <h2>%s</h2>
+<section class="orden cerrada" id="%s">
+  <div class="cab">
+    <h2>%s</h2>
+    <div class="acciones">
+      <button class="btn desc" data-csv="%s">⬇ Descargar Excel</button>
+      <button class="btn toggle">Ver tabla</button>
+    </div>
+  </div>
   <div class="resumen">
     <div class="dato"><span>Costo de la orden</span><b>$%s <i>US</i></b></div>
     <div class="dato"><span>Shipping</span><b>$%s <i>US</i></b><i class="sub">%.2f%% del costo</i></div>
@@ -159,7 +165,7 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
     <div class="dato inv"><span>Lo que realmente se pagó</span><b>$%s <i>MXN</i></b><i class="sub">%s pagos a Alibaba</i></div>
   </div>
   %s
-  <div class="tblwrap"><table>
+  <div class="plegable"><div class="tblwrap"><table>
     <thead><tr>
       <th>#</th><th>SKU</th><th>PRODUCTO</th><th>VARIANTE</th><th>CANT</th>
       <th>COSTO UNIT<br><i>US</i></th><th>COSTO TOTAL<br><i>US</i></th>
@@ -171,8 +177,8 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
       <th>PRECIO ACTUAL<br><i>Shopify</i></th><th>PRECIO ANTIGUO</th>
     </tr></thead>
     <tbody>%s</tbody>
-  </table></div>
-</section>""" % (nombre, nombre, money(o['costo']), money(o['shipping']),
+  </table></div></div>
+</section>""" % (nombre, nombre, nombre, money(o['costo']), money(o['shipping']),
                  o['shipping'] / o['costo'] * 100 if o['costo'] else 0,
                  money(o['sc']), TC, money(costo_total_mxn, 0),
                  money(inv_mxn, 0) if inv_mxn else '—', inv.get('pagos', '—'),
@@ -180,7 +186,9 @@ for nombre in sorted(ordenes, key=lambda k: (k[-2:], k[-4:-2])):
 
 CORTE = '%d de %s de %d' % (HOY.day, _MESES_L[HOY.month - 1], HOY.year)
 
-HTML = """<!doctype html><html lang="es"><head><meta charset="utf-8">
+# OJO: plantilla CRUDA (r"""). Sin la r, Python convierte los \n y ﻿ del
+# JavaScript en saltos de linea reales y rompe el script de la pagina.
+HTML = r"""<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jewelry Remate MX — Tablas de precios</title><style>
 :root{--bg:#f6f7fb;--card:#fff;--ink:#15192b;--muted:#6b7285;--line:#e4e7f0;--a:#c0392b;--a-bg:#fdecea;
@@ -204,7 +212,17 @@ padding:11px 13px;cursor:pointer;font:inherit;display:flex;flex-direction:column
 .ocard:hover{border-color:var(--blue)}
 .ocard b{font-size:14px}.ocard span{font-size:12px;color:var(--muted)}
 .ocard .mx{color:var(--ok);font-weight:600}
-.orden{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:22px}
+.orden{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.cab{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.cab h2{margin:0}
+.acciones{display:flex;gap:8px}
+.btn{font:inherit;font-size:13px;font-weight:600;padding:7px 13px;border-radius:9px;cursor:pointer;
+border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.btn.desc{background:var(--ok-bg);border-color:transparent;color:var(--ok)}
+.btn.desc:hover{filter:brightness(.95)}
+.orden.cerrada .plegable{display:none}
+.orden.cerrada{padding-bottom:12px}
 .resumen{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:12px}
 .dato{background:var(--gray-bg);border-radius:9px;padding:9px 11px;display:flex;flex-direction:column}
 .dato span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
@@ -275,8 +293,36 @@ q.oninput=function(){
     tr.style.display=(!t||tr.dataset.b.indexOf(t)>=0)?'':'none';});
   document.querySelectorAll('.orden').forEach(function(s){
     var vis=[].some.call(s.querySelectorAll('tr[data-b]'),function(tr){return tr.style.display!=='none'});
-    s.style.display=(!t||vis)?'':'none';});
+    s.style.display=(!t||vis)?'':'none';
+    if(t&&vis)s.classList.remove('cerrada');});
 };
+document.querySelectorAll('.toggle').forEach(function(b){
+  b.onclick=function(){
+    var s=b.closest('.orden');
+    s.classList.toggle('cerrada');
+    b.textContent=s.classList.contains('cerrada')?'Ver tabla':'Ocultar tabla';
+  };
+});
+function csvCell(v){v=(v==null?'':String(v)).replace(/\u00a0/g,' ').trim();
+  return /[",;\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+document.querySelectorAll('.desc').forEach(function(b){
+  b.onclick=function(){
+    var s=b.closest('.orden'), nom=b.dataset.csv;
+    var filas=[];
+    s.querySelectorAll('table tr').forEach(function(tr){
+      if(tr.style.display==='none')return;
+      var c=[];
+      tr.querySelectorAll('th,td').forEach(function(td){
+        c.push(csvCell(td.innerText.replace(/\n/g,' ')));});
+      filas.push(c.join(','));
+    });
+    var csv='\ufeff'+filas.join('\r\n');
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    a.download='TABLA PRECIOS '+nom+'.csv';
+    a.click();
+  };
+});
 document.querySelectorAll('.ocard').forEach(function(b){
   b.onclick=function(){var el=document.getElementById(b.dataset.ir);
     if(el)el.scrollIntoView({behavior:'smooth',block:'start'});};});
