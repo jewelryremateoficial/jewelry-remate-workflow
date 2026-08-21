@@ -222,22 +222,120 @@ for nombre in sorted(ordenes, key=_clave):
 
 CORTE = '%d de %s de %d' % (HOY.day, _MESES_L[HOY.month - 1], HOY.year)
 
+
+# ══════════════════════════════════════════════════════════════
+#  PANEL DE INVERSION 2026 (pedido de Eduardo, 20 ago 2026)
+#  Lo realmente pagado: Alibaba (producto + comision) + aduana.
+#  Color: slots 1 y 2 del palette de referencia, en su orden documentado.
+# ══════════════════════════════════════════════════════════════
+_MES_CORTO = {'01': 'Ene', '02': 'Feb', '03': 'Mar', '04': 'Abr', '05': 'May', '06': 'Jun',
+              '07': 'Jul', '08': 'Ago', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dic'}
+
+def _prov_de(o):
+    for k, v in (('HAIFENG', 'HAIFENG'), ('ZOEY', 'ZOEY'), ('CYNTHIA', 'CYNTHIA CAO'),
+                 ('NANCY', 'NANCY VIP'), ('DINADU', 'DINA DU'), ('COCOMA', 'COCOMA'),
+                 ('MOLLY', 'MOLLY')):
+        if o.startswith(k):
+            return v
+    return None
+
+por_mes = defaultdict(lambda: {'ali': 0.0, 'adu': 0.0, 'ord': set()})
+por_prov_inv = defaultdict(lambda: {'ali': 0.0, 'adu': 0.0, 'ord': set()})
+detalle = []
+for _o, _v in _inf['inv'].items():
+    _p = _prov_de(_o)
+    if not _p or not _v['mxn']:
+        continue
+    _m = (_v['mes'] or '')[:7]
+    _adu = _inf['sc'].get(_o, 0.0)
+    por_mes[_m]['ali'] += _v['mxn']; por_mes[_m]['adu'] += _adu
+    por_mes[_m]['ord'].add(_o)
+    por_prov_inv[_p]['ali'] += _v['mxn']; por_prov_inv[_p]['adu'] += _adu
+    por_prov_inv[_p]['ord'].add(_o)
+    detalle.append((_o, _p, _m, _v['mxn'], _adu, _v['pagos']))
+
+INV_TOTAL = sum(v['ali'] + v['adu'] for v in por_mes.values())
+INV_ALI = sum(v['ali'] for v in por_mes.values())
+INV_ADU = sum(v['adu'] for v in por_mes.values())
+N_ORD = len(detalle)
+
+_meses = sorted(m for m in por_mes if m)
+_topmes = max((por_mes[m]['ali'] + por_mes[m]['adu']) for m in _meses) or 1
+_barras = []
+for _m in _meses:
+    _d = por_mes[_m]; _t = _d['ali'] + _d['adu']
+    _h = _t / _topmes * 100
+    _ha = _d['ali'] / _t * 100 if _t else 0
+    _barras.append(
+        '<div class="bcol" tabindex="0" aria-label="' + _MES_CORTO[_m[5:7]] + ': $' + money(_t, 0) + ' MXN">'
+        '<b class="bval">' + money(_t / 1000, 0) + 'k</b>'
+        '<div class="bwrap"><div class="bar" style="height:' + '%.1f' % _h + '%">'
+        '<div class="seg s2" style="height:' + '%.1f' % (100 - _ha) + '%"></div>'
+        '<div class="seg s1" style="height:' + '%.1f' % _ha + '%"></div></div></div>'
+        '<span class="blab">' + _MES_CORTO[_m[5:7]] + '</span>'
+        '<div class="btip">' + _MES_CORTO[_m[5:7]] + ' 2026<br>'
+        '<i>Alibaba</i> $' + money(_d['ali'], 0) + '<br>'
+        '<i>Aduana</i> $' + money(_d['adu'], 0) + '<br>'
+        '<b>Total</b> $' + money(_t, 0) + ' · ' + str(len(_d['ord'])) + ' órdenes</div></div>')
+
+_provs_inv = sorted(por_prov_inv, key=lambda k: -(por_prov_inv[k]['ali'] + por_prov_inv[k]['adu']))
+_topprov = max((por_prov_inv[p]['ali'] + por_prov_inv[p]['adu']) for p in _provs_inv) or 1
+_hbar = []
+for _p in _provs_inv:
+    _d = por_prov_inv[_p]; _t = _d['ali'] + _d['adu']
+    _hbar.append(
+        '<div class="hrow"><span class="hlab">' + _p + '</span>'
+        '<div class="htrack"><div class="hbar s1" style="width:' + '%.1f' % (_d['ali'] / _topprov * 100) + '%"></div>'
+        '<div class="hbar s2" style="width:' + '%.1f' % (_d['adu'] / _topprov * 100) + '%"></div></div>'
+        '<b class="hval">$' + money(_t, 0) + '</b>'
+        '<span class="hord">' + str(len(_d['ord'])) + ' órd.</span></div>')
+
+detalle.sort(key=lambda x: -(x[3] + x[4]))
+_filas_inv = ''.join(
+    '<tr><td><b>' + o + '</b></td><td>' + p + '</td><td>' + (_MES_CORTO[m[5:7]] + ' ' + m[:4] if m else '—') +
+    '</td><td class="n">' + money(a, 0) + '</td><td class="n">' + (money(d, 0) if d else '<i>pendiente</i>') +
+    '</td><td class="n destacado">' + money(a + d, 0) + '</td><td class="n">' + str(pg) + '</td></tr>'
+    for o, p, m, a, d, pg in detalle)
+
+PANEL = ('<div class="prov" data-p="__INV__">'
+  '<div class="hero"><span>Invertido en 2026</span><b>$' + money(INV_TOTAL, 0) + '</b>'
+  '<i>pesos mexicanos, realmente pagados</i></div>'
+  '<div class="tiles">'
+  '<div class="tile"><span>Pagado a proveedores</span><b>$' + money(INV_ALI, 0) + '</b>'
+  '<i>producto + 3% de Alibaba</i></div>'
+  '<div class="tile"><span>Importación</span><b>$' + money(INV_ADU, 0) + '</b>'
+  '<i>Shop and Cross</i></div>'
+  '<div class="tile"><span>Órdenes pagadas</span><b>' + str(N_ORD) + '</b>'
+  '<i>en ' + str(len(_provs_inv)) + ' proveedores</i></div>'
+  '<div class="tile"><span>Promedio por orden</span><b>$' + money(INV_TOTAL / N_ORD if N_ORD else 0, 0) + '</b>'
+  '<i>todo incluido</i></div></div>'
+  '<div class="leyenda2"><span><i class="sw s1"></i> Pagado a proveedores</span>'
+  '<span><i class="sw s2"></i> Importación</span></div>'
+  '<div class="panel"><h3>Mes con mes</h3><div class="bars">' + ''.join(_barras) + '</div></div>'
+  '<div class="panel"><h3>Por proveedor</h3><div class="hbars">' + ''.join(_hbar) + '</div></div>'
+  '<div class="panel"><h3>Orden por orden</h3><div class="tblwrap"><table>'
+  '<thead><tr><th>ORDEN</th><th>PROVEEDOR</th><th>MES</th>'
+  '<th>PAGADO AL PROVEEDOR</th><th>IMPORTACIÓN</th><th>TOTAL REAL</th><th>PAGOS</th></tr></thead>'
+  '<tbody>' + _filas_inv + '</tbody></table></div></div></div>')
+
+
 provs = [p for p in ORDEN_PROV if p in por_prov] + \
         [p for p in sorted(por_prov) if p not in ORDEN_PROV]
 tot_inv_mxn = sum(por_prov[p]['inv'] for p in provs)
 tot_ord = sum(por_prov[p]['ordenes'] for p in provs)
 tot_lin = sum(por_prov[p]['lineas'] for p in provs)
 
-botones, secciones = [], []
+botones = ['<button class="ptab on" data-p="__INV__">📊 Inversión 2026</button>']
+secciones = [PANEL.replace('class="prov" data-p="__INV__"', 'class="prov on" data-p="__INV__"')]
 for i, p in enumerate(provs):
     P = por_prov[p]
-    botones.append('<button class="ptab%s" data-p="%s">%s <i>%d</i></button>'
-                   % (' on' if i == 0 else '', p, p, P['ordenes']))
+    botones.append('<button class="ptab" data-p="%s">%s <i>%d</i></button>'
+                   % (p, p, P['ordenes']))
     secciones.append(
-        '<div class="prov%s" data-p="%s">'
+        '<div class="prov" data-p="%s">'
         '<h2>%s · %d órdenes · %d productos · $%s MXN invertidos en 2026</h2>'
         '<div class="cards">%s</div>%s</div>'
-        % (' on' if i == 0 else '', p, p, P['ordenes'], P['lineas'],
+        % (p, p, P['ordenes'], P['lineas'],
            money(P['inv'], 0), ''.join(P['tarjetas']), ''.join(P['bloques'])))
 
 HTML = r"""<!doctype html><html lang="es"><head><meta charset="utf-8">
@@ -258,6 +356,46 @@ h2{font-size:19px;margin:0 0 10px}
 .intro b{color:var(--ink)}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
 input[type=search]{flex:1;min-width:240px;font:inherit;padding:9px 12px;border:1.5px solid var(--line);border-radius:9px}
+
+/* ── panel de inversion ── */
+.viz{--s1:#2a78d6;--s2:#eb6834}
+.hero{background:#141a33;color:#fff;border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.hero span{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#9aa3c0}
+.hero b{display:block;font-size:clamp(30px,6vw,46px);line-height:1.1;font-variant-numeric:tabular-nums;margin:4px 0}
+.hero i{font-style:normal;font-size:13px;color:#9aa3c0}
+.tiles{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:14px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:12px 14px}
+.tile span{display:block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tile b{display:block;font-size:22px;font-variant-numeric:tabular-nums;margin:2px 0}
+.tile i{font-style:normal;font-size:12px;color:var(--muted)}
+.leyenda2{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:12px}
+.sw{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+.sw.s1,.seg.s1,.hbar.s1{background:#2a78d6}
+.sw.s2,.seg.s2,.hbar.s2{background:#eb6834}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.panel h3{margin:0 0 14px;font-size:15px}
+.bars{display:flex;gap:10px;align-items:flex-end;height:230px}
+.bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;
+min-width:0;height:100%;justify-content:flex-end;cursor:default}
+.bcol:focus{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+.bval{font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.bwrap{width:100%;flex:1;display:flex;align-items:flex-end}
+.bar{width:100%;display:flex;flex-direction:column;border-radius:4px 4px 0 0;overflow:hidden;gap:2px}
+.seg{width:100%}
+.blab{font-size:12px;color:var(--muted)}
+.btip{display:none;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+background:#141a33;color:#fff;font-size:12px;line-height:1.55;padding:9px 12px;border-radius:9px;
+white-space:nowrap;z-index:5;box-shadow:0 6px 20px rgba(0,0,0,.22)}
+.btip i{font-style:normal;color:#9aa3c0;display:inline-block;min-width:64px}
+.bcol:hover .btip,.bcol:focus .btip{display:block}
+.hbars{display:flex;flex-direction:column;gap:9px}
+.hrow{display:grid;grid-template-columns:110px 1fr auto 58px;gap:11px;align-items:center}
+.hlab{font-size:13px;font-weight:600}
+.htrack{display:flex;gap:2px;height:22px;background:var(--gray-bg);border-radius:4px;overflow:hidden}
+.hbar{height:100%}
+.hval{font-size:13px;font-variant-numeric:tabular-nums;font-weight:700}
+.hord{font-size:11.5px;color:var(--muted);text-align:right}
+@media(max-width:620px){.hrow{grid-template-columns:88px 1fr auto}.hord{display:none}}
 .ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
 .ptab{font:inherit;font-size:13px;font-weight:700;padding:9px 15px;border-radius:10px;cursor:pointer;
 border:1.5px solid var(--line);background:var(--card);color:var(--muted)}
@@ -315,7 +453,7 @@ td.pact.bueno{background:var(--ok-bg);color:var(--ok)}
 </style></head><body>
 <div class="top"><div class="in"><div class="brand">Jewelry Remate MX
 <small>Tablas de precios por orden de compra</small></div></div></div>
-<div class="wrap">
+<div class="wrap viz">
 
 <div class="intro">
 <p><b>Qué es esto:</b> el costo real de cada producto puesto en Hermosillo, y a cuánto se está
