@@ -6,6 +6,12 @@
 --gray-bg:#f0f1f5;--reb:#8a2be2;--reb-bg:#f3eafe}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
 font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.nav{background:#0d1226;padding:0 18px}
+.navin{max-width:1600px;margin:0 auto;display:flex;gap:4px;flex-wrap:wrap}
+.nl{display:block;padding:9px 14px;font-size:13px;font-weight:600;text-decoration:none;
+color:#9aa3c0;border-bottom:2px solid transparent}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#e8b93c}
 .top{background:#141a33;color:#fff;padding:0 18px;position:sticky;top:0;z-index:30}
 .in{max-width:1600px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .brand{padding:12px 0;font-weight:700}.brand small{display:block;font-weight:400;font-size:11px;color:#9aa3c0}
@@ -111,6 +117,10 @@ td.pact.bueno{background:var(--ok-bg);color:var(--ok)}
 .leyenda i{font-style:normal;padding:2px 7px;border-radius:5px}
 .foot{color:var(--muted);font-size:12px;padding:18px 0;text-align:center}
 </style></head><body>
+<div class="nav"><div class="navin">
+  <a class="nl" href="ordenes.html">🚦 Órdenes de compra</a>
+  <a class="nl on" href="precios.html">💲 Tablas de precios</a>
+</div></div>
 <div class="top"><div class="in"><div class="brand">Jewelry Remate MX
 <small>Tablas de precios por orden de compra</small></div></div></div>
 <div class="wrap viz">

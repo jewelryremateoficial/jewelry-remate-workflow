@@ -3,6 +3,12 @@
 :root{--bg:#f6f7fb;--card:#fff;--ink:#15192b;--muted:#6b7285;--line:#e4e7f0;--a:#c0392b;--a-bg:#fdecea;
 --ok:#1e7d46;--ok-bg:#e8f5ee;--warn:#b26a00;--warn-bg:#fdf3e0;--blue:#20508c;--blue-bg:#e8effa;--gray-bg:#f0f1f5;--reb:#8a2be2;--reb-bg:#f3eafe}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.nav{background:#0d1226;padding:0 18px}
+.navin{max-width:1280px;margin:0 auto;display:flex;gap:4px;flex-wrap:wrap}
+.nl{display:block;padding:9px 14px;font-size:13px;font-weight:600;text-decoration:none;
+color:#9aa3c0;border-bottom:2px solid transparent}
+.nl:hover{color:#fff}
+.nl.on{color:#fff;border-bottom-color:#e8b93c}
 .top{background:#141a33;color:#fff;padding:0 18px;position:sticky;top:0;z-index:30}
 .in{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .brand{padding:12px 0;font-weight:700}.brand small{display:block;font-weight:400;font-size:11px;color:#9aa3c0}
@@ -64,6 +70,10 @@ tr.gris td{background:#fafafa}
 .transitem{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;border-bottom:1px solid var(--line);font-size:13px}
 .transitem button{border:0;background:none;color:var(--a);font-weight:700;cursor:pointer}
 </style></head><body>
+<div class="nav"><div class="navin">
+  <a class="nl on" href="ordenes.html">🚦 Órdenes de compra</a>
+  <a class="nl" href="precios.html">💲 Tablas de precios</a>
+</div></div>
 <div class="top"><div class="in">
   <div class="brand"><small>Centro de órdenes de compra</small>Jewelry Remate MX</div>
   <div class="tabs" role="tablist">
