@@ -1326,6 +1326,16 @@ document.getElementById('bdesc').onclick=function(){
     var inp=td.querySelector('.pin'); if(inp)inp.value=td.dataset.orig; pinta(td)});
   document.getElementById('blista').classList.remove('on'); barra();
 };
+if(aplicados){
+  localStorage.setItem(PKEY,JSON.stringify(pend));   // sin esto se quedarian guardados de a gratis
+  var av=document.createElement('div');
+  av.className='aplicado';
+  av.innerHTML='\u2705 <b>'+aplicados+'</b> precio'+(aplicados>1?'s':'')+
+    ' que estaban pendientes ya se aplicaron en Shopify. Se quitaron de la lista solos.';
+  var w=document.querySelector('.wrap'), pt=document.querySelector('.ptabs');
+  if(w&&pt)w.insertBefore(av,pt);
+  setTimeout(function(){av.style.opacity='0'},9000);
+}
 barra();
 
 document.querySelectorAll('.ptab').forEach(function(b){
