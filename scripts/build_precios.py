@@ -49,6 +49,13 @@ for f in sorted(glob.glob(SCRATCH + '/vp_0*.json')):
             pass
         titulo_shopify[sk] = (n['product']['title'] or '').strip()
 
+# Precios cambiados en Shopify DESPUES del ultimo corte del catalogo. Sin esto la
+# pagina seguiria mostrando el precio viejo hasta la siguiente bajada de datos.
+_ov = os.path.join(DATOS, 'precios_override.json')
+if os.path.isfile(_ov):
+    for _k, _v in json.load(open(_ov)).items():
+        precio_shopify[_k] = float(_v)
+
 import re as _re
 ordenes = {}
 for k, v in json.load(open(os.path.join(DATOS, 'zoey_ordenes.json'))).items():
