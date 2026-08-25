@@ -173,7 +173,7 @@ for nombre in sorted(ordenes, key=_clave):
             '<td class="n">%s</td><td class="n">%s</td><td class="n">%s</td>'
             '<td class="n destacado">%s</td>'
             '<td class="n roas">%s</td><td class="n roas">%s</td><td class="n roas">%s</td>'
-            '<td class="n pact %s" title="%s">%s</td>'
+            '<td class="n pact %s" title="%s" data-sku="%s" data-m="%.2f">%s</td>'
             '<td class="n">%s</td></tr>'
             % (html.escape((f['prod'] + ' ' + f['sku'] + ' ' + f['var']).upper()),
                i, html.escape(f['sku']) or '—', html.escape(f['prod']), html.escape(f['var']),
@@ -181,8 +181,10 @@ for nombre in sorted(ordenes, key=_clave):
                money(f['I']), money(f['J']), '%.4f%%' % (f['K'] * 100), money(f['L']),
                money(f['M']),
                money(f['M'] * ROAS[0]), money(f['M'] * ROAS[1]), money(f['M'] * ROAS[2]),
-               cls, html.escape(tip),
-               money(f['pact']) if f['pact'] else ('sin SKU' if not f['sku'] else 'no está'),
+               cls, html.escape(tip), html.escape(f['sku']), f['M'],
+               ('<input class="pin" value="%s" inputmode="decimal">' % money(f['pact'], 0))
+               if (f['sku'] and f['pact']) else
+               ('sin SKU' if not f['sku'] else 'no está'),
                money(f['pant'])))
 
     aviso = ''
@@ -448,6 +450,28 @@ border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
 .dato.fuerte{background:var(--blue-bg)}.dato.fuerte b{color:var(--blue)}
 .dato.inv{background:var(--ok-bg)}.dato.inv b{color:var(--ok)}
 .dato.pct{background:var(--reb-bg)}.dato.pct b{color:var(--reb)}
+.pin{width:78px;font:inherit;font-size:12.5px;font-weight:700;text-align:right;padding:3px 5px;
+border:1.5px solid transparent;border-radius:6px;background:transparent;color:inherit;
+font-variant-numeric:tabular-nums}
+.pin:hover{border-color:var(--line);background:#fff}
+.pin:focus{outline:none;border-color:var(--blue);background:#fff}
+td.pact.pend{background:var(--warn-bg)!important}
+td.pact.pend .pin{color:var(--warn)}
+td.pact.pend::after{content:"pendiente";display:block;font-size:9.5px;font-weight:600;
+letter-spacing:.04em;text-transform:uppercase;color:var(--warn);margin-top:1px}
+.barra{position:fixed;left:0;right:0;bottom:0;background:#141a33;color:#fff;padding:11px 18px;
+display:none;z-index:60;box-shadow:0 -4px 20px rgba(0,0,0,.2)}
+.barra.on{display:block}
+.barrain{max-width:1600px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.barra b{font-size:15px}
+.barra .sec2{color:#9aa3c0;font-size:13px;flex:1;min-width:180px}
+.barra button{font:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;
+cursor:pointer;border:0;background:#e8b93c;color:#141a33}
+.barra button.gris{background:#39406b;color:#fff}
+.lista{max-width:1600px;margin:10px auto 0;background:#0d1226;border-radius:10px;padding:12px 14px;
+font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.7;color:#c3cadf;
+max-height:190px;overflow:auto;display:none;white-space:pre}
+.lista.on{display:block}
 .aviso{background:var(--a-bg);color:var(--a);border-radius:9px;padding:9px 12px;font-size:13px;margin-bottom:10px}
 .aviso.leve{background:var(--warn-bg);color:var(--warn)}
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
@@ -501,6 +525,14 @@ para que el costo sea siempre comparable entre órdenes.</p>
 <div class="ptabs">__BOTONES__</div>
 __SECCIONES__
 
+<div class="barra" id="barra"><div class="barrain">
+  <b id="bnum">0 precios pendientes</b>
+  <span class="sec2">Se guardan en este navegador. Dile a Claude «aplica los precios» y los manda a Shopify.</span>
+  <button id="bver">Ver lista</button>
+  <button id="bcopy">📋 Copiar</button>
+  <button class="gris" id="bdesc">Descartar</button>
+</div><pre class="lista" id="blista"></pre></div>
+
 <div class="foot">Datos al __CORTE__ · Precios de venta tomados de Shopify ·
 Shop and Cross tomado del Informe de Inversión 2026</div>
 </div>
@@ -519,6 +551,77 @@ q.oninput=function(){
     s.style.display=(!t||vis)?'':'none';
     if(t&&vis)s.classList.remove('cerrada');});
 };
+
+// ── PRECIO EDITABLE (Eduardo, 21 ago 2026) ──
+// Quien revisa calidad escribe el precio aqui mismo. Se guarda en este navegador y
+// queda marcado como PENDIENTE hasta que Claude lo mande a Shopify.
+var PKEY='precios_pend_v1';
+var pend={}; try{pend=JSON.parse(localStorage.getItem(PKEY))||{}}catch(e){}
+function fmt(n){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function pinta(td){
+  var sku=td.dataset.sku, M=parseFloat(td.dataset.m)||0;
+  var inp=td.querySelector('.pin'); if(!inp)return;
+  var v=parseFloat(String(inp.value).replace(/[^0-9.]/g,''))||0;
+  td.classList.remove('critico','bajo','ok','bueno','pend');
+  if(pend[sku]!=null&&pend[sku]!==td.dataset.orig)td.classList.add('pend');
+  if(!v||!M)return;
+  var r=v/M;
+  td.classList.add(r<2.5?'critico':(r<3?'bajo':(r<3.5?'ok':'bueno')));
+  td.title='Vende a '+r.toFixed(1)+'× el costo'+(td.classList.contains('pend')?' · pendiente de aplicar':'');
+}
+function barra(){
+  var n=Object.keys(pend).length, b=document.getElementById('barra');
+  b.classList.toggle('on',n>0);
+  document.getElementById('bnum').textContent=n+(n===1?' precio pendiente':' precios pendientes');
+}
+document.querySelectorAll('td.pact[data-sku]').forEach(function(td){
+  var inp=td.querySelector('.pin'); if(!inp)return;
+  td.dataset.orig=inp.value;
+  var sku=td.dataset.sku;
+  if(pend[sku]!=null)inp.value=fmt(pend[sku]);
+  pinta(td);
+  inp.onfocus=function(){inp.select()};
+  inp.oninput=function(){
+    var v=parseFloat(String(inp.value).replace(/[^0-9.]/g,''));
+    var orig=parseFloat(String(td.dataset.orig).replace(/[^0-9.]/g,''));
+    if(!v||v===orig){delete pend[sku]}else{pend[sku]=v}
+    localStorage.setItem(PKEY,JSON.stringify(pend));
+    pinta(td); barra();
+  };
+  inp.onblur=function(){var v=parseFloat(String(inp.value).replace(/[^0-9.]/g,''));
+    if(v)inp.value=fmt(v); pinta(td)};
+  inp.onkeydown=function(e){if(e.key==='Enter')inp.blur()};
+});
+function textoLista(){
+  var L=[];
+  document.querySelectorAll('td.pact.pend[data-sku]').forEach(function(td){
+    var tr=td.closest('tr'), sec=td.closest('.orden');
+    var nom=tr.children[2].textContent.trim(), va=tr.children[3].textContent.trim();
+    L.push(td.dataset.sku+'  '+fmt(pend[td.dataset.sku])+'   '+nom+(va?' · '+va:'')+
+           '   ['+(sec?sec.id:'')+']');
+  });
+  return L.join('\n');
+}
+document.getElementById('bver').onclick=function(){
+  var l=document.getElementById('blista');
+  l.textContent=textoLista(); l.classList.toggle('on');
+  this.textContent=l.classList.contains('on')?'Ocultar lista':'Ver lista';
+};
+document.getElementById('bcopy').onclick=function(){
+  var b=this, t=textoLista();
+  navigator.clipboard.writeText(t).then(function(){
+    b.textContent='✓ Copiado'; setTimeout(function(){b.textContent='📋 Copiar'},1600);
+  },function(){ b.textContent='No se pudo'; });
+};
+document.getElementById('bdesc').onclick=function(){
+  if(!confirm('Vas a descartar '+Object.keys(pend).length+' precios pendientes. ¿Seguro?'))return;
+  pend={}; localStorage.removeItem(PKEY);
+  document.querySelectorAll('td.pact[data-sku]').forEach(function(td){
+    var inp=td.querySelector('.pin'); if(inp)inp.value=td.dataset.orig; pinta(td)});
+  document.getElementById('blista').classList.remove('on'); barra();
+};
+barra();
+
 document.querySelectorAll('.ptab').forEach(function(b){
   b.onclick=function(){
     document.querySelectorAll('.ptab').forEach(function(x){x.classList.toggle('on',x===b)});
