@@ -66,12 +66,25 @@ for k, v in _inf['inv'].items():
 ORDEN_PROV = ['HAIFENG', 'ZOEY', 'CYNTHIA CAO', 'NANCY VIP', 'DINA DU', 'COCOMA', 'MOLLY']
 
 
+CAJA_USD = 10.0     # lo que cuesta la caja del reloj (Eduardo, 21 ago 2026)
+
+def con_caja(l):
+    """El dato viene en el nombre de la variante: 'RELOJ CON CAJA' / 'sin caja'."""
+    txt = ((l.get('var') or '') + ' ' + (l.get('prod') or '')).upper()
+    if 'SIN CAJA' in txt:
+        return False
+    return 'CON CAJA' in txt
+
+
 def calcula(o):
     """Aplica la formula de Eduardo a una orden completa."""
     costo, ship, sc = o['costo'], o['shipping'], o['sc']
     pct_ship = ship / costo if costo else 0
     filas = []
     for l in o['lineas']:
+        # La caja va AL COSTO, no al precio: tambien paga flete, comision e importacion.
+        cu = l['cu'] + (CAJA_USD if con_caja(l) else 0)
+        l = dict(l, cu=cu, caja=1 if con_caja(l) else 0)
         F = l['cu'] * l['cant']
         G = F * pct_ship
         H = (F + G) * ALIBABA
