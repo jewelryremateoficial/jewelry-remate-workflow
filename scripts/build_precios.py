@@ -466,6 +466,8 @@ td.pact.pend{background:var(--warn-bg)!important}
 td.pact.pend .pin{color:var(--warn)}
 td.pact.pend::after{content:"pendiente";display:block;font-size:9.5px;font-weight:600;
 letter-spacing:.04em;text-transform:uppercase;color:var(--warn);margin-top:1px}
+.aplicado{background:var(--ok-bg);color:var(--ok);border:1px solid rgba(30,125,70,.25);
+border-radius:10px;padding:11px 14px;margin-bottom:14px;font-size:13.5px;transition:opacity .8s}
 .barra{position:fixed;left:0;right:0;bottom:0;background:#141a33;color:#fff;padding:11px 18px;
 display:none;z-index:60;box-shadow:0 -4px 20px rgba(0,0,0,.2)}
 .barra.on{display:block}
@@ -564,13 +566,16 @@ q.oninput=function(){
 // queda marcado como PENDIENTE hasta que Claude lo mande a Shopify.
 var PKEY='precios_pend_v1';
 var pend={}; try{pend=JSON.parse(localStorage.getItem(PKEY))||{}}catch(e){}
+var aplicados=0;   // cuantos pendientes resultaron ya aplicados en Shopify
 function fmt(n){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function num(x){return parseFloat(String(x).replace(/[^0-9.]/g,''))||0}
 function pinta(td){
   var sku=td.dataset.sku, M=parseFloat(td.dataset.m)||0;
   var inp=td.querySelector('.pin'); if(!inp)return;
-  var v=parseFloat(String(inp.value).replace(/[^0-9.]/g,''))||0;
+  var v=num(inp.value);
   td.classList.remove('critico','bajo','ok','bueno','pend');
-  if(pend[sku]!=null&&pend[sku]!==td.dataset.orig)td.classList.add('pend');
+  // pendiente solo si difiere del precio que ya trae Shopify (comparado como numero)
+  if(pend[sku]!=null&&pend[sku]!==num(td.dataset.orig))td.classList.add('pend');
   if(!v||!M)return;
   var r=v/M;
   td.classList.add(r<2.5?'critico':(r<3?'bajo':(r<3.5?'ok':'bueno')));
@@ -585,18 +590,18 @@ document.querySelectorAll('td.pact[data-sku]').forEach(function(td){
   var inp=td.querySelector('.pin'); if(!inp)return;
   td.dataset.orig=inp.value;
   var sku=td.dataset.sku;
+  // Si el precio pendiente ya es el que trae Shopify, es que YA SE APLICO: se limpia solo.
+  if(pend[sku]!=null&&pend[sku]===num(td.dataset.orig)){delete pend[sku];aplicados++}
   if(pend[sku]!=null)inp.value=fmt(pend[sku]);
   pinta(td);
   inp.onfocus=function(){inp.select()};
   inp.oninput=function(){
-    var v=parseFloat(String(inp.value).replace(/[^0-9.]/g,''));
-    var orig=parseFloat(String(td.dataset.orig).replace(/[^0-9.]/g,''));
+    var v=num(inp.value), orig=num(td.dataset.orig);
     if(!v||v===orig){delete pend[sku]}else{pend[sku]=v}
     localStorage.setItem(PKEY,JSON.stringify(pend));
     pinta(td); barra();
   };
-  inp.onblur=function(){var v=parseFloat(String(inp.value).replace(/[^0-9.]/g,''));
-    if(v)inp.value=fmt(v); pinta(td)};
+  inp.onblur=function(){var v=num(inp.value); if(v)inp.value=fmt(v); pinta(td)};
   inp.onkeydown=function(e){if(e.key==='Enter')inp.blur()};
 });
 function textoLista(){
