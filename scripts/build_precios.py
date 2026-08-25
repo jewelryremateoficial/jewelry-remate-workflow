@@ -30,6 +30,11 @@ DATOS = os.environ.get('OC_PRECIOS') or os.path.join(REPO, 'datos', 'precios')
 TC = 20.0          # tipo de cambio fijo
 ALIBABA = 0.03     # comision fija
 ROAS = (3, 3.5, 4)
+# REDONDEO de precios de venta: Eduardo los cierra en ...99 (5,899 / 2,999 / 999).
+# Se sube al siguiente ...99, nunca se baja.
+def redondea99(x):
+    import math
+    return math.ceil((x - 99) / 100) * 100 + 99
 
 HOY = (datetime.date.fromisoformat(os.environ['OC_HOY'])
        if os.environ.get('OC_HOY') else datetime.date.today())
