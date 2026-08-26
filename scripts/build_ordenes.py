@@ -105,6 +105,17 @@ for k, v in load_sales(SCRATCH + '/sales90_OTROS.json', 1, 2, 3, 4).items():
     e = s90.setdefault(k, v)
     if e is not v: e['u'] += v['u']
 
+# ---- ventas recuperadas (Eduardo, 26 ago 2026) ----
+# Cuando en Shopify se le agregan opciones a un producto que tenia "Default Title", el panel
+# BORRA la variante y crea una nueva. Las ventas viejas quedan atadas a la variante borrada, asi
+# que ShopifyQL las reporta de menos o de plano no las reporta. Resultado: el producto parece que
+# no vendio y no se sugiere pedirlo.
+# Este archivo trae SOLO los casos verificados uno por uno: la variante tiene fecha de creacion
+# POSTERIOR a la del producto, Y la diferencia NO se explica por una devolucion. Las diferencias
+# por devolucion NO se tocan: Shopify hace bien en restarlas.
+_vr = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ventas_recuperadas.json')
+VREC = json.load(open(_vr))['ventas'] if os.path.exists(_vr) else {}
+
 # ---- rebaja pieza por pieza (60d) ----
 cap_by_sku = {}
 for v in variants:
@@ -185,6 +196,15 @@ for v in variants:
     rb = reb.get(sku, {'r': 0, 'n': 0, 'c': 0})
     a = age.get(v['pid'], 999)
     ra = 1 if (v['cap'] > 0 and v['price'] > 0 and v['price'] <= 0.705 * v['cap']) else 0
+    # Ventas reales: si la variante fue recreada, ShopifyQL reporta de menos. 'fx' marca la fila
+    # para pintarle un asterisco y que Eduardo sepa que ese numero fue recuperado.
+    u60 = (e60 or {}).get('u', 0)
+    u90 = (e90 or {}).get('u', 0)
+    fx = 0
+    _r = VREC.get(sku)
+    if _r and _r > u60:
+        u60, fx = _r, 1
+        if u90 < _r: u90 = _r
     rows.append({
         # La llave 'k' identifica la fila y es con la que se guarda el borrador. Los productos
         # SIN SKU en Shopify (82 al 18 ago 2026) compartian la llave vacia: escribir una cantidad
@@ -192,9 +212,9 @@ for v in variants:
         'k': sku or ('SINSKU-' + str(v['vid'])), 'ns': 0 if sku else 1,
         't': v['title'], 'vt': vt if vt != 'Default Title' else '',
         'v': vendor or 'OTROS', 'st': st, 'q': v['inv'], 'p': v['price'], 'cap': v['cap'],
-        'i': img_i(p['img']), 'u': (e60 or {}).get('u', 0), 'u9': (e90 or {}).get('u', 0),
+        'i': img_i(p['img']), 'u': u60, 'u9': u90, 'fx': fx,
         'a': a, 'rb': rb['r'], 'pn': rb['n'], 'cd': rb['c'], 'ra': ra,
-        'dsl': dsl_for(sku, (e60 or {}).get('u', 0), (e90 or {}).get('u', 0)),
+        'dsl': dsl_for(sku, u60, u90),
         'c': round(c['best'], 2) if c else None, 'm': material.get(sku, ''),
         'dup': 1 if (st == '' and norm_t(v['title']) in dups) else 0,
     })
@@ -223,6 +243,7 @@ XLSX_LIB = re.search(r'(<script>/\*! xlsx\.js.*?</script>)', cv, re.S).group(1)
 
 HTML = r'''<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jewelry Remate MX — Centro de órdenes de compra</title><style>
+.fx{color:var(--warn);font-weight:700;cursor:help}
 :root{--bg:#f6f7fb;--card:#fff;--ink:#15192b;--muted:#6b7285;--line:#e4e7f0;--a:#c0392b;--a-bg:#fdecea;
 --ok:#1e7d46;--ok-bg:#e8f5ee;--warn:#b26a00;--warn-bg:#fdf3e0;--blue:#20508c;--blue-bg:#e8effa;--gray-bg:#f0f1f5;--reb:#8a2be2;--reb-bg:#f3eafe}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -401,6 +422,7 @@ function sug(r,tm){
 function cobertura(r){if(r.u9<=0)return r.q>0?9999:0;return Math.round(r.q/(r.u9/Math.min(r.a,90)))}
 function urg(r){if(r.q<=0)return 'agotado';var c=cobertura(r);if(c<14)return 'critico';if(c<30)return 'bajo';return 'ok'}
 var CH={agotado:'Agotado',critico:'Crítico',bajo:'Bajo',ok:'OK'};
+function fxHTML(r){return r.fx?'<span class="fx" title="Shopify no reporta estas ventas porque la variante fue borrada y recreada al agregarle opciones. Este numero se recupero del detalle de pedidos.">*</span>':''}
 function piezasHTML(r){
   if(r.rb===0&&r.cd===0)return '';
   var p=[];if(r.rb>0)p.push('<span class="r">🏷️'+r.rb+' rebaja</span>');
@@ -479,7 +501,7 @@ function rowHTML(r,tm,noSug){
   return '<tr'+(noSug?' class="gris"':'')+' data-k="'+r.k+'">'+
    '<td>'+img(r.i)+'</td>'+
    '<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.ns?'—':r.k)+(r.m?' · '+r.m:'')+'</span></td>'+
-   '<td class="num">'+r.u+piezasHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'+
+   '<td class="num">'+r.u+fxHTML(r)+piezasHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'+
    '<td class="num">'+r.q+'</td><td class="num">'+(t||'—')+'</td>'+
    '<td class="num"><input class="q'+(s>0?' hot':'')+(!out&&edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="1" value="'+s+'"'+(out?' disabled title="Los OUTLET no se piden"':'')+'></td>'+
    '<td class="num">'+usd(r.c)+'</td><td class="num" data-tot>'+(r.c?usd(s*r.c):'—')+'</td>'+
@@ -718,7 +740,7 @@ function renderMov(){
     .sort(function(a,b){return b.u9-a.u9});
   document.getElementById('msum').innerHTML='<b>'+rs.length+'</b> variantes · <b>'+rs.reduce(function(s,r){return s+r.u9},0)+'</b> pzs vendidas en 90 días';
   document.querySelector('#mt tbody').innerHTML=rs.slice(0,600).map(function(r){var u=urg(r);var c=cobertura(r);var ml=movLabel(r);
-   return '<tr><td>'+img(r.i)+'</td><td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.k||'—')+'</span>'+piezasHTML(r)+'</td><td>'+r.v+'</td><td class="num">'+r.u9+'</td><td class="num">'+r.u+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td><td class="num">'+r.q+'</td><td class="num">'+(c===9999?'∞':c)+'</td><td><span class="chip '+ml[0]+'">'+ml[1]+'</span></td><td><span class="chip '+u+'">'+CH[u]+'</span></td></tr>'}).join('');
+   return '<tr><td>'+img(r.i)+'</td><td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.k||'—')+'</span>'+piezasHTML(r)+'</td><td>'+r.v+'</td><td class="num">'+r.u9+'</td><td class="num">'+r.u+fxHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td><td class="num">'+r.q+'</td><td class="num">'+(c===9999?'∞':c)+'</td><td><span class="chip '+ml[0]+'">'+ml[1]+'</span></td><td><span class="chip '+u+'">'+CH[u]+'</span></td></tr>'}).join('');
 }
 document.getElementById('mq').oninput=renderMov;document.getElementById('msel').onchange=renderMov;mvsel.onchange=renderMov;
 

@@ -1,0 +1,14 @@
+{
+  "_nota": "Ventas que Shopify NO reporta porque la variante fue borrada y recreada al agregarle opciones. Verificado uno por uno: (1) la variante tiene fecha de creacion POSTERIOR a la del producto, y (2) la diferencia NO se explica por devoluciones. Generado el 26 ago 2026. Para regenerar ver ACTUALIZAR.md.",
+  "ventas": {
+    "41353991156557": 9,
+    "665bb4e678422": 2,
+    "67201531075373": 4,
+    "15554122997805": 3,
+    "91078753456205": 1,
+    "93098781536397": 3,
+    "29953902939629": 2,
+    "29953902810253": 1,
+    "34163623705709": 1
+  }
+}
