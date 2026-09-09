@@ -113,6 +113,12 @@ for k, v in load_sales(SCRATCH + '/sales90_OTROS.json', 1, 2, 3, 4).items():
 # Este archivo trae SOLO los casos verificados uno por uno: la variante tiene fecha de creacion
 # POSTERIOR a la del producto, Y la diferencia NO se explica por una devolucion. Las diferencias
 # por devolucion NO se tocan: Shopify hace bien en restarlas.
+_sd = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'seed_haifeng080926.json')
+# Siembra unica de cantidades (Eduardo, 9 sep 2026): carga en la casilla PEDIR las cantidades
+# del Excel de la orden HAIFENG080926, para que el arme la orden nueva desde la pagina.
+# Se aplica UNA sola vez en cada navegador; despues manda lo que Eduardo edite.
+SEED = json.load(open(_sd)) if os.path.exists(_sd) else {}
+
 _vr = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ventas_recuperadas.json')
 VREC = json.load(open(_vr))['ventas'] if os.path.exists(_vr) else {}
 
@@ -471,9 +477,16 @@ function goOrden(v){document.querySelector('.tab[data-p="orden"]').click();docum
 // ---- orden ----
 var vsel=document.getElementById('vsel');
 VENDORS.forEach(function(v){var o=document.createElement('option');o.value=o.textContent=v;vsel.appendChild(o)});
+var SEED_0809=__SEED__;
 var EKEY='oc_edits_v1',ETKEY='oc_edits_ts';
 var edits={};try{edits=JSON.parse(localStorage.getItem(EKEY))||{}}catch(e){}
 function esave(){localStorage.setItem(EKEY,JSON.stringify(edits));localStorage.setItem(ETKEY,new Date().toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}))}
+// Siembra unica: deja en PEDIR las cantidades del Excel de HAIFENG080926. Corre una sola vez
+// por navegador; a partir de ahi las ediciones de Eduardo mandan y no se vuelven a pisar.
+var SKEY='oc_seed_haifeng080926';
+try{ if(!localStorage.getItem(SKEY)){ var _n=0;
+  for(var _k in SEED_0809){ if(edits[_k]==null){ edits[_k]=SEED_0809[_k]; _n++; } }
+  if(_n){ esave(); } localStorage.setItem(SKEY,'1'); } }catch(e){}
 function draftbar(){var n=Object.keys(edits).length;var el=document.getElementById('draft');
  if(!n){el.innerHTML='';return}
  el.innerHTML='💾 <b>Borrador guardado automáticamente</b> — '+n+' cantidad'+(n>1?'es':'')+' editada'+(n>1?'s':'')+' por ti · última edición: '+(localStorage.getItem(ETKEY)||'')+' · tus cambios se conservan aunque cierres la página o se actualicen los datos.';}
@@ -748,6 +761,7 @@ renderSem();renderOrden();renderT();renderMov();draftbar();
 </script></body></html>'''
 
 HTML = HTML.replace('__CORTE__', CORTE).replace('__ACTUALIZADO__', ACTUALIZADO).replace('__XLSX_LIB__', XLSX_LIB).replace('__FECHA__', HOY.isoformat())
+HTML = HTML.replace('__SEED__', json.dumps(SEED, separators=(',', ':')))
 HTML = HTML.replace('__DATA__', DATA_JSON).replace('__IMGS__', IMGS_JSON).replace('__VENDORS__', VEND_JSON).replace('__TBASE__', TBASE_JSON)
 open(REPO + '/ordenes.html', 'w', encoding='utf-8').write(HTML)
 print('ordenes.html v2:', len(HTML), 'bytes | imgs:', len(imgs))
