@@ -86,7 +86,7 @@
     "variant": "24cm x 15cm",
     "sku": "64e78f2fafa3d",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO A TIEDIE",
@@ -100,7 +100,7 @@
     "variant": "17cm de largo x 11cm de alto x 8.3cm de ancho",
     "sku": "654bdbcfddee8",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO C N°25 DENIM",
@@ -114,7 +114,7 @@
     "variant": "25cm de largo x 17cm de alto x 6cm de ancho",
     "sku": "64571791072897",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO CC CAMBON LINE",
@@ -142,7 +142,7 @@
     "variant": "Default Title",
     "sku": "24780442101677",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO CC SHINY LAMBSKIN",
@@ -177,7 +177,7 @@
     "variant": "Default Title",
     "sku": "29953901454477",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO CD MESSENGER SADDLE HERITAGE",
@@ -240,14 +240,14 @@
     "variant": "22.5.cmx15cm",
     "sku": "64e78f8a50e61",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO GC BROWN",
     "variant": "22.5.cmx15cm",
     "sku": "64e78f8d3897d",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO GC MERCATO BLACK",
@@ -268,7 +268,7 @@
     "variant": "Default Title",
     "sku": "33891171250349",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO LADY D CHAROL RED",
@@ -310,14 +310,14 @@
     "variant": "Default Title",
     "sku": "93098783094061",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO LV POCHETTE HILLS",
     "variant": "HIGH QUALITY",
     "sku": "93098783161293",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO LV VANITY PM CANVAS",
@@ -373,28 +373,28 @@
     "variant": "24cm x 15cm",
     "sku": "648cc614da168",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL CHAROL CHERRY 37",
     "variant": "Default Title",
     "sku": "33891171089901",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL GABY VANITY",
     "variant": "Default Title",
     "sku": "29953903326061",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL ICARE NAPA BLACK",
     "variant": "Default Title",
     "sku": "29953902655501",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL JAMIE SHOPPING",
@@ -415,14 +415,14 @@
     "variant": "Default Title",
     "sku": "29953903227757",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL LOULOU WHITE",
     "variant": "HIGH QUALITY",
     "sku": "29953902939629",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL SHOPER ICARE",
@@ -471,14 +471,14 @@
     "variant": "Default Title",
     "sku": "95662171066189",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA F BAGUETTE BLACK",
     "variant": "HIGH QUALITY",
     "sku": "34163621960461",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA GC DYONYSUS",
@@ -492,35 +492,35 @@
     "variant": "Default Title",
     "sku": "24780441141293",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA LV EMPREINTE BLACK",
     "variant": "Default Title",
     "sku": "93098781770861",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA LV MULTIPLE MONOGRAM",
     "variant": "Default Title",
     "sku": "93098781603629",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA LV VICTORINE MONOGRAM EMPREINTE",
     "variant": "Default Title",
     "sku": "24780441054861",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA MM NAPA PINK",
     "variant": "Default Title",
     "sku": "13794532310349",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CINTO CC CLASSIC",
@@ -604,7 +604,7 @@
     "variant": "Default Title",
     "sku": "99781782742573",
     "qty": 8,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "LENTES C CAPSULE",
@@ -674,28 +674,28 @@
     "variant": "Default Title",
     "sku": "29953902146541",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "MONEDERO LV ZIPPY",
     "variant": "Default Title",
     "sku": "93098783400845",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PERFUME  BV LE GEMME TYGAR EAU DE PARFUM",
     "variant": "100 ml",
     "sku": "40495211029965",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PERFUME CD HOMME INTENSE",
     "variant": "Default Title",
     "sku": "95510921204013",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PERFUME JOFF DURAN DURAN",
@@ -744,7 +744,7 @@
     "variant": "Default Title",
     "sku": "34163621682221",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA CD PETIT",
@@ -849,14 +849,14 @@
     "variant": "RELOJ SIN CAJA HOMBRE 35mm",
     "sku": "679be1fa82b98",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ C SANTOS BLACK",
     "variant": "RELOJ SIN CAJA MUJER 27mm",
     "sku": "679be1fa82b97",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ C TANK LOUIS",
@@ -877,7 +877,7 @@
     "variant": "RELOJ CON CAJA",
     "sku": "17360611631597",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ PANTHERE SILVER",
@@ -905,14 +905,14 @@
     "variant": "30mm Mujer sin caja",
     "sku": "67981321028461",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ TANK CR BLACK GOLD",
     "variant": "Default Title",
     "sku": "42283701061581",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "SANDALIAS CD MULE",
@@ -961,35 +961,35 @@
     "variant": "M",
     "sku": "43728084634892",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "SUÉTER PR MILANO WHITE",
     "variant": "M",
     "sku": "43728084530892",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO CD FREESIA",
     "variant": "10cm x 7.5cm",
     "sku": "47754352942988",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO MM NAPA",
     "variant": "Default Title",
     "sku": "33794532055533",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO YSL GOLD",
     "variant": "HIGH QUALITY",
     "sku": "43728117034540",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TENIS CD B27",
@@ -1031,7 +1031,7 @@
     "variant": "M",
     "sku": "10065591348557",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TRAJE DE BAÑO F MEN",
