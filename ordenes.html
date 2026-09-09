@@ -95,7 +95,7 @@ tr.gris td{background:#fafafa}
 
 <div class="pane" id="orden">
   <h2>Orden sugerida por proveedor</h2>
-  <p class="note upd">🕐 Actualizado el <b>9 de septiembre de 2026, a las 3:00 PM</b></p>
+  <p class="note upd">🕐 Actualizado el <b>9 de septiembre de 2026, a las 3:07 PM</b></p>
   <p class="note">Ajusta <b>PEDIR</b> a tu criterio. Las secciones de rebaja, borradores y estancados no traen cantidad sugerida — son tu decisión. La descarga es un <b>Excel con las fotos incrustadas</b>.</p>
   <div class="controls">
     <select id="vsel"></select>
@@ -249,8 +249,16 @@ try{ if(!localStorage.getItem(SKEY)){ var _n=0;
   for(var _k in SEED_0809){ if(edits[_k]==null){ edits[_k]=SEED_0809[_k]; _n++; } }
   if(_n){ esave(); } localStorage.setItem(SKEY,'1'); } }catch(e){}
 function draftbar(){var n=Object.keys(edits).length;var el=document.getElementById('draft');
- if(!n){el.innerHTML='';return}
- el.innerHTML='💾 <b>Borrador guardado automáticamente</b> — '+n+' cantidad'+(n>1?'es':'')+' editada'+(n>1?'s':'')+' por ti · última edición: '+(localStorage.getItem(ETKEY)||'')+' · tus cambios se conservan aunque cierres la página o se actualicen los datos.';}
+ var av='';
+ if(localStorage.getItem(SKEY)){var ns=0;for(var _s in SEED_0809)ns++;
+  av='<div style="margin-bottom:6px">📥 <b>Cantidades cargadas de la orden HAIFENG080926</b> — '+ns+' productos del Excel del 8 de septiembre ya vienen escritos en <b>PEDIR</b>. Modifícalos y agrega los que falten; lo que edites se guarda solo. <a href="#" id="undoseed">Quitar estas cantidades</a></div>';}
+ if(!n){el.innerHTML=av;bindUndo();return}
+ el.innerHTML=av+'💾 <b>Borrador guardado automáticamente</b> — '+n+' cantidad'+(n>1?'es':'')+' editada'+(n>1?'s':'')+' por ti · última edición: '+(localStorage.getItem(ETKEY)||'')+' · tus cambios se conservan aunque cierres la página o se actualicen los datos.';bindUndo();}
+function bindUndo(){var u=document.getElementById('undoseed');if(!u)return;
+ u.onclick=function(e){e.preventDefault();
+  if(!confirm('Se quitan las cantidades que vinieron del Excel de HAIFENG080926. Lo que tú hayas escrito encima también se pierde. ¿Seguimos?'))return;
+  for(var k in SEED_0809){delete edits[k];}
+  esave();localStorage.removeItem(SKEY);renderOrden();draftbar();};}
 function rowHTML(r,tm,noSug){
   var out=isOutlet(r);
   var s=out?0:(edits[r.k]!=null?edits[r.k]:(noSug?0:sug(r,tm)));
