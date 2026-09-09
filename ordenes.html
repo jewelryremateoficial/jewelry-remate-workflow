@@ -53,6 +53,11 @@ img.th{width:44px;height:44px;object-fit:cover;border-radius:8px;background:#eee
 .chip.top{color:#7a4bd6;background:#f0eafc}.chip.gris{color:var(--muted);background:var(--gray-bg)}
 .chip.reb{color:var(--reb);background:var(--reb-bg)}.chip.dup{color:#8a2be2;background:#f3eafe}
 .chip.nuevo{color:#0b7285;background:#e3fafc}
+.chip.enodc{color:#0b5c8a;background:#e1f0fb;border:1px solid #b6dcf5}
+.chip.falta{color:#b26a00;background:#fdf3e0;border:1px solid #f0d9a8}
+.chip.dupodc{color:#c0392b;background:#fdecea;border:1px solid #f3c2bc}
+input.q.enodc{background:#f2f9ff;border-color:#7fb6e0}
+tr.enodc td{background:#fbfdff}
 .pill{font-size:11px;font-weight:600}
 .pill .r{color:var(--reb)}.pill .n{color:var(--ok)}.pill .c{color:var(--warn)}
 input.q{width:64px;font:inherit;font-weight:700;text-align:right;padding:6px;border:1.5px solid var(--line);border-radius:8px}
@@ -95,7 +100,7 @@ tr.gris td{background:#fafafa}
 
 <div class="pane" id="orden">
   <h2>Orden sugerida por proveedor</h2>
-  <p class="note upd">🕐 Actualizado el <b>9 de septiembre de 2026, a las 3:07 PM</b></p>
+  <p class="note upd">🕐 Actualizado el <b>9 de septiembre de 2026, a las 3:13 PM</b></p>
   <p class="note">Ajusta <b>PEDIR</b> a tu criterio. Las secciones de rebaja, borradores y estancados no traen cantidad sugerida — son tu decisión. La descarga es un <b>Excel con las fotos incrustadas</b>.</p>
   <div class="controls">
     <select id="vsel"></select>
@@ -262,8 +267,15 @@ function bindUndo(){var u=document.getElementById('undoseed');if(!u)return;
 function rowHTML(r,tm,noSug){
   var out=isOutlet(r);
   var s=out?0:(edits[r.k]!=null?edits[r.k]:(noSug?0:sug(r,tm)));
+  // Marca visual: si el producto ya venia en el Excel de la orden HAIFENG080926.
+  var enODC=(typeof SEED_0809!=='undefined'&&SEED_0809[r.k]!=null&&localStorage.getItem(SKEY));
+  var faltaODC=(!enODC&&localStorage.getItem(SKEY)&&r.v==='HAIFENG'&&r.st===''&&!out&&s>0);
   var t=inTransit(r,tm);
   var chips='';var u=urg(r);
+  if(enODC)chips+=' <span class="chip enodc">\u{1F4E5} Ya está en la orden 08/09 · '+SEED_0809[r.k]+' pzs</span>';
+  if(faltaODC)chips+=' <span class="chip falta">\u2795 NO está en la orden 08/09</span>';
+  // Aviso fuerte: esta en la orden 08/09 PERO ya viene en camino -> se pediria doble.
+  if(enODC&&t>0&&!out&&sug(r,tm)===0)chips+=' <span class="chip dupodc">\u26A0\uFE0F Ya vienen '+t+' pzs en camino — pedirlo sería doble</span>';
   if(out)chips+=' <span class="chip gris" style="color:var(--a);background:var(--a-bg)">🚫 OUTLET — no se pide</span>';
   if(r.st===''&&r.u>0&&(u==='agotado'||u==='critico'))chips+=' <span class="chip '+u+'">'+CH[u]+'</span>';
   if(r.u>TOP_U)chips+=' <span class="chip top">TOP +20%</span>';
@@ -280,12 +292,12 @@ function rowHTML(r,tm,noSug){
   if(r.ns)obs.push('SIN SKU en Shopify — conviene ponérselo');
   if(r.dup)obs.push('nombre duplicado, revisar cuál pedir');
   if(r.c==null)obs.push('SIN COSTO en historial');
-  return '<tr'+(noSug?' class="gris"':'')+' data-k="'+r.k+'">'+
+  return '<tr class="'+(noSug?'gris ':'')+(enODC?'enodc':'')+'" data-k="'+r.k+'">'+
    '<td>'+img(r.i)+'</td>'+
    '<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.ns?'—':r.k)+(r.m?' · '+r.m:'')+'</span></td>'+
    '<td class="num">'+r.u+fxHTML(r)+piezasHTML(r)+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'+
    '<td class="num">'+r.q+'</td><td class="num">'+(t||'—')+'</td>'+
-   '<td class="num"><input class="q'+(s>0?' hot':'')+(!out&&edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="1" value="'+s+'"'+(out?' disabled title="Los OUTLET no se piden"':'')+'></td>'+
+   '<td class="num"><input class="q'+(s>0?' hot':'')+(enODC?' enodc':'')+(!out&&edits[r.k]!=null?' edited':'')+'" type="number" min="0" step="1" value="'+s+'"'+(out?' disabled title="Los OUTLET no se piden"':'')+'></td>'+
    '<td class="num">'+usd(r.c)+'</td><td class="num" data-tot>'+(r.c?usd(s*r.c):'—')+'</td>'+
    '<td>'+chips+(obs.length?'<span class="vsub">'+obs.join(' · ')+'</span>':'')+'</td></tr>';
 }
