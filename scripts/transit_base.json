@@ -31,7 +31,7 @@
   ]
  },
  {
-  "name": "ZOEY300726 (3 guias sin inventariar)",
+  "name": "ZOEY300726 (2 guias sin inventariar)",
   "date": "2026-07-30",
   "base": 1,
   "lines": [
@@ -426,94 +426,6 @@
     "qty": 2,
     "arrived": false,
     "guia": "1Z16GA850302996406"
-   },
-   {
-    "title": "BOLSO C N.25 DENIM",
-    "variant": "Default Title",
-    "sku": "24780442420877",
-    "qty": 5,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "BOLSO LADY D CHAROL RED",
-    "variant": "23.5cm de largo x 21cm de alto x 12cm de ancho",
-    "sku": "43728088191436",
-    "qty": 4,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "BOLSO LW ANAGRAM",
-    "variant": "50cm x 26cm x 15cm",
-    "sku": "17872087535244",
-    "qty": 3,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "BOLSO V GARAVANI TOTE BLACK",
-    "variant": "",
-    "sku": "28214353190509",
-    "qty": 1,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "BOLSO YSL JAMIE SHOPPING",
-    "variant": "BIG",
-    "sku": "29953902272525",
-    "qty": 2,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "BOX CARTIER",
-    "variant": "",
-    "sku": "",
-    "qty": 4,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "BOX CHANEL",
-    "variant": "",
-    "sku": "",
-    "qty": 1,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "BOX ROLEX",
-    "variant": "",
-    "sku": "",
-    "qty": 6,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "CARTERA GC DYONYSUS",
-    "variant": "",
-    "sku": "37561653456589",
-    "qty": 2,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "VANITY V GARAVANI",
-    "variant": "",
-    "sku": "23694451633261",
-    "qty": 2,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
-   },
-   {
-    "title": "ZAPATILLAS YSL SLINGBACK",
-    "variant": "24MX",
-    "sku": "91345323151149",
-    "qty": 1,
-    "arrived": false,
-    "guia": "1ZJ448C50427796931"
    }
   ]
  },
@@ -1231,13 +1143,6 @@
    },
    {
     "title": "ANILLO TRES AROS",
-    "variant": "4",
-    "sku": "12312341052653",
-    "qty": 3,
-    "arrived": false
-   },
-   {
-    "title": "ANILLO TRES AROS",
     "variant": "5",
     "sku": "673cd567a7edc",
     "qty": 4,
@@ -1937,20 +1842,6 @@
     "arrived": false
    },
    {
-    "title": "LENTES CD OBLIQUE S1",
-    "variant": "Default Title",
-    "sku": "17964141754957",
-    "qty": 3,
-    "arrived": false
-   },
-   {
-    "title": "LENTES F LOGO",
-    "variant": "Default Title",
-    "sku": "22064322217229",
-    "qty": 2,
-    "arrived": false
-   },
-   {
     "title": "LENTES GOLD BLACK GC",
     "variant": "Default Title",
     "sku": "67201531386477",
@@ -2481,6 +2372,181 @@
     "sku": "59109721136621",
     "qty": 2,
     "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER #6",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER #7",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD #6",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD #7",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD #7",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD #6",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER #6",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER #7",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER #8",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER #9",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "SILVER #9",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD #7",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "VISERA CD V1U",
+    "variant": "GOLD #8",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
    }
   ]
  },
@@ -2822,7 +2888,7 @@
     "title": "BOLSO F CHAIN LOGOS",
     "variant": "",
     "sku": "33644561183053",
-    "qty": 7,
+    "qty": 1,
     "arrived": false
    },
    {
@@ -2850,7 +2916,7 @@
     "title": "BOLSO H BIRKIN 30 GRIS TOURTERELLE",
     "variant": "20.5cm de alto x 25cm de largo x 13cm ancho",
     "sku": "6701d26e04890",
-    "qty": 2,
+    "qty": 1,
     "arrived": false
    },
    {
@@ -3498,10 +3564,38 @@
     "arrived": false
    },
    {
-    "title": "ARETES T-SMILE ROSE GOLD",
-    "variant": "1cm",
-    "sku": "63e0bd2165d38",
-    "qty": 3,
+    "title": "PULSERA C GOLD",
+    "variant": "#8",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "PULSERA C GOLD",
+    "variant": "#9",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "PULSERA C GOLD",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "PULSERA C GOLD",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "PULSERA C GOLD",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
     "arrived": false
    },
    {
@@ -3509,6 +3603,146 @@
     "variant": "",
     "sku": "15104862595853",
     "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "GOLD",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "SILVER",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "GOLD",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "SILVER",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "GOLD",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "SILVER",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "WHITE",
+    "sku": "",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "BLACK",
+    "sku": "",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "SILVER #8",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "SILVER #9",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "GOLD #8",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "GOLD #9",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "GOLD",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "SILVER",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "L",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "L",
+    "sku": "",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "L",
+    "sku": "",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "M",
+    "sku": "",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LV LOGO PEARL",
+    "variant": "",
+    "sku": "",
+    "qty": 1,
     "arrived": false
    }
   ]
@@ -4177,27 +4411,6 @@
     "arrived": false
    },
    {
-    "title": "CINTO CC LEATHER BLACK",
-    "variant": "",
-    "sku": "24780443136013",
-    "qty": 1,
-    "arrived": false
-   },
-   {
-    "title": "CINTO CD MEDALLON",
-    "variant": "",
-    "sku": "29953901285005",
-    "qty": 4,
-    "arrived": false
-   },
-   {
-    "title": "CINTO LV REVERSIBLE MINI",
-    "variant": "",
-    "sku": "93098782555053",
-    "qty": 2,
-    "arrived": false
-   },
-   {
     "title": "COLLAR CD GOLD CON PERLAS",
     "variant": "",
     "sku": "63264441047757",
@@ -4611,13 +4824,6 @@
     "arrived": false
    },
    {
-    "title": "PERFUME JEAN PAUL SCANDAL WOMEN",
-    "variant": "REGULAR",
-    "sku": "34163621418381",
-    "qty": 1,
-    "arrived": false
-   },
-   {
     "title": "RELOJ BALLON BLUE C",
     "variant": "RELOJ CON CAJA",
     "sku": "17360611212238",
@@ -4660,101 +4866,101 @@
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
+    "variant": "",
+    "sku": "",
+    "qty": 5,
+    "arrived": false
+   },
+   {
+    "title": "",
     "variant": "38/24cm",
     "sku": "",
     "qty": 2,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "42/28MX",
     "sku": "",
     "qty": 2,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "38/24cm",
     "sku": "",
     "qty": 1,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
-    "variant": "40/25cm",
+    "title": "",
+    "variant": "44",
     "sku": "",
     "qty": 1,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "42/28MX",
     "sku": "",
     "qty": 2,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "42/28MX",
     "sku": "",
     "qty": 2,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "42/28MX",
     "sku": "",
     "qty": 2,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "42/28MX",
     "sku": "",
     "qty": 2,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "L",
     "sku": "",
     "qty": 2,
     "arrived": false
    },
    {
-    "title": "BOX CARTIER",
-    "variant": "L",
-    "sku": "",
-    "qty": 2,
-    "arrived": false
-   },
-   {
-    "title": "BOX CARTIER",
-    "variant": "L",
-    "sku": "",
-    "qty": 2,
-    "arrived": false
-   },
-   {
-    "title": "BOX CARTIER",
-    "variant": "L",
-    "sku": "",
-    "qty": 2,
-    "arrived": false
-   },
-   {
-    "title": "BOX CARTIER",
-    "variant": "L",
-    "sku": "",
-    "qty": 2,
-    "arrived": false
-   },
-   {
-    "title": "BOX CARTIER",
+    "title": "",
     "variant": "40",
     "sku": "",
     "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "",
+    "variant": "M",
+    "sku": "",
+    "qty": 3,
+    "arrived": false
+   },
+   {
+    "title": "",
+    "variant": "",
+    "sku": "",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "",
+    "variant": "",
+    "sku": "",
+    "qty": 1,
     "arrived": false
    }
   ]
