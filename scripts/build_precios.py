@@ -90,6 +90,25 @@ for k, v in _inf['inv'].items():
 
 ORDEN_PROV = ['HAIFENG', 'ZOEY', 'CYNTHIA CAO', 'NANCY VIP', 'DINA DU', 'COCOMA', 'MOLLY']
 
+# Aduana estimada (Eduardo, 10 sep 2026). La Shop and Cross se paga caja por caja conforme van
+# llegando, asi que una orden a medio pagar muestra un costo por pieza mas barato de lo real y
+# lleva a ponerle precio bajo. Mientras la orden siga EN CAMINO se usa este porcentaje sobre la
+# compra en pesos; cuando ya llego, manda lo que de verdad se pago.
+# Los porcentajes los fijo Eduardo a partir del historico: HAIFENG pesa poco (joyeria chica) y
+# el resto se maneja parejo al 4%.
+PCT_ADUANA = {'HAIFENG': 0.03, 'ZOEY': 0.04, 'CYNTHIA CAO': 0.04,
+              'NANCY VIP': 0.04, 'DINA DU': 0.04, 'COCOMA': 0.04, 'MOLLY': 0.04}
+PCT_ADUANA_DEF = 0.04
+
+# Nunca se usa el estimado por debajo de lo ya pagado: si una orden lleva pagado mas, manda lo real.
+_tb = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'transit_base.json')
+EN_CAMINO = set()
+if os.path.exists(_tb):
+    for _t in json.load(open(_tb)):
+        _m = _re.match(r'[A-Z]+\d+', _t['name'])
+        if _m and any(not _l.get('arrived') for _l in _t['lines']):
+            EN_CAMINO.add(_m.group(0))
+
 
 CAJA_USD = 10.0     # lo que cuesta la caja del reloj (Eduardo, 21 ago 2026)
 
@@ -159,6 +178,17 @@ for nombre in sorted(ordenes, key=_clave):
     prov = o.get('proveedor', 'ZOEY')
     P = por_prov[prov]
     filas, tot_I = calcula(o)
+    # Si la orden sigue en camino y lo pagado va por debajo del estimado, se usa el estimado.
+    o['sc_estimado'] = False
+    _base = sum(f['J'] for f in filas)
+    _est = _base * PCT_ADUANA.get(prov, PCT_ADUANA_DEF)
+    if nombre in EN_CAMINO and _est > o['sc']:
+        o['sc_pagado'] = o['sc']
+        o['sc'] = _est
+        o['sc_estimado'] = True
+        filas, tot_I = calcula(o)      # se rehace la tabla ya con la aduana estimada
+        print('  Aduana estimada %-16s pagado %9.2f -> estimado %9.2f  (%s al %.0f%%)'
+              % (nombre, o['sc_pagado'], _est, prov, PCT_ADUANA.get(prov, PCT_ADUANA_DEF) * 100))
     inv = inversion.get(_norm(nombre), {})
     inv_mxn = inv.get('total_mxn') or None
     if inv_mxn:
@@ -213,7 +243,14 @@ for nombre in sorted(ordenes, key=_clave):
                money(f['pant'])))
 
     aviso = ''
-    if not o['sc']:
+    if o.get('sc_estimado'):
+        _pg = o.get('sc_pagado', 0.0)
+        aviso = ('<div class="aviso">📦 <b>Aduana estimada al %.0f%%.</b> Esta orden todavía viene '
+                 'en camino y la Shop and Cross se paga caja por caja: llevas <b>$%s MXN</b> '
+                 'pagados de <b>$%s MXN</b> estimados. El costo por pieza usa el estimado para que '
+                 'no te salga barato; cuando llegue completa se cambia solo por lo real.</div>'
+                 % (PCT_ADUANA.get(prov, PCT_ADUANA_DEF) * 100, money(_pg), money(o['sc'])))
+    elif not o['sc']:
         aviso = ('<div class="aviso">⚠️ Esta orden todavía no tiene Shop and Cross pagado. '
                  'El costo por pieza está <b>incompleto</b> — le falta la aduana.</div>')
     elif sin_sku:
@@ -235,7 +272,7 @@ for nombre in sorted(ordenes, key=_clave):
     <div class="dato"><span>Shipping</span><b>$%s <i>US</i></b></div>
     <div class="dato pct"><span>%% de shipping</span><b>%.2f%%</b><i class="sub">shipping ÷ costo</i></div>
     <div class="dato"><span>Comisión Alibaba</span><b>3%%</b></div>
-    <div class="dato"><span>Shop and Cross</span><b>$%s <i>MXN</i></b></div>
+    <div class="dato"><span>Shop and Cross%s</span><b>$%s <i>MXN</i></b>%s</div>
     <div class="dato pct"><span>%% Shop and Cross</span><b>%.2f%%</b><i class="sub">aduana ÷ compra en pesos</i></div>
     <div class="dato"><span>Tipo de cambio</span><b>%.0f</b></div>
     <div class="dato fuerte"><span>Costo total puesto</span><b>$%s <i>MXN</i></b></div>
@@ -256,7 +293,11 @@ for nombre in sorted(ordenes, key=_clave):
     <tbody>%s</tbody>
   </table></div></div>
 </section>""" % (nombre, nombre, nombre, money(o['costo']), money(o['shipping']),
-                 pct_ship * 100, money(o['sc']), pct_sc * 100, TC, money(costo_total_mxn, 0),
+                 pct_ship * 100,
+                 (' <i class="sub">estimada</i>' if o.get('sc_estimado') else ''),
+                 money(o['sc']),
+                 ('<i class="sub">pagados $%s</i>' % money(o.get('sc_pagado', 0.0))) if o.get('sc_estimado') else '',
+                 pct_sc * 100, TC, money(costo_total_mxn, 0),
                  money(inv_mxn, 0) if inv_mxn else '—', inv.get('pagos', '—'),
                  aviso, ''.join(trs)))
 
