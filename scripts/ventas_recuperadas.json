@@ -1,5 +1,5 @@
 {
-  "_nota": "Ventas que Shopify NO reporta porque la variante fue borrada y recreada al agregarle opciones. Verificado uno por uno: (1) la variante se recreo DENTRO de los ultimos 60 dias -- una recreacion mas vieja no puede esconder ventas de la ventana; y (2) la diferencia NO se explica por devoluciones. Regenerado el 9 sep 2026. Procedimiento en ACTUALIZAR.md.",
+  "_nota": "Ventas que Shopify NO reporta porque la variante fue borrada y recreada al agregarle opciones. Verificado uno por uno: (1) la variante se recreo DENTRO de los ultimos 60 dias -- una recreacion mas vieja no puede esconder ventas de la ventana; y (2) la diferencia NO se explica por devoluciones. Regenerado el 10 sep 2026 (mismos 10 SKU que ayer). Procedimiento en ACTUALIZAR.md.",
   "ventas": {
     "41353991156557": 11,
     "67201531075373": 4,
