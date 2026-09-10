@@ -68,6 +68,19 @@ for k, v in json.load(open(os.path.join(DATOS, 'zoey_ordenes.json'))).items():
 ordenes.update(json.load(open(os.path.join(DATOS, 'otros_ordenes.json'))))
 
 _inf = json.load(open(os.path.join(DATOS, 'informe_2026.json')))
+
+# El Shop and Cross de cada orden se toma SIEMPRE del informe, que es lo que de verdad se ha
+# pagado. Antes se guardaba a mano en el archivo de la orden y se quedaba atras: ZOEY260826 se
+# quedo en 0 aunque ya se habia pagado la aduana (Eduardo, 10 sep 2026).
+_sc_cambios = []
+for _k, _o in ordenes.items():
+    _n = _inf['sc'].get(_k)
+    if _n is not None and abs(_n - _o.get('sc', 0.0)) >= 0.01:
+        _sc_cambios.append((_k, _o.get('sc', 0.0), _n))
+        _o['sc'] = _n
+for _k, _a, _n in _sc_cambios:
+    print('  Shop and Cross %-16s %10.2f -> %10.2f' % (_k, _a, _n))
+
 def _norm(x):
     return _re.sub(r'[^A-Z0-9]', '', x.upper())
 inversion = {}
