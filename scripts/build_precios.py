@@ -178,17 +178,41 @@ for nombre in sorted(ordenes, key=_clave):
     prov = o.get('proveedor', 'ZOEY')
     P = por_prov[prov]
     filas, tot_I = calcula(o)
-    # Si la orden sigue en camino y lo pagado va por debajo del estimado, se usa el estimado.
+    # ---- ADUANA: lo pagado + lo que falta de las cajas sin pagar ----
+    # La Shop and Cross se paga caja por caja. Lo que manda NO es si la mercancia ya llego, sino
+    # si ya se pagaron todas las cajas (Eduardo, 10 sep 2026: ZOEY300726 llego a medias pero su
+    # aduana ya estaba pagada completa, y el estimado la inflaba).
+    #   1. Todas las cajas pagadas  -> lo pagado, sin estimar.
+    #   2. Faltan cajas y ya hay pagadas -> pagado + promedio de SUS PROPIAS cajas x las que faltan.
+    #   3. Ninguna pagada -> el porcentaje del proveedor, que es lo unico que hay.
     o['sc_estimado'] = False
+    o['sc_pagado'] = o['sc']
     _base = sum(f['J'] for f in filas)
-    _est = _base * PCT_ADUANA.get(prov, PCT_ADUANA_DEF)
-    if nombre in EN_CAMINO and _est > o['sc']:
-        o['sc_pagado'] = o['sc']
+    _cajas = o.get('cajas')
+    _pag = _inf.get('sc_cajas', {}).get(nombre, 0)
+    _est = None
+    _por = ''
+    _completa = bool(_cajas) and _pag >= _cajas
+    # Solo se estima en ordenes ABIERTAS: las que siguen en camino y aun no pagan todas sus cajas.
+    # Las viejas ya cerraron con lo que se pago (varias nunca tuvieron aduana) y no se tocan.
+    if _completa or nombre not in EN_CAMINO:
+        _est = None
+    elif _cajas and _pag > 0:
+        _prom = o['sc'] / _pag
+        _est = o['sc'] + _prom * (_cajas - _pag)
+        _por = '%d de %d cajas pagadas, las %d que faltan a $%s c/u' % (
+            _pag, _cajas, _cajas - _pag, money(_prom))
+    elif _pag == 0:
+        _est = _base * PCT_ADUANA.get(prov, PCT_ADUANA_DEF)
+        _por = 'ninguna caja pagada todavia, %s al %.0f%%' % (
+            prov, PCT_ADUANA.get(prov, PCT_ADUANA_DEF) * 100)
+    if _est and _est > o['sc']:
         o['sc'] = _est
         o['sc_estimado'] = True
+        o['sc_porque'] = _por
         filas, tot_I = calcula(o)      # se rehace la tabla ya con la aduana estimada
-        print('  Aduana estimada %-16s pagado %9.2f -> estimado %9.2f  (%s al %.0f%%)'
-              % (nombre, o['sc_pagado'], _est, prov, PCT_ADUANA.get(prov, PCT_ADUANA_DEF) * 100))
+        print('  Aduana estimada %-16s pagado %9.2f -> %9.2f   (%s)'
+              % (nombre, o['sc_pagado'], _est, _por))
     inv = inversion.get(_norm(nombre), {})
     inv_mxn = inv.get('total_mxn') or None
     if inv_mxn:
@@ -245,11 +269,11 @@ for nombre in sorted(ordenes, key=_clave):
     aviso = ''
     if o.get('sc_estimado'):
         _pg = o.get('sc_pagado', 0.0)
-        aviso = ('<div class="aviso">📦 <b>Aduana estimada al %.0f%%.</b> Esta orden todavía viene '
-                 'en camino y la Shop and Cross se paga caja por caja: llevas <b>$%s MXN</b> '
-                 'pagados de <b>$%s MXN</b> estimados. El costo por pieza usa el estimado para que '
-                 'no te salga barato; cuando llegue completa se cambia solo por lo real.</div>'
-                 % (PCT_ADUANA.get(prov, PCT_ADUANA_DEF) * 100, money(_pg), money(o['sc'])))
+        aviso = ('<div class="aviso">📦 <b>Aduana estimada.</b> La Shop and Cross se paga caja por '
+                 'caja: %s. Llevas <b>$%s MXN</b> pagados y la tabla usa <b>$%s MXN</b> para que el '
+                 'costo por pieza no te salga barato. En cuanto se paguen todas las cajas, se '
+                 'cambia solo por lo real.</div>'
+                 % (o.get('sc_porque', ''), money(_pg), money(o['sc'])))
     elif not o['sc']:
         aviso = ('<div class="aviso">⚠️ Esta orden todavía no tiene Shop and Cross pagado. '
                  'El costo por pieza está <b>incompleto</b> — le falta la aduana.</div>')
