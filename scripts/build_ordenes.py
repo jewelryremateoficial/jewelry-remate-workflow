@@ -622,7 +622,16 @@ document.getElementById('xlsx').onclick=async function(){
     // FOTOS EN HD Y RECORTADAS AL PRODUCTO (Eduardo, 18 ago 2026).
     // La pagina usa miniaturas de 120x120 para ir ligera; el CDN de Shopify sirve el mismo
     // archivo en grande cambiando el sufijo del nombre, asi que para el Excel se pide 1024.
-    function hdURL(u){return u.replace(/_\d+x\d+(?=\.[a-z]+)/i,'_1024x1024')}
+    // El catalogo trae la miniatura de 120 px, que sirve para la tabla pero se ve borrosa en el
+    // Excel: al recortarle el fondo blanco el producto queda de ~60 px y luego hay que estirarlo.
+    // Para la descarga se le pide al CDN de Shopify la imagen grande (1600 px de ancho, sin alto
+    // fijo para no deformarla). Si esa no existe, mas abajo se cae de vuelta a la miniatura.
+    function hdURL(u){
+      u=u.replace(/([?&])height=\d+/gi,'$1').replace(/([?&])width=\d+/gi,'$1width=1600');
+      u=u.replace(/[?&]{2,}/g,'&').replace(/\?&/,'?').replace(/[?&]$/,'');
+      if(!/[?&]width=/.test(u))u+=(u.indexOf('?')>=0?'&':'?')+'width=1600';
+      return u.replace(/_\d+x\d+(?=\.[a-z]+)/i,'_1600x1600');
+    }
     // Quita el fondo blanco sobrante para que el producto llene el cuadro.
     async function recorta(blob){
       var bmp=await createImageBitmap(blob);
@@ -648,7 +657,7 @@ document.getElementById('xlsx').onclick=async function(){
       // Se respeta la forma real del producto: nada de cuadrar con blanco, porque un anillo
       // ancho y bajito quedaba diminuto en medio de una celda enorme.
       var cw=maxX-minX+1, ch=maxY-minY+1;
-      var esc=Math.min(1,560/Math.max(cw,ch));   // nitido sin inflar el archivo
+      var esc=Math.min(1,900/Math.max(cw,ch));   // nitido sin inflar el archivo
       var ow=Math.max(1,Math.round(cw*esc)), oh=Math.max(1,Math.round(ch*esc));
       var o2=document.createElement('canvas');o2.width=ow;o2.height=oh;
       var g2=o2.getContext('2d');
