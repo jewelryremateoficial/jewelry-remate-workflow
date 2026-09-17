@@ -40,7 +40,7 @@
     "variant": "Default Title",
     "sku": "75249151006253",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -48,7 +48,7 @@
     "variant": "Default Title",
     "sku": "66148671022797",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -56,7 +56,7 @@
     "variant": "2cm",
     "sku": "77275241042893",
     "qty": 3,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -64,7 +64,7 @@
     "variant": "",
     "sku": "28214351018381",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -72,7 +72,7 @@
     "variant": "",
     "sku": "28214351135885",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -80,7 +80,7 @@
     "variant": "Default Title",
     "sku": "24780443529645",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -88,7 +88,7 @@
     "variant": "Default Title",
     "sku": "93098782555053",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -96,7 +96,7 @@
     "variant": "Default Title",
     "sku": "93098782656749",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -104,7 +104,7 @@
     "variant": "Default Title",
     "sku": "98946151012205",
     "qty": 5,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -112,7 +112,7 @@
     "variant": "40cm con 6.5cm de extension.",
     "sku": "43047193870476",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -120,7 +120,7 @@
     "variant": "44.5cm",
     "sku": "25156441068705",
     "qty": 4,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -128,7 +128,7 @@
     "variant": "Default Title",
     "sku": "99781783430157",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -136,7 +136,7 @@
     "variant": "",
     "sku": "37561641148109",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -144,7 +144,7 @@
     "variant": "",
     "sku": "37561641243021",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -152,7 +152,7 @@
     "variant": "",
     "sku": "37561641334541",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -160,7 +160,7 @@
     "variant": "",
     "sku": "37561641089357",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -168,7 +168,7 @@
     "variant": "16cm con 5cm de extension",
     "sku": "62328733504652",
     "qty": 8,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -176,7 +176,7 @@
     "variant": "16cm con 4cm de extension (small)",
     "sku": "73582401057453",
     "qty": 4,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -192,7 +192,7 @@
     "variant": "Default Title",
     "sku": "34163623457677",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -200,7 +200,7 @@
     "variant": "",
     "sku": "37561642403405",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -208,7 +208,7 @@
     "variant": "",
     "sku": "37561642593229",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -216,7 +216,7 @@
     "variant": "",
     "sku": "37561642624301",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -224,7 +224,7 @@
     "variant": "",
     "sku": "37561642789837",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -232,7 +232,7 @@
     "variant": "",
     "sku": "37561642845197",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -240,7 +240,7 @@
     "variant": "25cm",
     "sku": "42834310237836",
     "qty": 4,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -248,7 +248,7 @@
     "variant": "42/8MX",
     "sku": "23025461105261",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -256,7 +256,7 @@
     "variant": "44/9MX",
     "sku": "23025461238029",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -264,7 +264,7 @@
     "variant": "",
     "sku": "23694451333869",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -272,7 +272,7 @@
     "variant": "44",
     "sku": "24531061030477",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -280,7 +280,7 @@
     "variant": "44/9MX",
     "sku": "23025461465709",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -288,7 +288,7 @@
     "variant": "",
     "sku": "23694451458157",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -296,7 +296,7 @@
     "variant": "25cm",
     "sku": "72002489515276",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -304,7 +304,7 @@
     "variant": "24MX (38UK)",
     "sku": "70332771093261",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -312,7 +312,7 @@
     "variant": "25MX (39UK)",
     "sku": "91345321754957",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -320,7 +320,7 @@
     "variant": "25cm",
     "sku": "72002489673612",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z530Y1A0491985647"
    },
    {
@@ -328,7 +328,7 @@
     "variant": "38/24MX",
     "sku": "24780442908333",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -336,7 +336,7 @@
     "variant": "44cm de largo x 25cm de alto x 20cm de ancho",
     "sku": "43728083774252",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -344,7 +344,7 @@
     "variant": "HIGH QUALITY",
     "sku": "43728136587308",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -360,7 +360,7 @@
     "variant": "",
     "sku": "37561641588205",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -368,7 +368,7 @@
     "variant": "Default Title",
     "sku": "43794531550861",
     "qty": 4,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -376,7 +376,7 @@
     "variant": "Default Title",
     "sku": "53794531481933",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -384,7 +384,7 @@
     "variant": "Default Title",
     "sku": "34163622241805",
     "qty": 1,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -392,7 +392,7 @@
     "variant": "HIGH QUALITY",
     "sku": "93098781536397",
     "qty": 4,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -400,7 +400,7 @@
     "variant": "",
     "sku": "37561641612493",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -408,7 +408,7 @@
     "variant": "",
     "sku": "37561641721517",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -416,7 +416,7 @@
     "variant": "",
     "sku": "37561641876877",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    },
    {
@@ -424,7 +424,7 @@
     "variant": "42/8MX",
     "sku": "23025461018285",
     "qty": 2,
-    "arrived": false,
+    "arrived": true,
     "guia": "1Z16GA850302996406"
    }
   ]
@@ -4093,7 +4093,7 @@
     "variant": "22.5.cmx15cm",
     "sku": "64e78f8c69235",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSA LLM BLACK",
@@ -4107,7 +4107,7 @@
     "variant": "24cm x 15cm",
     "sku": "64e78f2fafa3d",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO A TIEDIE",
@@ -4142,14 +4142,14 @@
     "variant": "19cm de alto x 23.5cm de ancho",
     "sku": "43728083210732",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO CC N°25 WHITE BROWN",
     "variant": "",
     "sku": "24780442101677",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO DE VIAJE  LV KEEPALL 45",
@@ -4177,14 +4177,14 @@
     "variant": "22.5.cmx15cm",
     "sku": "64e78f8d3897d",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO GC BUCKET EMBLEM",
     "variant": "",
     "sku": "99781782406413",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO H EVELYNE 29",
@@ -4205,7 +4205,7 @@
     "variant": "",
     "sku": "93098783094061",
     "qty": 13,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO LW ANAGRAM",
@@ -4233,14 +4233,14 @@
     "variant": "",
     "sku": "29953902560653",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL ICARE NAPA BLACK",
     "variant": "",
     "sku": "29953902655501",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL JAMIE SHOPPING",
@@ -4331,7 +4331,7 @@
     "variant": "HIGH QUALITY",
     "sku": "34163621960461",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA G SAINT-MARC GREY",
@@ -4562,7 +4562,7 @@
     "variant": "",
     "sku": "93098781839789",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA CD PETIT",
