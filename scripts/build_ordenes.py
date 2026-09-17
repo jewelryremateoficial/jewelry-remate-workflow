@@ -488,16 +488,17 @@ var edits={};try{edits=JSON.parse(localStorage.getItem(EKEY))||{}}catch(e){}
 function esave(){localStorage.setItem(EKEY,JSON.stringify(edits));localStorage.setItem(ETKEY,new Date().toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}))}
 // Siembra unica: deja en PEDIR las cantidades del Excel de HAIFENG080926. Corre una sola vez
 // por navegador; a partir de ahi las ediciones de Eduardo mandan y no se vuelven a pisar.
-var SKEY='oc_seed_haifeng080926';
-try{ if(!localStorage.getItem(SKEY)){ var _n=0;
-  for(var _k in SEED_0809){ if(edits[_k]==null){ edits[_k]=SEED_0809[_k]; _n++; } }
-  if(_n){ esave(); } localStorage.setItem(SKEY,'1'); } }catch(e){}
+// La orden HAIFENG080926 ya se pago y paso a 'en camino' (17 sep 2026). Se limpian de una vez
+// las cantidades que se habian sembrado: ahora manda la sugerencia, que ya descuenta lo pedido.
+var SKEY='oc_seed_haifeng080926', UKEY='oc_unseed_haifeng080926';
+try{ if(!localStorage.getItem(UKEY)){ var _n=0;
+  for(var _k in SEED_0809){ if(edits[_k]!=null){ delete edits[_k]; _n++; } }
+  if(_n){ esave(); }
+  localStorage.removeItem(SKEY); localStorage.setItem(UKEY,'1'); } }catch(e){}
 function draftbar(){var n=Object.keys(edits).length;var el=document.getElementById('draft');
  var av='';
- if(localStorage.getItem(SKEY)){var ns=0;for(var _s in SEED_0809)ns++;
-  av='<div style="margin-bottom:6px">📥 <b>Cantidades cargadas de la orden HAIFENG080926</b> — '+ns+' productos del Excel del 8 de septiembre ya vienen escritos en <b>PEDIR</b>. Modifícalos y agrega los que falten; lo que edites se guarda solo. <a href="#" id="undoseed">Quitar estas cantidades</a></div>';}
- if(!n){el.innerHTML=av;bindUndo();return}
- el.innerHTML=av+'💾 <b>Borrador guardado automáticamente</b> — '+n+' cantidad'+(n>1?'es':'')+' editada'+(n>1?'s':'')+' por ti · última edición: '+(localStorage.getItem(ETKEY)||'')+' · tus cambios se conservan aunque cierres la página o se actualicen los datos.';bindUndo();}
+ if(!n){el.innerHTML=av;return}
+ el.innerHTML=av+'💾 <b>Borrador guardado automáticamente</b> — '+n+' cantidad'+(n>1?'es':'')+' editada'+(n>1?'s':'')+' por ti · última edición: '+(localStorage.getItem(ETKEY)||'')+' · tus cambios se conservan aunque cierres la página o se actualicen los datos.';}
 function bindUndo(){var u=document.getElementById('undoseed');if(!u)return;
  u.onclick=function(e){e.preventDefault();
   if(!confirm('Se quitan las cantidades que vinieron del Excel de HAIFENG080926. Lo que tú hayas escrito encima también se pierde. ¿Seguimos?'))return;
@@ -506,9 +507,7 @@ function bindUndo(){var u=document.getElementById('undoseed');if(!u)return;
 function rowHTML(r,tm,noSug){
   var out=isOutlet(r);
   var s=out?0:(edits[r.k]!=null?edits[r.k]:(noSug?0:sug(r,tm)));
-  // Marca visual: si el producto ya venia en el Excel de la orden HAIFENG080926.
-  var enODC=(typeof SEED_0809!=='undefined'&&SEED_0809[r.k]!=null&&localStorage.getItem(SKEY));
-  var faltaODC=(!enODC&&localStorage.getItem(SKEY)&&r.v==='HAIFENG'&&r.st===''&&!out&&s>0);
+  var enODC=false, faltaODC=false;   // la orden 08/09 ya se pidio: sus marcas ya no aplican
   var t=inTransit(r,tm);
   var chips='';var u=urg(r);
   if(enODC)chips+=' <span class="chip enodc">\u{1F4E5} Ya está en la orden 08/09 · '+SEED_0809[r.k]+' pzs</span>';
