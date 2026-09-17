@@ -192,7 +192,9 @@ for nombre in sorted(ordenes, key=_clave):
     _pag = _inf.get('sc_cajas', {}).get(nombre, 0)
     _est = None
     _por = ''
-    _completa = bool(_cajas) and _pag >= _cajas
+    # 'aduana_completa' lo pone Eduardo cuando ya se pagaron todas las cajas de una orden que
+    # sigue en camino: el estimado ya no aplica aunque la mercancia no haya llegado.
+    _completa = o.get('aduana_completa') or (bool(_cajas) and _pag >= _cajas)
     # Solo se estima en ordenes ABIERTAS: las que siguen en camino y aun no pagan todas sus cajas.
     # Las viejas ya cerraron con lo que se pago (varias nunca tuvieron aduana) y no se tocan.
     if _completa or nombre not in EN_CAMINO:
