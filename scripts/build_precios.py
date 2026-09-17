@@ -265,7 +265,10 @@ for nombre in sorted(ordenes, key=_clave):
                cls, html.escape(tip), html.escape(f['sku']), f['M'],
                ('<input class="pin" value="%s" inputmode="decimal">' % money(f['pact'], 0))
                if (f['sku'] and f['pact']) else
-               ('sin SKU' if not f['sku'] else 'no está'),
+               # Producto nuevo: todavia no tiene precio en Shopify, pero Eduardo necesita poder
+               # capturarlo aqui mismo (10 sep 2026). Se deja el campo vacio y se marca "nuevo".
+               ('sin SKU' if not f['sku'] else
+                '<input class="pin nuevo" value="" placeholder="—" inputmode="decimal">'),
                money(f['pant'])))
 
     aviso = ''
@@ -280,8 +283,9 @@ for nombre in sorted(ordenes, key=_clave):
         aviso = ('<div class="aviso">⚠️ Esta orden todavía no tiene Shop and Cross pagado. '
                  'El costo por pieza está <b>incompleto</b> — le falta la aduana.</div>')
     elif sin_sku:
-        aviso = ('<div class="aviso leve">%d producto%s de esta orden ya no está%s en Shopify, '
-                 'así que no tienen precio de venta que mostrar.</div>'
+        aviso = ('<div class="aviso leve">%d producto%s de esta orden no está%s en Shopify. '
+                 'Su casilla de precio viene vacía y en amarillo: escríbele el precio ahí mismo y '
+                 'se guarda en la lista de pendientes.</div>'
                  % (sin_sku, 's' if sin_sku > 1 else '', 'n' if sin_sku > 1 else ''))
 
     P['bloques'].append("""
@@ -547,6 +551,9 @@ border:1.5px solid transparent;border-radius:6px;background:transparent;color:in
 font-variant-numeric:tabular-nums}
 .pin:hover{border-color:var(--line);background:#fff}
 .pin:focus{outline:none;border-color:var(--blue);background:#fff}
+.pin.nuevo{border-color:#c9a227;background:#fffdf2}
+.pin.nuevo::placeholder{color:#b08900;font-weight:700}
+td.pact.sinprecio::after{content:"nuevo — ponle precio";display:block;font-size:9.5px;font-weight:600;color:#b08900;line-height:1.1;margin-top:1px}
 td.pact.pend{background:var(--warn-bg)!important}
 td.pact.pend .pin{color:var(--warn)}
 td.pact.pend::after{content:"pendiente";display:block;font-size:9.5px;font-weight:600;
@@ -674,14 +681,17 @@ function barra(){
 document.querySelectorAll('td.pact[data-sku]').forEach(function(td){
   var inp=td.querySelector('.pin'); if(!inp)return;
   td.dataset.orig=inp.value;
+  // Producto que todavia no existe en Shopify: se marca mientras no tenga precio capturado.
   var sku=td.dataset.sku;
   // Si el precio pendiente ya es el que trae Shopify, es que YA SE APLICO: se limpia solo.
   if(pend[sku]!=null&&pend[sku]===num(td.dataset.orig)){delete pend[sku];aplicados++}
   if(pend[sku]!=null)inp.value=fmt(pend[sku]);
+  if(inp.classList.contains('nuevo'))td.classList.toggle('sinprecio',!num(inp.value));
   pinta(td);
   inp.onfocus=function(){inp.select()};
   inp.oninput=function(){
     var v=num(inp.value), orig=num(td.dataset.orig);
+    if(inp.classList.contains('nuevo'))td.classList.toggle('sinprecio',!v);
     if(!v||v===orig){delete pend[sku]}else{pend[sku]=v}
     localStorage.setItem(PKEY,JSON.stringify(pend));
     pinta(td); barra();
