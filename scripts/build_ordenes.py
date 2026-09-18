@@ -488,13 +488,19 @@ var edits={};try{edits=JSON.parse(localStorage.getItem(EKEY))||{}}catch(e){}
 function esave(){localStorage.setItem(EKEY,JSON.stringify(edits));localStorage.setItem(ETKEY,new Date().toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}))}
 // Siembra unica: deja en PEDIR las cantidades del Excel de HAIFENG080926. Corre una sola vez
 // por navegador; a partir de ahi las ediciones de Eduardo mandan y no se vuelven a pisar.
-// La orden HAIFENG080926 ya se pago y paso a 'en camino' (17 sep 2026). Se limpian de una vez
-// las cantidades que se habian sembrado: ahora manda la sugerencia, que ya descuenta lo pedido.
-var SKEY='oc_seed_haifeng080926', UKEY='oc_unseed_haifeng080926';
-try{ if(!localStorage.getItem(UKEY)){ var _n=0;
-  for(var _k in SEED_0809){ if(edits[_k]!=null){ delete edits[_k]; _n++; } }
-  if(_n){ esave(); }
-  localStorage.removeItem(SKEY); localStorage.setItem(UKEY,'1'); } }catch(e){}
+// Borron y cuenta nueva (Eduardo, 18 sep 2026). La orden HAIFENG080926 ya se pago y paso a
+// 'en camino', asi que TODO lo que quedaba capturado en PEDIR ya no sirve: eran cantidades de
+// una orden que ya se hizo. Se borra el borrador completo -- no solo lo que se habia sembrado,
+// tambien lo que Eduardo escribio a mano -- para que mande la sugerencia, que ya descuenta
+// stock y lo que viene en camino. Corre UNA sola vez por navegador; despues sus ediciones
+// nuevas se respetan como siempre.
+var RKEY0='oc_reset_18sep2026';
+try{ if(!localStorage.getItem(RKEY0)){
+  localStorage.removeItem(EKEY); localStorage.removeItem(ETKEY);
+  localStorage.removeItem('oc_seed_haifeng080926');
+  localStorage.removeItem('oc_unseed_haifeng080926');
+  for(var _k in edits) delete edits[_k];
+  localStorage.setItem(RKEY0,'1'); } }catch(e){}
 function draftbar(){var n=Object.keys(edits).length;var el=document.getElementById('draft');
  var av='';
  if(!n){el.innerHTML=av;return}
