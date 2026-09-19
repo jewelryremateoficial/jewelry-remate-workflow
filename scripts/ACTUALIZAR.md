@@ -8,7 +8,11 @@ en la memoria (reglas-centro-ordenes) y en el encabezado de scripts/build_ordene
 
 1. **Ventas 60 días** (2 consultas ShopifyQL, guardar el resultado JSON tal cual):
    - `FROM sales SHOW net_items_sold, gross_sales, discounts, net_sales GROUP BY product_variant_sku, product_title, product_variant_title WHERE product_vendor = 'HAIFENG' SINCE -60d UNTIL today ORDER BY net_items_sold DESC LIMIT 1000` → `sales_HAIFENG.json`
-   - Igual pero `WHERE product_vendor != 'HAIFENG'` y con `product_vendor` en el GROUP BY → `sales_OTROS.json`
+   - Igual pero `WHERE product_vendor != 'HAIFENG'` y con `product_vendor` **como PRIMER campo del
+     GROUP BY** → `sales_OTROS.json`. El orden importa: `build_ordenes.py` lee ese archivo por
+     posicion (sku=1, title=2, variant_title=3, net_items_sold=4), asi que el GROUP BY debe ser
+     `product_vendor, product_variant_sku, product_title, product_variant_title`. Si el vendor va
+     al final, el SKU se lee del titulo, no cruza nada y las ventas salen a la mitad sin avisar.
 2. **Ventas 90 días**: mismas dos consultas con `SINCE -90d` → `sales90_HAIFENG.json`, `sales90_OTROS.json`
 3. **Catálogo completo** (paginado de 250 en 250 hasta hasNextPage=false) → `vp_001.json`, `vp_002.json`, …:
    `query($after:String){ productVariants(first:250, after:$after){ pageInfo{hasNextPage endCursor} nodes{ id title sku price compareAtPrice inventoryQuantity product{ id title vendor status featuredImage{ url(transform:{maxWidth:120,maxHeight:120}) } } } } }`
