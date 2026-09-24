@@ -345,7 +345,7 @@ _MES_CORTO = {'01': 'Ene', '02': 'Feb', '03': 'Mar', '04': 'Abr', '05': 'May', '
 def _prov_de(o):
     for k, v in (('HAIFENG', 'HAIFENG'), ('ZOEY', 'ZOEY'), ('CYNTHIA', 'CYNTHIA CAO'),
                  ('NANCY', 'NANCY VIP'), ('DINADU', 'DINA DU'), ('COCOMA', 'COCOMA'),
-                 ('MOLLY', 'MOLLY')):
+                 ('MOLLY', 'MOLLY'), ('DONGAI', 'DONGAI')):
         if o.startswith(k):
             return v
     return None
