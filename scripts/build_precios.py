@@ -149,6 +149,17 @@ def money(v, dec=2):
     return '—' if v is None else '{:,.{}f}'.format(v, dec)
 
 
+def clave_pin(orden, i, f):
+    """Clave con la que se guarda el precio capturado a mano.
+
+    Normalmente es el SKU. Pero en los ODC vienen renglones SIN SKU (productos que
+    todavia no se dan de alta en Shopify) y esos tambien llevan cuadrito para capturar
+    precio. Si todos compartieran la clave vacia, lo que se escribe en uno aparecería
+    en todos. Por eso se les arma una clave propia con la orden y el numero de renglon.
+    """
+    return f['sku'] or 'SINSKU:%s:%d' % (orden, i)
+
+
 def semaforo(f):
     """Que tan sano es el precio de venta contra el costo real."""
     if not f['pact'] or not f['M']:
@@ -262,13 +273,14 @@ for nombre in sorted(ordenes, key=_clave):
                money(f['I']), money(f['J']), '%.4f%%' % (f['K'] * 100), money(f['L']),
                money(f['M']),
                money(f['M'] * ROAS[0]), money(f['M'] * ROAS[1]), money(f['M'] * ROAS[2]),
-               cls, html.escape(tip), html.escape(f['sku']), f['M'],
+               cls, html.escape(tip), html.escape(clave_pin(nombre, i, f)), f['M'],
                ('<input class="pin" value="%s" inputmode="decimal">' % money(f['pact'], 0))
-               if (f['sku'] and f['pact']) else
+               if f['pact'] else
                # Producto nuevo: todavia no tiene precio en Shopify, pero Eduardo necesita poder
                # capturarlo aqui mismo (10 sep 2026). Se deja el campo vacio y se marca "nuevo".
-               ('sin SKU' if not f['sku'] else
-                '<input class="pin nuevo" value="" placeholder="—" inputmode="decimal">'),
+               # Las lineas SIN SKU tambien llevan cuadrito: en el ODC vienen productos que aun
+               # no se dan de alta y hay que poderles capturar el precio (Reyna, 24 sep 2026).
+               '<input class="pin nuevo" value="" placeholder="—" inputmode="decimal">',
                money(f['pant'])))
 
     aviso = ''
