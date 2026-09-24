@@ -93,3 +93,7 @@ Eduardo Zayas dirige **Jewelry Remate MX** (tienda Shopify: jewelryrematemx.com,
 - Acceso por llave SSH (la llave "claude-backup-jewelry" de la compu original y la "eduardo-horizen-vps" de la otra están autorizadas en el panel de Hostinger). Si una compu nueva necesita acceso: agregar su llave pública en hPanel → VPS → Claves SSH.
 - Para bajar el respaldo desde cualquier compu: `scp -r root@2.24.199.94:/root/respaldos/jewelry-remate-workflow ~/Documents/`
 - Para actualizar el respaldo desde la compu que tenga el repo: `rsync -az --delete --exclude 'jewelry-remate-workflow/' ~/Documents/"Jewelry 2026"/ root@2.24.199.94:/root/respaldos/jewelry-remate-workflow/`
+
+## 7. OTROS PROCESOS FIJOS
+
+- **Preparar borradores nuevos** (etiquetas + tipo + descripción "POR COMPLETAR" + etiqueta `FALTA-INFO`; las colecciones entran solas por etiqueta): seguir `scripts/PREPARAR-BORRADORES.md` al pie de la letra. Generador: `scripts/preparar_borradores.py`. Última corrida: 24 sep 2026, 113 productos (DONGAI, NANCY VIP, ZOEY, HAIFENG).
