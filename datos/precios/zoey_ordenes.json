@@ -7145,10 +7145,11 @@
   "cajas": 7
  },
  "ZOEY260826": {
-  "hoja": "(archivo de la orden en Drive)",
-  "costo": 11778.0,
+  "hoja": "ODC del Drive (1aicX001chVE...), verificado contra TOTAL ODC",
+  "costo": 11458.0,
   "shipping": 2432.1,
   "sc": 0.0,
+  "cajas": 7,
   "lineas": [
    {
     "sku": "79684371047438",
@@ -7272,7 +7273,7 @@
    },
    {
     "sku": "43728083774252",
-    "prod": "BOLSO DE VIAJE  LV KEEPALL 45",
+    "prod": "BOLSO DE VIAJE LV KEEPALL 45",
     "var": "44cm de largo x 25cm de alto x 20cm de ancho",
     "cant": 1,
     "cu": 60.0,
@@ -7400,7 +7401,7 @@
    },
    {
     "sku": "29953902810253",
-    "prod": "BOLSO YSL LOULOU BLACK GOLD",
+    "prod": "BOLSO YSL LOULOU MINI BLACK GOLD",
     "var": "HIGH QUALITY",
     "cant": 4,
     "cu": 58.0,
@@ -7728,7 +7729,7 @@
    },
    {
     "sku": "15711173666157",
-    "prod": "PERFUME, DELINA EXCLUSIF EAU DE PARFUM, 75 ML",
+    "prod": "PERFUME DELINA EXCLUSIF EAU DE PARFUM 75 ML",
     "var": "",
     "cant": 2,
     "cu": 18.0,
@@ -7890,7 +7891,7 @@
     "sku": "42834310205068",
     "prod": "SANDALIAS CD MULE",
     "var": "24cm",
-    "cant": 5,
+    "cant": 2,
     "cu": 35.0,
     "pant": null
    },
@@ -7898,7 +7899,7 @@
     "sku": "42834310237836",
     "prod": "SANDALIAS CD MULE",
     "var": "25cm",
-    "cant": 3,
+    "cant": 2,
     "cu": 35.0,
     "pant": null
    },
@@ -7906,7 +7907,7 @@
     "sku": "34163622623149",
     "prod": "SANDALIAS LV MULE BOM DIA",
     "var": "38/24mx",
-    "cant": 2,
+    "cant": 1,
     "cu": 50.0,
     "pant": null
    },
@@ -7992,7 +7993,7 @@
    },
    {
     "sku": "72002489515276",
-    "prod": "ZAPATILLA J’ADIOR",
+    "prod": "ZAPATILLA J'ADIOR",
     "var": "25cm",
     "cant": 1,
     "cu": 58.0,
@@ -8002,7 +8003,7 @@
     "sku": "70332771093261",
     "prod": "ZAPATILLAS CD HEELED SANDAL",
     "var": "24MX (38UK)",
-    "cant": 5,
+    "cant": 3,
     "cu": 65.0,
     "pant": null
    },
@@ -8036,6 +8037,14 @@
     "var": "",
     "cant": 2,
     "cu": 18.0,
+    "pant": null
+   },
+   {
+    "sku": "34163621418381",
+    "prod": "PERFUME JEAN PAUL SCANDAL WOMEN (out of stock)",
+    "var": "REGULAR",
+    "cant": 1,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -8088,71 +8097,71 @@
    },
    {
     "sku": "",
-    "prod": "",
+    "prod": "(sin nombre en el ODC)",
     "var": "",
     "cant": 5,
     "cu": 10.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "80636131095949",
+    "prod": "SANDALIAS LV SUNSET",
     "var": "38/24cm",
     "cant": 2,
     "cu": 39.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "80636131190861",
+    "prod": "SANDALIAS GC SLIDE HEBILLAS",
     "var": "42/28MX",
     "cant": 2,
     "cu": 58.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "80636131277293",
+    "prod": "SANDALIAS GC FLIP FLOPS",
     "var": "38/24cm",
     "cant": 1,
     "cu": 55.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "44",
+    "sku": "80636131310061",
+    "prod": "SANDALIAS GC FLIP FLOPS",
+    "var": "44/7",
     "cant": 1,
     "cu": 55.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "80636131470509",
+    "prod": "SANDALIAS CD HEBILLAS",
     "var": "42/28MX",
     "cant": 2,
     "cu": 53.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "80636131562029",
+    "prod": "SANDALIAS CD AQUA BLACK",
     "var": "42/28MX",
     "cant": 2,
     "cu": 53.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "80636131655245",
+    "prod": "SANDALIAS CD RIVERA",
     "var": "42/28MX",
     "cant": 2,
     "cu": 48.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "80636131760877",
+    "prod": "SANDALIAS CD OBLIQUE",
     "var": "42/28MX",
     "cant": 2,
     "cu": 45.0,
@@ -8160,23 +8169,31 @@
    },
    {
     "sku": "",
-    "prod": "",
+    "prod": "(sin nombre en el ODC — out of stock)",
+    "var": "L",
+    "cant": 2,
+    "cu": 0.0,
+    "pant": null
+   },
+   {
+    "sku": "80636131854093",
+    "prod": "CAMISETA CD COUTURE",
     "var": "L",
     "cant": 2,
     "cu": 25.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "91345323018381",
+    "prod": "ZAPATILLAS YSL SLINGBACK",
     "var": "40",
     "cant": 2,
     "cu": 65.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "679be97d4c737",
+    "prod": "SUÉTER DE BOTÓN YSL",
     "var": "M",
     "cant": 3,
     "cu": 38.0,
@@ -8184,22 +8201,29 @@
    },
    {
     "sku": "",
-    "prod": "",
-    "var": "",
+    "prod": "(sin nombre en el ODC)",
+    "var": "dominique",
     "cant": 1,
     "cu": 13.0,
     "pant": null
    },
    {
     "sku": "",
-    "prod": "",
-    "var": "",
+    "prod": "(sin nombre en el ODC)",
+    "var": "dominique",
     "cant": 1,
     "cu": 13.0,
     "pant": null
+   },
+   {
+    "sku": "28126144456875",
+    "prod": "LENTES MM OVAL BLACK GOLD (REGALO)",
+    "var": "",
+    "cant": 4,
+    "cu": 0.0,
+    "pant": null
    }
-  ],
-  "cajas": 7
+  ]
  },
  "ZOEY100926": {
   "hoja": "ODC del Drive (1mInvc8f2Dha...), verificado contra TOTAL ODC",
