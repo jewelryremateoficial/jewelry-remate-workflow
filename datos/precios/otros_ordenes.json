@@ -29981,7 +29981,8 @@
  },
  "NANCY220826": {
   "proveedor": "NANCY VIP",
-  "costo": 4018.94,
+  "hoja": "ODC del Drive (1Umikqq0zSK7...), verificado contra TOTAL ODC",
+  "costo": 4014.95,
   "shipping": 568.0,
   "sc": 0.0,
   "cajas": 4,
@@ -30108,7 +30109,7 @@
    },
    {
     "sku": "43047216775308",
-    "prod": "ARETES ESLABON LISO  GOLD",
+    "prod": "ARETES ESLABON LISO GOLD",
     "var": "",
     "cant": 1,
     "cu": 5.79,
@@ -30518,7 +30519,7 @@
     "sku": "63e0c0ea219d0",
     "prod": "PULSERA CLAVO GOLD DELGADA CON ZIRCONIA",
     "var": "17cm",
-    "cant": 9,
+    "cant": 8,
     "cu": 3.99,
     "pant": null
    },
@@ -30723,200 +30724,200 @@
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "35724720255684",
+    "prod": "COLLAR LV TWO COLOR",
     "var": "",
     "cant": 2,
     "cu": 7.49,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "20502742750210",
+    "prod": "PULSERA LV LOCK ME",
     "var": "",
     "cant": 2,
     "cu": 7.69,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "34133805095923",
+    "prod": "ARETES CC OVAL",
     "var": "GOLD",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "56108291640049",
+    "prod": "ARETES CC OVAL SILVER",
     "var": "SILVER",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "87527027959196",
+    "prod": "ARETES CC STRASS",
     "var": "",
     "cant": 2,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "56173787299092",
+    "prod": "ANILLO GC ICON",
     "var": "",
     "cant": 2,
     "cu": 7.69,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "69017560653661",
+    "prod": "ANILLO GC ICON WHITE",
     "var": "",
     "cant": 2,
     "cu": 7.69,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "13766570398275",
+    "prod": "PULSERA CD MEDALLON",
     "var": "",
     "cant": 3,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "85646546823497",
+    "prod": "ARETES CD MEDALLON",
     "var": "",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "18641240025024",
+    "prod": "ANILLO CD MEDALLON",
     "var": "",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "77591003195337",
+    "prod": "BRAZALETE CD CORE",
     "var": "",
     "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "65121573416207",
+    "prod": "PULSERA CD DOBLE TRENZADA",
     "var": "",
     "cant": 3,
     "cu": 8.19,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "76046472629709",
+    "prod": "ARETES C MAILLON TRIOMPHE",
     "var": "",
     "cant": 3,
     "cu": 4.89,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "30613325901214",
+    "prod": "PULSERA YSL CASSANDRE",
     "var": "",
     "cant": 3,
     "cu": 4.49,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "13109165263265",
+    "prod": "BRAZALETE YSL GOLD",
     "var": "",
     "cant": 2,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "64610234952021",
+    "prod": "BRAZALETE YSL SILVER",
     "var": "",
     "cant": 2,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "38748920518113",
+    "prod": "PULSERA YSL SILVER",
     "var": "",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "41377040162696",
+    "prod": "CARTERA YSL CASSANDRE BURGUNDY",
     "var": "",
     "cant": 3,
     "cu": 20.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "35755979484699",
+    "prod": "MONEDERO YSL ALL BLACK",
     "var": "",
     "cant": 3,
     "cu": 21.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "55091844867890",
+    "prod": "BOLSA POCHETTE YSL CHAROL RED",
     "var": "",
     "cant": 3,
     "cu": 29.39,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "90063708885147",
+    "prod": "TARJETERO YSL MATELASSE BLACK",
     "var": "",
     "cant": 3,
     "cu": 18.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "87069443152811",
+    "prod": "SANDALIAS H CHYPRE BROWN",
     "var": "45eur",
     "cant": 2,
     "cu": 15.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "99611698255261",
+    "prod": "SANDALIAS LV BLACK",
     "var": "44eur",
     "cant": 2,
     "cu": 18.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "79057440024981",
+    "prod": "SANDALIAS LV LOGO",
     "var": "44eur",
     "cant": 2,
     "cu": 18.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES BV ROSE GOLD-BLACK",
+    "sku": "34388952390409",
+    "prod": "SANDALIAS F BLACK",
     "var": "44eur",
     "cant": 2,
     "cu": 21.59,
