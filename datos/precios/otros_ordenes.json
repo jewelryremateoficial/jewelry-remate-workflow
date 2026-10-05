@@ -23015,118 +23015,6 @@
   ],
   "sc": 1352.3376
  },
- "MOLLY ABRIL Y MAY": {
-  "proveedor": "MOLLY",
-  "costo": 300.0,
-  "shipping": 0.0,
-  "lineas": [
-   {
-    "sku": "26853591099213",
-    "prod": "GORRA BARBAS EL MAGO",
-    "var": "#REF!",
-    "cant": 2.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591164749",
-    "prod": "GORRA THIRTY ONE FOREVER",
-    "var": "#REF!",
-    "cant": 2.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591497517",
-    "prod": "GORRA DANDY ONYX",
-    "var": "#REF!",
-    "cant": 2.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591330285",
-    "prod": "GORRA EL BARBAS CHROME",
-    "var": "#REF!",
-    "cant": 2.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591295821",
-    "prod": "GORRA EL BARBAS CHROME X CT",
-    "var": "#REF!",
-    "cant": 2.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591559661",
-    "prod": "GORRA EL BARBAS X RICH THE KID STATE",
-    "var": "#REF!",
-    "cant": 2.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591657965",
-    "prod": "GORRA DANDY X JUNIOR EL AZUL",
-    "var": "#REF!",
-    "cant": 1.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591721805",
-    "prod": "GORRA DANDY X JUNIOR CLAVE ALI",
-    "var": "#REF!",
-    "cant": 1.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591847789",
-    "prod": "GORRA EL BARBAS GALAXY",
-    "var": "#REF!",
-    "cant": 2.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853591980557",
-    "prod": "GORRA BARBAS B CHROME",
-    "var": "#REF!",
-    "cant": 1.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853592046093",
-    "prod": "GORRA DANDY X LOST HILLS LH CHROME",
-    "var": "#REF!",
-    "cant": 1.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853592178861",
-    "prod": "GORRA 31 FOREVER BLACK",
-    "var": "#REF!",
-    "cant": 1.0,
-    "cu": 15.0,
-    "pant": null
-   },
-   {
-    "sku": "26853592244397",
-    "prod": "GORRA EL BARBAS 77",
-    "var": "#REF!",
-    "cant": 1.0,
-    "cu": 15.0,
-    "pant": null
-   }
-  ],
-  "sc": 0.0
- },
  "CYNTHIA070726": {
   "proveedor": "CYNTHIA CAO",
   "costo": 10055.5,
@@ -35440,7 +35328,7 @@
     "pant": null
    },
    {
-    "sku": "20544362024013",
+    "sku": "50544362156781",
     "prod": "ABRIGO LARGO JW",
     "var": "L",
     "cant": 2,
