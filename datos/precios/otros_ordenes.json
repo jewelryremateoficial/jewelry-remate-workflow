@@ -24145,7 +24145,7 @@
  },
  "CYNTHIA180826": {
   "proveedor": "CYNTHIA CAO",
-  "costo": 12627.53,
+  "costo": 12846.03,
   "shipping": 2753.0,
   "sc": 0.0,
   "lineas": [
@@ -24310,8 +24310,8 @@
     "pant": null
    },
    {
-    "sku": "6617867765c65",
-    "prod": "ARETES LOVE SILVER CON ZIRCONIA",
+    "sku": "6617867e8acd0",
+    "prod": "ARETES LOVE GOLD CON ZIRCONIA",
     "var": "",
     "cant": 6,
     "cu": 2.6,
@@ -24558,14 +24558,6 @@
     "pant": null
    },
    {
-    "sku": "6701d26e04890",
-    "prod": "BOLSO H BIRKIN 30 GRIS TOURTERELLE",
-    "var": "20.5cm de alto x 25cm de largo x 13cm ancho",
-    "cant": 1,
-    "cu": 65.0,
-    "pant": null
-   },
-   {
     "sku": "6701d26e72186",
     "prod": "BOLSO H BIRKIN 30 WHITE",
     "var": "20.5cm de alto x 25cm de largo x 13cm ancho",
@@ -24593,7 +24585,7 @@
     "sku": "33644561954829",
     "prod": "BOLSO MM DENIM BLUE",
     "var": "",
-    "cant": 4,
+    "cant": 7,
     "cu": 65.0,
     "pant": null
    },
@@ -24734,8 +24726,8 @@
     "pant": null
    },
    {
-    "sku": "665bbd3eee796",
-    "prod": "COLLAR CC SILVER",
+    "sku": "648cc32b9ef2d",
+    "prod": "COLLAR CC DORADO",
     "var": "49cm x 6cm de extensión",
     "cant": 3,
     "cu": 2.25,
@@ -24857,7 +24849,7 @@
     "sku": "66581907ee9cb-1",
     "prod": "LENTES C OVAL BROWN",
     "var": "REGULAR",
-    "cant": 11,
+    "cant": 14,
     "cu": 29.5,
     "pant": null
    },
@@ -25302,40 +25294,40 @@
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PULSERA C GOLD",
+    "sku": "15091641817307",
+    "prod": "ANILLO LV INITIALES",
     "var": "#8",
     "cant": 2,
     "cu": 7.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PULSERA C GOLD",
+    "sku": "21360341087798",
+    "prod": "ANILLO LV INITIALES",
     "var": "#9",
     "cant": 2,
     "cu": 7.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PULSERA C GOLD",
+    "sku": "38493492975747",
+    "prod": "BRAZALETE LV INITIALES",
     "var": "",
     "cant": 2,
     "cu": 8.5,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PULSERA C GOLD",
+    "sku": "97078716334589",
+    "prod": "COLLAR LV MONOGRAM BOLS",
     "var": "",
     "cant": 2,
     "cu": 7.8,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PULSERA C GOLD",
+    "sku": "32989192481233",
+    "prod": "PULSERA LV SLIM MONOGRAM",
     "var": "",
     "cant": 2,
     "cu": 5.5,
@@ -25350,160 +25342,160 @@
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "GOLD",
+    "sku": "21395876081765",
+    "prod": "COLLAR LV V GOLD",
+    "var": "",
     "cant": 2,
     "cu": 4.9,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "SILVER",
+    "sku": "84757322248428",
+    "prod": "COLLAR LV V SILVER",
+    "var": "",
     "cant": 2,
     "cu": 4.9,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "GOLD",
+    "sku": "96062933567145",
+    "prod": "PULSERA LV V GOLD",
+    "var": "",
     "cant": 2,
     "cu": 4.9,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "SILVER",
+    "sku": "34916368326682",
+    "prod": "PULSERA LV V SILVER",
+    "var": "",
     "cant": 2,
     "cu": 4.9,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "GOLD",
+    "sku": "73224823409455",
+    "prod": "ARETES LV LOGO FLOWER GOLD",
+    "var": "",
     "cant": 2,
     "cu": 6.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "SILVER",
+    "sku": "97538243688932",
+    "prod": "ARETES LV LOGO FLOWER SILVER",
+    "var": "",
     "cant": 2,
     "cu": 6.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "39618311220420",
+    "prod": "ARETES LV MONOGRAM ENAMEL WHITE",
     "var": "WHITE",
     "cant": 1,
     "cu": 9.5,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "86882412617188",
+    "prod": "ARETES LV MONOGRAM ENAMEL",
     "var": "BLACK",
     "cant": 1,
     "cu": 9.5,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "10004897642672",
+    "prod": "ANILLO LV SIGNATURE SILVER",
     "var": "SILVER #8",
     "cant": 2,
     "cu": 5.5,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "63787401401193",
+    "prod": "ANILLO LV SIGNATURE SILVER",
     "var": "SILVER #9",
     "cant": 2,
     "cu": 5.5,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "52335624138011",
+    "prod": "ANILLO LV SIGNATURE GOLD",
     "var": "GOLD #8",
     "cant": 2,
     "cu": 5.5,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "62314722703280",
+    "prod": "ANILLO LV SIGNATURE GOLD",
     "var": "GOLD #9",
     "cant": 2,
     "cu": 5.5,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "96525980917407",
+    "prod": "ARETES PR LOGO BLACK",
     "var": "",
     "cant": 2,
     "cu": 5.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "GOLD",
+    "sku": "65633606294029",
+    "prod": "PULSERA YSL GRABADO GOLD",
+    "var": "",
     "cant": 2,
     "cu": 6.2,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
-    "var": "SILVER",
+    "sku": "41144179696451",
+    "prod": "PULSERA YSL GRABADO SILVER",
+    "var": "",
     "cant": 2,
     "cu": 6.2,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "89108326433610",
+    "prod": "CAMISA F PATCH",
     "var": "L",
     "cant": 2,
     "cu": 9.8,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "59357487588800",
+    "prod": "BLUSA GC JACQUARD",
     "var": "L",
     "cant": 1,
     "cu": 27.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "65601076295037",
+    "prod": "CARDIGAN GC JACQUARD",
     "var": "L",
     "cant": 1,
     "cu": 35.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "78755605790372",
+    "prod": "SUETER F CUELLO ALTO LOGOS",
     "var": "M",
     "cant": 1,
     "cu": 64.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "ARETES LV LOGO PEARL",
+    "sku": "45854471076461",
+    "prod": "PANTALON LW MEZCLILLA",
     "var": "",
     "cant": 1,
     "cu": 40.0,
