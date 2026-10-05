@@ -360,9 +360,12 @@ _MES_CORTO = {'01': 'Ene', '02': 'Feb', '03': 'Mar', '04': 'Abr', '05': 'May', '
               '07': 'Jul', '08': 'Ago', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dic'}
 
 def _prov_de(o):
-    for k, v in (('HAIFENG', 'HAIFENG'), ('ZOEY', 'ZOEY'), ('CYNTHIA', 'CYNTHIA CAO'),
-                 ('NANCY', 'NANCY VIP'), ('DINADU', 'DINA DU'), ('COCOMA', 'COCOMA'),
-                 ('MOLLY', 'MOLLY'), ('DONGAI', 'DONGAI')):
+    # 'HAIFEN' sin G y RITA/ISLA/COCOZHANG faltaban, y por eso 4 ordenes del
+    # INFORME ($144,550.80) no entraban al panel de inversion. Reyna, 5 oct 2026.
+    for k, v in (('HAIFENG', 'HAIFENG'), ('HAIFEN', 'HAIFENG'), ('ZOEY', 'ZOEY'),
+                 ('CYNTHIA', 'CYNTHIA CAO'), ('NANCY', 'NANCY VIP'), ('DINADU', 'DINA DU'),
+                 ('COCOMA', 'COCOMA'), ('COCOZHANG', 'COCO ZHANG'), ('MOLLY', 'MOLLY'),
+                 ('DONGAI', 'DONGAI'), ('RITA', 'RITA'), ('ISLA', 'ISLA')):
         if o.startswith(k):
             return v
     return None
@@ -381,6 +384,18 @@ for _o, _v in _inf['inv'].items():
     por_prov_inv[_p]['ali'] += _v['mxn']; por_prov_inv[_p]['adu'] += _adu
     por_prov_inv[_p]['ord'].add(_o)
     detalle.append((_o, _p, _m, _v['mxn'], _adu, _v['pagos']))
+
+# El mes de cada pago sale del INFORME del Drive (datos/precios/inversion_mes.json,
+# que escribe scripts/dump_inversion_mes.py), no del nombre de la orden: NANCY220826
+# se siguio pagando en septiembre y HAIFENG290926 ya cayo en octubre, y por eso
+# septiembre salia en $753 mil cuando fueron mas de $900 mil. Reyna, 5 oct 2026.
+# Ahi tambien entra la aduana de las ordenes viejas que no tienen inversion
+# registrada. Si el archivo no esta, se cae al mes del nombre de la orden.
+_invmes = os.path.join(DATOS, 'inversion_mes.json')
+if os.path.isfile(_invmes):
+    _IM = json.load(open(_invmes))
+    por_mes = {k: {'ali': v['ali'], 'adu': v['adu'], 'ord': v['ordenes']}
+               for k, v in _IM['mes'].items()}
 
 INV_TOTAL = sum(v['ali'] + v['adu'] for v in por_mes.values())
 INV_ALI = sum(v['ali'] for v in por_mes.values())
@@ -404,7 +419,8 @@ for _m in _meses:
         '<div class="btip">' + _MES_CORTO[_m[5:7]] + ' 2026<br>'
         '<i>Alibaba</i> $' + money(_d['ali'], 0) + '<br>'
         '<i>Aduana</i> $' + money(_d['adu'], 0) + '<br>'
-        '<b>Total</b> $' + money(_t, 0) + ' · ' + str(len(_d['ord'])) + ' órdenes</div></div>')
+        '<b>Total</b> $' + money(_t, 0) + ' · '
+        + str(_d['ord'] if isinstance(_d['ord'], int) else len(_d['ord'])) + ' órdenes</div></div>')
 
 _provs_inv = sorted(por_prov_inv, key=lambda k: -(por_prov_inv[k]['ali'] + por_prov_inv[k]['adu']))
 _topprov = max((por_prov_inv[p]['ali'] + por_prov_inv[p]['adu']) for p in _provs_inv) or 1
@@ -442,7 +458,7 @@ PANEL = ('<div class="prov" data-p="__INV__">'
   '<div class="panel"><h3>Mes con mes</h3><div class="bars">' + ''.join(_barras) + '</div></div>'
   '<div class="panel"><h3>Por proveedor</h3><div class="hbars">' + ''.join(_hbar) + '</div></div>'
   '<div class="panel"><h3>Orden por orden</h3><div class="tblwrap"><table>'
-  '<thead><tr><th>ORDEN</th><th>PROVEEDOR</th><th>MES</th>'
+  '<thead><tr><th>ORDEN</th><th>PROVEEDOR</th><th>MES DE LA ORDEN</th>'
   '<th>PAGADO AL PROVEEDOR</th><th>IMPORTACIÓN</th><th>TOTAL REAL</th><th>PAGOS</th></tr></thead>'
   '<tbody>' + _filas_inv + '</tbody></table></div></div></div>')
 
@@ -468,13 +484,21 @@ if os.path.isfile(_an):
            money(x['p'], 0), x['x'])
         for x in A['peores'])
 
+    # Tarjetas en vez de tabla de 7 columnas: Reyna pidio menos texto y mas
+    # visual (5 oct 2026). La barra se mide contra 4x, el ROAS mas alto que usamos.
+    def _cls_mult(m):
+        return 'ok' if m >= 3.5 else ('mal' if m < 3 else 'warn')
+
     _res = ''.join(
-        '<tr><td>%s</td><td class="n">%s</td><td class="n">$%s</td><td class="n">$%s</td>'
-        '<td class="n %s">%.1f%%</td><td class="n %s">%.2f×</td><td class="n">$%s</td></tr>'
-        % (html.escape(p_), money(d['q'], 0), money(d['ing'], 0), money(d['margen'], 0),
-           'ok' if d['pct'] >= 70 else ('mal' if d['mult'] < 3 else 'warn'), d['pct'],
-           'ok' if d['mult'] >= 3.5 else ('mal' if d['mult'] < 3 else 'warn'), d['mult'],
-           money(d['parado_mxn'], 0))
+        '<div class="pk"><b class="pknom">%s</b>'
+        '<div class="pkx %s">%.2f×</div>'
+        '<div class="barra ancha"><i class="%s" style="width:%d%%"></i></div>'
+        '<div class="pkpie"><span>Ingreso<b>$%s</b></span>'
+        '<span>Margen<b>%.0f%%</b></span>'
+        '<span>Parado<b class="%s">$%s</b></span></div></div>'
+        % (html.escape(p_), _cls_mult(d['mult']), d['mult'], _cls_mult(d['mult']),
+           min(100, int(d['mult'] / 4 * 100)), money(d['ing'], 0), d['pct'],
+           'mal' if d['parado_mxn'] > 150000 else '', money(d['parado_mxn'], 0))
         for p_, d in sorted(A['prov'].items(), key=lambda x: -x[1]['ing']) if d['q'])
 
     _bloques = []
@@ -543,8 +567,15 @@ if os.path.isfile(_an):
             _sc = ('<p class="nota">%d piezas por $%s MXN entraron al ingreso pero <b>sin costo</b>: '
                    'son SKU que no aparecen en ningún ODC. No cuentan para el margen.</p>'
                    % (d['q_sc'], money(d['ing_sc'], 0)))
+        _rec = (d['ing'] / d['inv'] * 100) if d['inv'] else 0
         _bloques.append(
-            '<div class="panel"><h3>%s</h3>'
+            '<details class="panel pdet"><summary>'
+            '<span class="sgn">%s</span>'
+            '<span class="sdat"><i>Recuperado</i><b class="%s">%.0f%%</b></span>'
+            '<span class="sdat"><i>Múltiplo</i><b class="%s">%.2f×</b></span>'
+            '<span class="sdat"><i>Órdenes</i><b>%d</b></span>'
+            '<span class="sdat"><i>Bajo 3×</i><b class="%s">%d</b></span>'
+            '<span class="sdat"><i>Parado</i><b class="%s">$%s</b></span></summary>'
             '<div class="tiles">'
             '<div class="tile"><span>Invertido</span><b>$%s</b></div>'
             '<div class="tile"><span>Ingreso</span><b>$%s</b></div>'
@@ -555,9 +586,14 @@ if os.path.isfile(_an):
             '<div class="tblwrap"><table><thead><tr><th>Orden</th><th class="n">Invertido</th>'
             '<th class="n">Recuperado</th><th>Avance</th><th class="n">Vendidas</th>'
             '<th class="n">Sin vender</th><th class="n">Parado</th></tr></thead>'
-            '<tbody>%s</tbody></table></div>%s%s%s</div>'
-            % (html.escape(p_), money(d['inv'], 0), money(d['ing'], 0), money(d['margen'], 0),
-               d['pct'], 'ok' if d['mult'] >= 3.5 else ('mal' if d['mult'] < 3 else 'warn'),
+            '<tbody>%s</tbody></table></div>%s%s%s</details>'
+            % (html.escape(p_),
+               'ok' if _rec >= 100 else 'mal', _rec,
+               _cls_mult(d['mult']), d['mult'], len(d['ordenes']),
+               'mal' if d['bajo3'] else '', len(d['bajo3']),
+               'mal' if d['parado_mxn'] > 150000 else '', money(d['parado_mxn'], 0),
+               money(d['inv'], 0), money(d['ing'], 0), money(d['margen'], 0),
+               d['pct'], _cls_mult(d['mult']),
                d['mult'], money(d['parado_mxn'], 0), d['parado_q'],
                ''.join(_ords), _sc, _b3, _estht))
 
@@ -572,10 +608,11 @@ if os.path.isfile(_an):
         '<div class="tblwrap"><table><thead><tr><th>Producto</th><th>Proveedor</th>'
         '<th class="n">Cuesta</th><th class="n">Vende</th><th class="n">×</th></tr></thead>'
         '<tbody>%s</tbody></table></div></div>'
-        '<div class="panel"><h3>Resumen por proveedor</h3><div class="tblwrap"><table>'
-        '<thead><tr><th>Proveedor</th><th class="n">Piezas</th><th class="n">Ingreso</th>'
-        '<th class="n">Margen</th><th class="n">%%</th><th class="n">Múltiplo</th>'
-        '<th class="n">Parado</th></tr></thead><tbody>%s</tbody></table></div></div>'
+        '<div class="panel"><h3>Proveedor por proveedor'
+        ' <i>cuántas veces el costo se está vendiendo · la barra llena es 4×</i></h3>'
+        '<div class="pkgrid">%s</div></div>'
+        '<p class="nota">Cada proveedor viene cerrado. Ábrelo para ver orden por orden, '
+        'los productos bajo 3× y lo que lleva parado en bodega.</p>'
         '%s</div>' % (A['generado'], _pe, _res, ''.join(_bloques)))
 
 provs = [p for p in ORDEN_PROV if p in por_prov] + \
@@ -757,6 +794,40 @@ td.av{min-width:150px}
 .barra{display:inline-block;width:88px;height:7px;border-radius:999px;background:var(--gray-bg);
   overflow:hidden;vertical-align:middle;margin-right:7px}
 .barra i{display:block;height:100%;background:var(--ok)}
+/* ── Tablero: tarjetas de proveedor y bloques plegados (Reyna, 5 oct 2026) ── */
+.barra.ancha{width:100%;height:9px;margin:0 0 11px}
+.barra i.mal{background:var(--a)}
+.barra i.warn{background:var(--warn)}
+.pkgrid{display:grid;gap:11px;grid-template-columns:repeat(auto-fill,minmax(188px,1fr))}
+.pk{border:1px solid var(--line);border-radius:13px;padding:13px 14px 11px;background:var(--card)}
+.pknom{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pkx{font-size:27px;font-weight:800;line-height:1.1;margin:0 0 8px;font-variant-numeric:tabular-nums}
+.pkx.ok{color:var(--ok)} .pkx.warn{color:var(--warn)} .pkx.mal{color:var(--a)}
+.pkpie{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;color:var(--muted)}
+.pkpie span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pkpie b{font-size:12.5px;color:var(--fg);font-weight:700;white-space:nowrap}
+.pkpie b.mal{color:var(--a)}
+.pdet{padding:0}
+.pdet>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:18px;
+  flex-wrap:wrap;padding:14px 18px}
+.pdet>summary::-webkit-details-marker{display:none}
+.pdet>summary::after{content:'▸';margin-left:auto;color:var(--muted);font-size:14px}
+.pdet[open]>summary::after{content:'▾'}
+.pdet[open]>summary{border-bottom:1px solid var(--line)}
+.pdet>summary:hover{background:var(--gray-bg)}
+.sgn{font-size:15px;font-weight:800;min-width:132px}
+.sdat{display:flex;flex-direction:column;gap:1px;font-size:10.5px;color:var(--muted)}
+.sdat i{font-style:normal;letter-spacing:.03em;text-transform:uppercase}
+.sdat b{font-size:14px;color:var(--fg);font-variant-numeric:tabular-nums}
+.sdat b.ok{color:var(--ok)} .sdat b.warn{color:var(--warn)} .sdat b.mal{color:var(--a)}
+.pdet>.tiles,.pdet>.tblwrap,.pdet>.nota,.pdet>div.panel,.pdet>section{margin:14px 18px}
+.pdet>.tblwrap{margin-bottom:18px}
+@media(max-width:620px){
+  .pdet>summary{gap:12px;padding:12px 13px}
+  .sgn{min-width:100%}
+  .pdet>.tiles,.pdet>.tblwrap,.pdet>.nota,.pdet>div.panel,.pdet>section{margin:11px 13px}
+}
 .barra i.mal{background:var(--a)}
 .leyenda{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:10px 0 0}
 .leyenda i{font-style:normal;padding:2px 7px;border-radius:5px}
