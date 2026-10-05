@@ -61,6 +61,15 @@ if os.path.isfile(_ov):
     for _k, _v in json.load(open(_ov)).items():
         precio_shopify[_k] = float(_v)
 
+# Precios bajados de Shopify hoy mismo (bulkOperationRunQuery sobre productVariants
+# { sku price }, 3,722 variantes). Van al final porque son el dato mas fresco: el
+# catalogo vp_0*.json es del corte anterior y precios_override.json era el parche
+# que se usaba cuando no se podian bajar. Reyna, 5 oct 2026.
+_ph = os.path.join(DATOS, 'precios_shopify.json')
+if os.path.isfile(_ph):
+    for _k, _v in json.load(open(_ph)).items():
+        precio_shopify[_k] = float(_v)
+
 import re as _re
 ordenes = {}
 for k, v in json.load(open(os.path.join(DATOS, 'zoey_ordenes.json'))).items():
