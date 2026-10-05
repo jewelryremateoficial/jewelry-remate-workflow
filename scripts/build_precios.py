@@ -534,10 +534,12 @@ if os.path.isfile(_an):
                    '<th class="n">Debería (3×)</th><th class="n">×</th></tr></thead><tbody>%s'
                    '</tbody></table></div></div>'
                    % (len(d['bajo3']), ''.join(
-                       '<tr><td>%s <span class="muted">%s</span></td><td class="muted">%s</td>'
+                       '<tr><td><a class="irprod" data-prov="%s" data-ir="%s" data-sku="%s">%s'
+                       ' <span class="muted">%s</span></a></td><td class="muted">%s</td>'
                        '<td class="n">$%s</td><td class="n mal">$%s</td><td class="n ok">$%s</td>'
                        '<td class="n mal">%.2f×</td></tr>'
-                       % (html.escape(x['prod']), html.escape(x['var'] or ''), x['orden'],
+                       % (html.escape(p_), x['orden'], html.escape(x['sku'] or ''),
+                          html.escape(x['prod']), html.escape(x['var'] or ''), x['orden'],
                           money(x['M'], 0), money(x['p'], 0), money(redondea99(x['M'] * 3), 0), x['x'])
                        for x in d['bajo3'])))
         _est = []
@@ -554,10 +556,12 @@ if os.path.isfile(_an):
                       '<th class="n">Costo c/u</th><th class="n">Parado</th><th class="n">Días</th>'
                       '</tr></thead><tbody>%s</tbody></table></div></div></section>'
                       % (len(_est), money(sum(x[0] for x in _est), 0), ''.join(
-                          '<tr><td>%s <span class="muted">%s</span>%s</td><td class="muted">%s</td>'
+                          '<tr><td><a class="irprod" data-prov="%s" data-ir="%s" data-sku="%s">%s'
+                          ' <span class="muted">%s</span></a>%s</td><td class="muted">%s</td>'
                           '<td class="n">%d</td><td class="n muted">%d</td><td class="n">$%s</td>'
                           '<td class="n">$%s</td><td class="n %s">%d</td></tr>'
-                          % (html.escape(e['prod']), html.escape(e['var'] or ''),
+                          % (html.escape(p_), k2, html.escape(e['sku'] or ''),
+                             html.escape(e['prod']), html.escape(e['var'] or ''),
                              ' ' + _pill('nunca se ha vendido', 'mal') if e['nunca'] else '',
                              k2, e['rest'], e['q'], money(e['M'], 0), money(e['mxn'], 0),
                              'mal' if e['dias'] >= 90 else '', e['dias'])
@@ -823,6 +827,10 @@ td.av{min-width:150px}
 .sdat b.ok{color:var(--ok)} .sdat b.warn{color:var(--warn)} .sdat b.mal{color:var(--a)}
 .pdet>.tiles,.pdet>.tblwrap,.pdet>.nota,.pdet>div.panel,.pdet>section{margin:14px 18px}
 .pdet>.tblwrap{margin-bottom:18px}
+a.irprod{color:inherit;text-decoration:none;border-bottom:1px dotted var(--muted);cursor:pointer}
+a.irprod:hover{color:var(--blue);border-bottom-color:var(--blue)}
+tr.resalta>td{background:var(--warn-bg);box-shadow:inset 0 0 0 1px var(--warn)}
+tr.resalta>td:first-child{box-shadow:inset 1px 0 0 var(--warn),inset 0 1px 0 var(--warn),inset 0 -1px 0 var(--warn)}
 @media(max-width:620px){
   .pdet>summary{gap:12px;padding:12px 13px}
   .sgn{min-width:100%}
@@ -1076,6 +1084,29 @@ document.querySelectorAll('.desc').forEach(function(b){
 document.querySelectorAll('.ocard').forEach(function(b){
   b.onclick=function(){var el=document.getElementById(b.dataset.ir);
     if(el)el.scrollIntoView({behavior:'smooth',block:'start'});};});
+
+// ── DEL TABLERO A LA ORDEN (Reyna, 5 oct 2026) ──
+// En "se venden por debajo de 3x" y en "parado en bodega", picar el producto
+// lleva a la orden donde se pidio, abre la tabla y deja el renglon marcado,
+// para ver de donde salio ese precio sin andarlo buscando.
+document.querySelectorAll('a.irprod').forEach(function(a){
+  a.onclick=function(ev){
+    ev.preventDefault();
+    var tab=document.querySelector('.ptab[data-p="'+a.dataset.prov+'"]');
+    if(tab)tab.click();
+    var sec=document.getElementById(a.dataset.ir);
+    if(!sec){alert('Esa orden todavía no tiene tabla de precios en esta página.');return}
+    sec.classList.remove('cerrada');
+    var bt=sec.querySelector('.toggle'); if(bt)bt.textContent='Ocultar tabla';
+    var td=null, sku=a.dataset.sku;
+    if(sku)sec.querySelectorAll('td.pact[data-sku]').forEach(function(x){
+      if(!td&&x.dataset.sku===sku)td=x;});
+    var fila=td?td.closest('tr'):null;
+    (fila||sec).scrollIntoView({behavior:'smooth',block:fila?'center':'start'});
+    document.querySelectorAll('tr.resalta').forEach(function(t){t.classList.remove('resalta')});
+    if(fila){fila.classList.add('resalta');
+      setTimeout(function(){fila.classList.remove('resalta')},4000);}
+  };});
 </script></body></html>"""
 HTML = (HTML.replace('__BOTONES__', ''.join(botones))
             .replace('__SECCIONES__', ''.join(secciones))
