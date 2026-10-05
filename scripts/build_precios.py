@@ -442,6 +442,137 @@ PANEL = ('<div class="prov" data-p="__INV__">'
   '<tbody>' + _filas_inv + '</tbody></table></div></div></div>')
 
 
+# ══════════════════════════════════════════════════════════════
+#  TABLERO (Reyna, 5 oct 2026): margen real y recuperacion por orden.
+#  Los numeros los calcula scripts/build_analisis.py y llegan en analisis.json;
+#  aqui solo se pintan. Si el archivo no existe, la pestana no aparece y la
+#  pagina queda exactamente igual que antes.
+# ══════════════════════════════════════════════════════════════
+TABLERO = ''
+_an = os.path.join(DATOS, 'analisis.json')
+if os.path.isfile(_an):
+    A = json.load(open(_an))
+
+    def _pill(txt, cls=''):
+        return '<span class="pill %s">%s</span>' % (cls, txt)
+
+    _pe = ''.join(
+        '<tr><td>%s</td><td class="muted">%s</td><td class="n">$%s</td>'
+        '<td class="n">$%s</td><td class="n mal">%.2f×</td></tr>'
+        % (html.escape(x['prod']), html.escape(x['prov']), money(x['M'], 0),
+           money(x['p'], 0), x['x'])
+        for x in A['peores'])
+
+    _res = ''.join(
+        '<tr><td>%s</td><td class="n">%s</td><td class="n">$%s</td><td class="n">$%s</td>'
+        '<td class="n %s">%.1f%%</td><td class="n %s">%.2f×</td><td class="n">$%s</td></tr>'
+        % (html.escape(p_), money(d['q'], 0), money(d['ing'], 0), money(d['margen'], 0),
+           'ok' if d['pct'] >= 70 else ('mal' if d['mult'] < 3 else 'warn'), d['pct'],
+           'ok' if d['mult'] >= 3.5 else ('mal' if d['mult'] < 3 else 'warn'), d['mult'],
+           money(d['parado_mxn'], 0))
+        for p_, d in sorted(A['prov'].items(), key=lambda x: -x[1]['ing']) if d['q'])
+
+    _bloques = []
+    for p_, d in sorted(A['prov'].items(), key=lambda x: -x[1]['ing']):
+        if not d['ordenes']:
+            continue
+        _ords = []
+        for o in d['ordenes']:
+            if o['camino']:
+                av = _pill('en camino')
+                cls = 'muted'
+            elif o['pct'] is None:
+                av = _pill('sin inversión registrada', 'mal')
+                cls = 'muted'
+            else:
+                cls = 'ok' if o['pct'] >= 100 else 'mal'
+                av = ('<div class="barra"><i class="%s" style="width:%d%%"></i></div>'
+                      '<b class="%s">%.0f%%</b>' % (cls, min(100, int(o['pct'])), cls, o['pct']))
+            _dt = ('llega en %d días' % -o['dias']) if o['dias'] < 0 else ('%d días' % o['dias'])
+            _ords.append(
+                '<tr><td>%s<br><span class="muted">%s · %s</span></td>'
+                '<td class="n">$%s</td><td class="n">$%s</td><td class="av">%s</td>'
+                '<td class="n">%d<span class="muted">/%d</span></td>'
+                '<td class="n">%d</td><td class="n %s">$%s</td></tr>'
+                % (o['orden'], o['fecha'], _dt, money(o['inv'], 0), money(o['ing'], 0),
+                   av, o['q'], o['pzs'], o['nunca'],
+                   'mal' if o['rest_mxn'] > 150000 else '', money(o['rest_mxn'], 0)))
+        _b3 = ''
+        if d['bajo3']:
+            _b3 = ('<div class="panel malpanel"><h3>Se venden por debajo de 3× — hay que subirles el precio'
+                   ' <i>%d</i></h3><div class="tblwrap"><table><thead><tr><th>Producto</th>'
+                   '<th>Orden</th><th class="n">Cuesta</th><th class="n">Vende</th>'
+                   '<th class="n">Debería (3×)</th><th class="n">×</th></tr></thead><tbody>%s'
+                   '</tbody></table></div></div>'
+                   % (len(d['bajo3']), ''.join(
+                       '<tr><td>%s <span class="muted">%s</span></td><td class="muted">%s</td>'
+                       '<td class="n">$%s</td><td class="n mal">$%s</td><td class="n ok">$%s</td>'
+                       '<td class="n mal">%.2f×</td></tr>'
+                       % (html.escape(x['prod']), html.escape(x['var'] or ''), x['orden'],
+                          money(x['M'], 0), money(x['p'], 0), money(redondea99(x['M'] * 3), 0), x['x'])
+                       for x in d['bajo3'])))
+        _est = []
+        for o in d['ordenes']:
+            for e in o['est']:
+                _est.append((e['mxn'], o['orden'], e))
+        _est.sort(reverse=True, key=lambda x: x[0])
+        _estht = ''
+        if _est:
+            _estht = ('<section class="orden cerrada"><div class="ohead"><h3>Parado en bodega '
+                      '<i>%d productos · $%s MXN</i></h3><button class="btn toggle">Ver tabla</button></div>'
+                      '<div class="plegable"><div class="tblwrap"><table><thead><tr><th>Producto</th>'
+                      '<th>Orden</th><th class="n">Quedan</th><th class="n">De</th>'
+                      '<th class="n">Costo c/u</th><th class="n">Parado</th><th class="n">Días</th>'
+                      '</tr></thead><tbody>%s</tbody></table></div></div></section>'
+                      % (len(_est), money(sum(x[0] for x in _est), 0), ''.join(
+                          '<tr><td>%s <span class="muted">%s</span>%s</td><td class="muted">%s</td>'
+                          '<td class="n">%d</td><td class="n muted">%d</td><td class="n">$%s</td>'
+                          '<td class="n">$%s</td><td class="n %s">%d</td></tr>'
+                          % (html.escape(e['prod']), html.escape(e['var'] or ''),
+                             ' ' + _pill('nunca se ha vendido', 'mal') if e['nunca'] else '',
+                             k2, e['rest'], e['q'], money(e['M'], 0), money(e['mxn'], 0),
+                             'mal' if e['dias'] >= 90 else '', e['dias'])
+                          for _m, k2, e in _est[:60])))
+        _sc = ''
+        if d['q_sc']:
+            _sc = ('<p class="nota">%d piezas por $%s MXN entraron al ingreso pero <b>sin costo</b>: '
+                   'son SKU que no aparecen en ningún ODC. No cuentan para el margen.</p>'
+                   % (d['q_sc'], money(d['ing_sc'], 0)))
+        _bloques.append(
+            '<div class="panel"><h3>%s</h3>'
+            '<div class="tiles">'
+            '<div class="tile"><span>Invertido</span><b>$%s</b></div>'
+            '<div class="tile"><span>Ingreso</span><b>$%s</b></div>'
+            '<div class="tile ok"><span>Margen</span><b>$%s</b><span>%.1f%%</span></div>'
+            '<div class="tile %s"><span>Múltiplo</span><b>%.2f×</b></div>'
+            '<div class="tile warn"><span>Parado</span><b>$%s</b><span>%d pzs</span></div>'
+            '</div>'
+            '<div class="tblwrap"><table><thead><tr><th>Orden</th><th class="n">Invertido</th>'
+            '<th class="n">Recuperado</th><th>Avance</th><th class="n">Vendidas</th>'
+            '<th class="n">Sin vender</th><th class="n">Parado</th></tr></thead>'
+            '<tbody>%s</tbody></table></div>%s%s%s</div>'
+            % (html.escape(p_), money(d['inv'], 0), money(d['ing'], 0), money(d['margen'], 0),
+               d['pct'], 'ok' if d['mult'] >= 3.5 else ('mal' if d['mult'] < 3 else 'warn'),
+               d['mult'], money(d['parado_mxn'], 0), d['parado_q'],
+               ''.join(_ords), _sc, _b3, _estht))
+
+    TABLERO = (
+        '<div class="prov" data-p="__DASH__">'
+        '<h2>Tablero · qué tanto se está vendiendo y con cuánto margen</h2>'
+        '<p class="nota">Cada venta se le acredita al <b>lote</b> que la surtió, no al proveedor que '
+        'diga Shopify: primero que entra, primero que sale. Ya con devoluciones descontadas. '
+        'Es <b>margen bruto de mercancía</b> — no trae publicidad, envíos ni comisiones. '
+        'Corte al %s.</p>'
+        '<div class="panel malpanel"><h3>Los 5 peores de toda la tienda</h3>'
+        '<div class="tblwrap"><table><thead><tr><th>Producto</th><th>Proveedor</th>'
+        '<th class="n">Cuesta</th><th class="n">Vende</th><th class="n">×</th></tr></thead>'
+        '<tbody>%s</tbody></table></div></div>'
+        '<div class="panel"><h3>Resumen por proveedor</h3><div class="tblwrap"><table>'
+        '<thead><tr><th>Proveedor</th><th class="n">Piezas</th><th class="n">Ingreso</th>'
+        '<th class="n">Margen</th><th class="n">%%</th><th class="n">Múltiplo</th>'
+        '<th class="n">Parado</th></tr></thead><tbody>%s</tbody></table></div></div>'
+        '%s</div>' % (A['generado'], _pe, _res, ''.join(_bloques)))
+
 provs = [p for p in ORDEN_PROV if p in por_prov] + \
         [p for p in sorted(por_prov) if p not in ORDEN_PROV]
 tot_inv_mxn = sum(por_prov[p]['inv'] for p in provs)
@@ -450,6 +581,9 @@ tot_lin = sum(por_prov[p]['lineas'] for p in provs)
 
 botones = ['<button class="ptab on" data-p="__INV__">📊 Inversión 2026</button>']
 secciones = [PANEL.replace('class="prov" data-p="__INV__"', 'class="prov on" data-p="__INV__"')]
+if TABLERO:
+    botones.append('<button class="ptab" data-p="__DASH__">📈 Tablero</button>')
+    secciones.append(TABLERO)
 for i, p in enumerate(provs):
     P = por_prov[p]
     botones.append('<button class="ptab" data-p="%s">%s <i>%d</i></button>'
@@ -603,6 +737,22 @@ td.pact.critico{background:var(--a-bg);color:var(--a)}
 td.pact.bajo{background:var(--warn-bg);color:var(--warn)}
 td.pact.ok{background:var(--gray-bg)}
 td.pact.bueno{background:var(--ok-bg);color:var(--ok)}
+.nota{font-size:12.5px;color:var(--muted);line-height:1.6;margin:0 0 14px}
+.malpanel{border-color:var(--a)}
+.malpanel h3{color:var(--a)}
+.panel h3 i{font-style:normal;font-weight:400;color:var(--muted);font-size:12.5px}
+td.muted,span.muted{color:var(--muted)}
+td.ok,b.ok{color:var(--ok)}
+td.mal,b.mal{color:var(--a)}
+td.warn{color:var(--warn)}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;
+  border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.mal{border-color:var(--a);color:var(--a);background:var(--a-bg)}
+td.av{min-width:150px}
+.barra{display:inline-block;width:88px;height:7px;border-radius:999px;background:var(--gray-bg);
+  overflow:hidden;vertical-align:middle;margin-right:7px}
+.barra i{display:block;height:100%;background:var(--ok)}
+.barra i.mal{background:var(--a)}
 .leyenda{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:10px 0 0}
 .leyenda i{font-style:normal;padding:2px 7px;border-radius:5px}
 .foot{color:var(--muted);font-size:12px;padding:18px 0;text-align:center}
