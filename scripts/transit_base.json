@@ -2152,10 +2152,94 @@
   ]
  },
  {
-  "name": "CYNTHIA180826 guia 7 (ups 1Z2R36C00429281871)",
+  "name": "CYNTHIA180826 lo que falta de inventariar (renglones sin verde en el ODC)",
   "date": "2026-08-18",
   "base": "CYNTHIA180826",
   "lines": [
+   {
+    "title": "ARETES DIORIVIERA GOLD CD",
+    "variant": "",
+    "sku": "15711172175405",
+    "qty": 3,
+    "arrived": false
+   },
+   {
+    "title": "ARETES LOVE GOLD CON ZIRCONIA",
+    "variant": "",
+    "sku": "6617867e8acd0",
+    "qty": 6,
+    "arrived": false
+   },
+   {
+    "title": "BOLSO C CABAS PANIER BROWN",
+    "variant": "",
+    "sku": "14401521745677",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "BOLSO CC MINI KELLY BLACK",
+    "variant": "",
+    "sku": "24072851105773",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "BOLSO LW GREEN",
+    "variant": "28cmx20cm",
+    "sku": "677c26b31023a",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "BOLSO MM DENIM BLUE",
+    "variant": "",
+    "sku": "33644561954829",
+    "qty": 4,
+    "arrived": false
+   },
+   {
+    "title": "BOLSO MM TOTE DE TELA",
+    "variant": "",
+    "sku": "33644561253677",
+    "qty": 1,
+    "arrived": false
+   },
+   {
+    "title": "CINTO C TRIOMPHE BLACK",
+    "variant": "",
+    "sku": "41353991048077",
+    "qty": 16,
+    "arrived": false
+   },
+   {
+    "title": "CINTO GC WHITE",
+    "variant": "",
+    "sku": "14401522887469",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "CINTO LV REVERSIBLE HERITAGE",
+    "variant": "",
+    "sku": "14401521021389",
+    "qty": 4,
+    "arrived": false
+   },
+   {
+    "title": "COLLAR CC DORADO",
+    "variant": "49cm x 6cm de extensión",
+    "sku": "648cc32b9ef2d",
+    "qty": 3,
+    "arrived": false
+   },
+   {
+    "title": "LENTES C OVAL BROWN",
+    "variant": "REGULAR",
+    "sku": "66581907ee9cb-1",
+    "qty": 11,
+    "arrived": false
+   },
    {
     "title": "PULSERA DE TENNIS ESSENTIAL GOLD",
     "variant": "16.5",
@@ -2178,6 +2262,41 @@
     "arrived": false
    },
    {
+    "title": "SOMBRERO MM BEACH RAFFIA",
+    "variant": "",
+    "sku": "33644561374637",
+    "qty": 6,
+    "arrived": false
+   },
+   {
+    "title": "SOMBRERO MM BEACH RAFFIA CAQUI",
+    "variant": "",
+    "sku": "79010371019917",
+    "qty": 6,
+    "arrived": false
+   },
+   {
+    "title": "SUETER PR BLACK CON PLACA DEL LOGO",
+    "variant": "M",
+    "sku": "98269351593262",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "SUETER PR BLACK CON PLACA DEL LOGO",
+    "variant": "S",
+    "sku": "98269351593261",
+    "qty": 3,
+    "arrived": false
+   },
+   {
+    "title": "TRAJE DE BAÑO PR BLACK",
+    "variant": "M",
+    "sku": "43026762793100",
+    "qty": 1,
+    "arrived": false
+   },
+   {
     "title": "BLUSA GC JACQUARD",
     "variant": "L",
     "sku": "59357487588800",
@@ -2185,45 +2304,17 @@
     "arrived": false
    },
    {
-    "title": "BOLSO C CABAS",
-    "variant": "30cm de largo x 22cm de alto x 13cm de ancho",
-    "sku": "6701d26c9c67e",
+    "title": "CARDIGAN GC JACQUARD",
+    "variant": "L",
+    "sku": "65601076295037",
     "qty": 1,
     "arrived": false
    },
    {
-    "title": "BOLSO CC CLASIC BROWN",
-    "variant": "",
-    "sku": "24469411472813",
+    "title": "SUETER F CUELLO ALTO LOGOS",
+    "variant": "M",
+    "sku": "78755605790372",
     "qty": 1,
-    "arrived": false
-   },
-   {
-    "title": "BOLSO H BIRKIN 30 WHITE",
-    "variant": "20.5cm de alto x 25cm de largo x 13cm ancho",
-    "sku": "6701d26e72186",
-    "qty": 1,
-    "arrived": false
-   },
-   {
-    "title": "BOLSO LW GREEN",
-    "variant": "28cmx20cm",
-    "sku": "677c26b31023a",
-    "qty": 1,
-    "arrived": false
-   },
-   {
-    "title": "BOLSO MM DENIM BLUE",
-    "variant": "",
-    "sku": "33644561954829",
-    "qty": 1,
-    "arrived": false
-   },
-   {
-    "title": "COLLAR ESLABONES GOLD",
-    "variant": "46cm",
-    "sku": "668eee4037675",
-    "qty": 8,
     "arrived": false
    }
   ]
