@@ -35174,5 +35174,399 @@
     "pant": null
    }
   ]
+ },
+ "MOLLY100626": {
+  "proveedor": "MOLLY",
+  "hoja": "ODC del Drive (1oQd4LtcG1X4...), verificado linea por linea",
+  "costo": 2228.89,
+  "shipping": 400.0,
+  "sc": 0.0,
+  "cajas": 1,
+  "lineas": [
+   {
+    "sku": "70544362253997",
+    "prod": "CÁRDIGAN BROWN JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 20.25,
+    "pant": null
+   },
+   {
+    "sku": "80544362386765",
+    "prod": "CÁRDIGAN BROWN JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 20.25,
+    "pant": null
+   },
+   {
+    "sku": "60544362485069",
+    "prod": "CHAQUETA DARK BLUE JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 18.25,
+    "pant": null
+   },
+   {
+    "sku": "60544362576589",
+    "prod": "CHAQUETA BEIGE JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 18.25,
+    "pant": null
+   },
+   {
+    "sku": "20544361133645",
+    "prod": "ABRIGO BOTONES BROWN JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 16.25,
+    "pant": null
+   },
+   {
+    "sku": "50544361299181",
+    "prod": "ABRIGO BOTONES WHITE JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 21.25,
+    "pant": null
+   },
+   {
+    "sku": "70544361064717",
+    "prod": "ABRIGO BOTONES BLACK JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 21.25,
+    "pant": null
+   },
+   {
+    "sku": "20544362763021",
+    "prod": "ABRIGO OVERSIZED BABY BLUE JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 39.5,
+    "pant": null
+   },
+   {
+    "sku": "20544361595789",
+    "prod": "ABRIGO COZY WHITE JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 19.5,
+    "pant": null
+   },
+   {
+    "sku": "90544362828557",
+    "prod": "GABARDINA BLACK JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 20.0,
+    "pant": null
+   },
+   {
+    "sku": "20544361326861",
+    "prod": "ABRIGO BURGUNDY JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 20.0,
+    "pant": null
+   },
+   {
+    "sku": "30544361459629",
+    "prod": "ABRIGO BURGUNDY JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 20.0,
+    "pant": null
+   },
+   {
+    "sku": "20544361625165",
+    "prod": "ABRIGO CUELLO ALTO CAQUI JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 18.25,
+    "pant": null
+   },
+   {
+    "sku": "30544361790701",
+    "prod": "ABRIGO CUELLO ALTO GREY JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 18.25,
+    "pant": null
+   },
+   {
+    "sku": "60544361823469",
+    "prod": "ABRIGO CUELLO ALTO GREY JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 18.25,
+    "pant": null
+   },
+   {
+    "sku": "90544362989005",
+    "prod": "GABARDINA WHITE JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 33.75,
+    "pant": null
+   },
+   {
+    "sku": "30544363021773",
+    "prod": "GABARDINA BROWN JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 82.25,
+    "pant": null
+   },
+   {
+    "sku": "85887252613805",
+    "prod": "BLAZER BLACK FEATHERS JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 20.0,
+    "pant": null
+   },
+   {
+    "sku": "85887251172013",
+    "prod": "ABRIGO WHITE JW",
+    "var": "S",
+    "cant": 2,
+    "cu": 14.8,
+    "pant": null
+   },
+   {
+    "sku": "85887252725133",
+    "prod": "CONJUNTO WHITE JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 16.9,
+    "pant": null
+   },
+   {
+    "sku": "85887251265229",
+    "prod": "CARDIGAN RAYAS JW",
+    "var": "S",
+    "cant": 2,
+    "cu": 5.12,
+    "pant": null
+   },
+   {
+    "sku": "20544363178829",
+    "prod": "PANTALON DE VESTIR CAQUI JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 9.5,
+    "pant": null
+   },
+   {
+    "sku": "40544363211597",
+    "prod": "PANTALON DE VESTIR CAQUI JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 9.5,
+    "pant": null
+   },
+   {
+    "sku": "90544363373741",
+    "prod": "PANTALON DE VESTIR BROWN JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 16.0,
+    "pant": null
+   },
+   {
+    "sku": "30544363472045",
+    "prod": "PANTALON DE VESTIR BLACK JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 9.5,
+    "pant": null
+   },
+   {
+    "sku": "60544363501421",
+    "prod": "BLAZER BLACK MEN JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 36.0,
+    "pant": null
+   },
+   {
+    "sku": "40544363699725",
+    "prod": "GABARDINA BEIGE CUELLO ALTO JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 36.25,
+    "pant": null
+   },
+   {
+    "sku": "40544363732493",
+    "prod": "GABARDINA BEIGE CUELLO ALTO JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 36.25,
+    "pant": null
+   },
+   {
+    "sku": "60544363863565",
+    "prod": "BLAZER BEIGE MEN JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 36.0,
+    "pant": null
+   },
+   {
+    "sku": "30544364096333",
+    "prod": "CAMISA CASUAL JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 19.5,
+    "pant": null
+   },
+   {
+    "sku": "10544362627405",
+    "prod": "CHAQUETA MEN ZIPPER BEIGE JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 16.25,
+    "pant": null
+   },
+   {
+    "sku": "20544362024013",
+    "prod": "ABRIGO LARGO JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 66.0,
+    "pant": null
+   },
+   {
+    "sku": "20544362024013",
+    "prod": "ABRIGO LARGO JW",
+    "var": "L",
+    "cant": 2,
+    "cu": 66.0,
+    "pant": null
+   },
+   {
+    "sku": "39902701013069",
+    "prod": "ABRIGO COZY BROWN JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 66.0,
+    "pant": null
+   },
+   {
+    "sku": "80544361981069",
+    "prod": "ABRIGO LARGO BROWN JW",
+    "var": "L",
+    "cant": 1,
+    "cu": 66.0,
+    "pant": null
+   },
+   {
+    "sku": "80544363936429",
+    "prod": "CAMISA CASUAL GREEN JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 24.0,
+    "pant": null
+   },
+   {
+    "sku": "97231971095181",
+    "prod": "SUETER CASHMERE CUELLO ALTO CLASSIC GREY JW",
+    "var": "M",
+    "cant": 2,
+    "cu": 73.4,
+    "pant": null
+   },
+   {
+    "sku": "57231971193485",
+    "prod": "SUETER CASHMERE CLASSIC BLUE JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 81.4,
+    "pant": null
+   },
+   {
+    "sku": "67231971224557",
+    "prod": "BLUSA ENCAJE CASHMERE BROWN JW",
+    "var": "BROWN M",
+    "cant": 1,
+    "cu": 33.4,
+    "pant": null
+   },
+   {
+    "sku": "47231971386701",
+    "prod": "BLUSA ENCAJE CASHMERE BLACK JW",
+    "var": "1-BLACK M",
+    "cant": 1,
+    "cu": 33.4,
+    "pant": null
+   },
+   {
+    "sku": "77231971447149",
+    "prod": "CAMISA CASHMERE WHITE JW",
+    "var": "WHITE M",
+    "cant": 1,
+    "cu": 47.8,
+    "pant": null
+   },
+   {
+    "sku": "67231971512685",
+    "prod": "CAMISA CASHMERE BLACK JW",
+    "var": "BLACK L",
+    "cant": 1,
+    "cu": 47.8,
+    "pant": null
+   },
+   {
+    "sku": "57231971604205",
+    "prod": "BLUSA SIN MANGAS CASHMERE WHITE JW",
+    "var": "WHITE M",
+    "cant": 1,
+    "cu": 38.2,
+    "pant": null
+   },
+   {
+    "sku": "87231971764653",
+    "prod": "CARDIGAN CASHMERE WHITE JW",
+    "var": "S",
+    "cant": 1,
+    "cu": 119.8,
+    "pant": null
+   },
+   {
+    "sku": "37231971862957",
+    "prod": "CARDIGAN CASHMERE BLUE JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 119.8,
+    "pant": null
+   },
+   {
+    "sku": "37231971994029",
+    "prod": "SUETER CASHMERE LINEAS NEGRAS JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 91.0,
+    "pant": null
+   },
+   {
+    "sku": "87231972087245",
+    "prod": "SUETER CASHMERE BLACK JW",
+    "var": "M",
+    "cant": 1,
+    "cu": 97.4,
+    "pant": null
+   },
+   {
+    "sku": "87231972120013",
+    "prod": "SUETER MEN HALF CASHMERE BLACK",
+    "var": "M",
+    "cant": 1,
+    "cu": 38.2,
+    "pant": null
+   }
+  ]
  }
 }
