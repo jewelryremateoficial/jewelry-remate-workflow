@@ -34,6 +34,7 @@ SCRATCH = os.environ.get('OC_SCRATCH') or os.path.join(REPO, '.scratch')
 DATOS = os.path.join(REPO, 'datos', 'precios')
 HOY = (datetime.date.fromisoformat(os.environ['OC_HOY'])
        if os.environ.get('OC_HOY') else datetime.date.today())
+DIAS_PARADO = 60   # sin una sola venta en 60 dias = parado de verdad
 LAG = 30          # dias estimados entre la fecha del ODC y la entrada a bodega
 TC = 20.0
 FLETE_HIST = 1.10 # el costo historico viene sin flete ni aduana; se le pone 10%
@@ -239,14 +240,36 @@ for pr in sorted(P):
                                        'p': lot['pact']})
                 if lot['rest'] > 0:
                     rq += lot['rest']; rm += lot['rest'] * lot['M']
+                    _dl = (HOY - datetime.date.fromisoformat(lot['lleg'])).days
+                    if _dl < 0:
+                        continue          # todavia viene en camino: no esta parado
                     uv = ult_venta.get(sk)
+                    # Dias sin venta del PRODUCTO, no dias desde que llego la caja.
+                    # Antes 'nunca' se marcaba cuando la ultima venta era anterior a
+                    # la llegada del lote, y por eso el BOLSO CC 22 SILVER salia como
+                    # "nunca se ha vendido" aunque llevaba 10 piezas vendidas en el
+                    # anio: el lote ZOEY100926 no habia llegado. Reyna, 5 oct 2026.
+                    _dsv = (HOY - datetime.date.fromisoformat(uv)).days if uv else None
+                    # Para el que nunca ha vendido, el tiempo sin vender son los dias
+                    # que lleva en bodega: asi uno que llego hace 3 semanas no se
+                    # cuenta como parado nomas por no haber vendido todavia.
+                    _sv = _dsv if _dsv is not None else _dl
                     est.append({'prod': lot['prod'], 'var': lot['var'], 'sku': sk,
                                 'rest': lot['rest'], 'q': lot['q'], 'M': round(lot['M']),
                                 'mxn': round(lot['rest'] * lot['M']),
-                                'nunca': uv is None or uv < lot['lleg'],
-                                'dias': (HOY - datetime.date.fromisoformat(lot['lleg'])).days})
-        est.sort(key=lambda e: -e['mxn'])
-        parado_q += rq; parado_mxn += rm
+                                'nunca': uv is None, 'uv': uv or '',
+                                'dsv': _dsv, 'sv': _sv, 'quieto': _sv >= DIAS_PARADO,
+                                'dias': _dl})
+        # Parado de verdad = ya llego Y el producto no se ha vendido en DIAS_PARADO
+        # dias. Lo que queda de algo que se sigue vendiendo es inventario, no estorbo.
+        for _e in est:
+            if _e['quieto']:
+                parado_q += _e['rest']; parado_mxn += _e['rest'] * _e['M']
+        # En la lista solo va lo que esta parado de verdad. Lo que queda de un
+        # producto que se sigue vendiendo es inventario, y meterlo aqui era lo
+        # que hacia ver estancado al BOLSO CC 22 SILVER.
+        est = [e for e in est if e['quieto']]
+        est.sort(key=lambda e: (-e['sv'], -e['mxn']))
         ords.append({'orden': k, 'fecha': m['fecha'], 'inv': round(inv),
                      'ing': round(dd['ing']), 'q': round(dd['q']), 'pzs': m['pzs'],
                      'pct': round(100 * dd['ing'] / inv, 1) if inv else None,
@@ -254,7 +277,9 @@ for pr in sorted(P):
                      'dias': (HOY - datetime.date.fromisoformat(m['lleg'])).days,
                      'camino': k in EN_CAMINO,
                      'nunca': sum(1 for e in est if e['nunca']),
-                     'est': est[:25], 'est_total': len(est)})
+                     'quietos': sum(1 for e in est if e['quieto']),
+                     'quieto_mxn': round(sum(e['mxn'] for e in est if e['quieto'])),
+                     'est': est, 'est_total': len(est)})
     mg = d['ing'] - d['costo']
     prov_out[pr] = {
         'q': round(d['q']), 'ing': round(d['ing']), 'costo': round(d['costo']),

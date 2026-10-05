@@ -558,22 +558,25 @@ if os.path.isfile(_an):
         _est.sort(reverse=True, key=lambda x: x[0])
         _estht = ''
         if _est:
-            _estht = ('<section class="orden cerrada"><div class="ohead"><h3>Parado en bodega '
-                      '<i>%d productos · $%s MXN</i></h3><button class="btn toggle">Ver tabla</button></div>'
+            _estht = ('<section class="orden cerrada"><div class="ohead"><h3>Parado de verdad '
+                      '<i>%d productos · $%s MXN · ya llegaron y no venden una pieza desde hace '
+                      '60 días o más</i></h3><button class="btn toggle">Ver tabla</button></div>'
                       '<div class="plegable"><div class="tblwrap"><table><thead><tr><th>Producto</th>'
                       '<th>Orden</th><th class="n">Quedan</th><th class="n">De</th>'
-                      '<th class="n">Costo c/u</th><th class="n">Parado</th><th class="n">Días</th>'
-                      '</tr></thead><tbody>%s</tbody></table></div></div></section>'
+                      '<th class="n">Costo c/u</th><th class="n">Parado</th>'
+                      '<th class="n">Sin vender</th></tr></thead><tbody>%s</tbody></table></div>'
+                      '</div></section>'
                       % (len(_est), money(sum(x[0] for x in _est), 0), ''.join(
                           '<tr><td><a class="irprod" data-prov="%s" data-ir="%s" data-sku="%s">%s'
                           ' <span class="muted">%s</span></a>%s</td><td class="muted">%s</td>'
                           '<td class="n">%d</td><td class="n muted">%d</td><td class="n">$%s</td>'
-                          '<td class="n">$%s</td><td class="n %s">%d</td></tr>'
+                          '<td class="n">$%s</td><td class="n %s">%s</td></tr>'
                           % (html.escape(p_), k2, html.escape(e['sku'] or ''),
                              html.escape(e['prod']), html.escape(e['var'] or ''),
-                             ' ' + _pill('nunca se ha vendido', 'mal') if e['nunca'] else '',
+                             ' ' + _pill('ni una venta en el año', 'mal') if e['nunca'] else '',
                              k2, e['rest'], e['q'], money(e['M'], 0), money(e['mxn'], 0),
-                             'mal' if e['dias'] >= 90 else '', e['dias'])
+                             'mal' if (e['dsv'] is None or e['dsv'] >= 90) else 'warn',
+                             'nunca' if e['dsv'] is None else ('%d d' % e['dsv']))
                           for _m, k2, e in _est[:60])))
         _sc = ''
         if d['q_sc']:
