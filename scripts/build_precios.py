@@ -113,11 +113,16 @@ if os.path.exists(_tb):
 CAJA_USD = 10.0     # lo que cuesta la caja del reloj (Eduardo, 21 ago 2026)
 
 def con_caja(l):
-    """El dato viene en el nombre de la variante: 'RELOJ CON CAJA' / 'sin caja'."""
+    """El dato viene en el nombre de la variante: 'RELOJ CON CAJA' / 'sin caja'.
+
+    Los $10 son LA CAJA DEL RELOJ, nada mas (Reyna, 5 oct 2026). Antes bastaba
+    con que el texto dijera 'CON CAJA' y se le cobraban a lentes y carteras que
+    tambien vienen en su caja pero no cuestan eso.
+    """
     txt = ((l.get('var') or '') + ' ' + (l.get('prod') or '')).upper()
     if 'SIN CAJA' in txt:
         return False
-    return 'CON CAJA' in txt
+    return 'CON CAJA' in txt and 'RELOJ' in txt
 
 
 def calcula(o):
