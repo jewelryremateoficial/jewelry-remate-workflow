@@ -1,0 +1,3 @@
+# Los PDF se regeneran con scripts/pdf_parado.py y pesan ~9 MB entre todos.
+# En el repo se guardan los .md, que son el mismo dato en texto.
+*.pdf

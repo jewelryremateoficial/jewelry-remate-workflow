@@ -254,9 +254,14 @@ for pr in sorted(P):
                     # que lleva en bodega: asi uno que llego hace 3 semanas no se
                     # cuenta como parado nomas por no haber vendido todavia.
                     _sv = _dsv if _dsv is not None else _dl
+                    # El resto es fraccionario por el descuento de devoluciones.
+                    # Si redondea a cero no queda pieza parada y no va en la lista.
+                    _r = int(round(lot['rest']))
+                    if _r < 1:
+                        continue
                     est.append({'prod': lot['prod'], 'var': lot['var'], 'sku': sk,
-                                'rest': lot['rest'], 'q': lot['q'], 'M': round(lot['M']),
-                                'mxn': round(lot['rest'] * lot['M']),
+                                'rest': _r, 'q': lot['q'], 'M': round(lot['M']),
+                                'mxn': round(_r * lot['M']),
                                 'nunca': uv is None, 'uv': uv or '',
                                 'dsv': _dsv, 'sv': _sv, 'quieto': _sv >= DIAS_PARADO,
                                 'dias': _dl})
