@@ -27934,8 +27934,7 @@
   "costo": 6306.24,
   "shipping": 0.0,
   "sc": 1512.88,
-  "cajas": 1,
-  "aduana_completa": true,
+  "cajas": null,
   "lineas": [
    {
     "sku": "67201533404653",
@@ -35454,7 +35453,7 @@
   "costo": 4312.24,
   "shipping": 470.0,
   "sc": 1435.66,
-  "cajas": 1,
+  "cajas": null,
   "lineas": [
    {
     "sku": "58980701738189",

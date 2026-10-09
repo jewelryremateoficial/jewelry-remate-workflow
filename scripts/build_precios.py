@@ -219,20 +219,26 @@ for nombre in sorted(ordenes, key=_clave):
     _por = ''
     # 'aduana_completa' lo pone Eduardo cuando ya se pagaron todas las cajas de una orden que
     # sigue en camino: el estimado ya no aplica aunque la mercancia no haya llegado.
-    _completa = o.get('aduana_completa') or (bool(_cajas) and _pag >= _cajas)
-    # Solo se estima en ordenes ABIERTAS: las que siguen en camino y aun no pagan todas sus cajas.
-    # Las viejas ya cerraron con lo que se pago (varias nunca tuvieron aduana) y no se tocan.
-    if _completa or nombre not in EN_CAMINO:
+    # Mientras la orden siga EN CAMINO la aduana nunca se da por cerrada sola: las cajas
+    # llegan y se pagan de a poco, y quedarse con lo pagado hasta hoy subvalua el costo y
+    # termina poniendole precio barato al producto. Por eso se toma SIEMPRE el mayor entre
+    # lo pagado y el porcentaje del proveedor (4%, 3% en HAIFENG). El porcentaje pega bien:
+    # en ZOEY260826, ya con sus 7 cajas pagadas, da $11,535 contra $11,506 reales.
+    # Solo deja de estimarse cuando Reyna marca 'aduana_completa' en la orden, o cuando la
+    # orden ya salio del campo de en camino. (Reyna, 9 oct 2026.)
+    _pct = PCT_ADUANA.get(prov, PCT_ADUANA_DEF)
+    if o.get('aduana_completa') or nombre not in EN_CAMINO:
         _est = None
-    elif _cajas and _pag > 0:
-        _prom = o['sc'] / _pag
-        _est = o['sc'] + _prom * (_cajas - _pag)
-        _por = '%d de %d cajas pagadas, las %d que faltan a $%s c/u' % (
-            _pag, _cajas, _cajas - _pag, money(_prom))
-    elif _pag == 0:
-        _est = _base * PCT_ADUANA.get(prov, PCT_ADUANA_DEF)
-        _por = 'ninguna caja pagada todavia, %s al %.0f%%' % (
-            prov, PCT_ADUANA.get(prov, PCT_ADUANA_DEF) * 100)
+    else:
+        _piso = _base * _pct
+        _est, _por = _piso, 'estimada al %.0f%% de %s, porque faltan cajas por llegar' % (
+            _pct * 100, prov)
+        if _cajas and _pag > 0 and _pag < _cajas:
+            _prom = o['sc'] / _pag
+            _porcaja = o['sc'] + _prom * (_cajas - _pag)
+            if _porcaja > _est:
+                _est, _por = _porcaja, '%d de %d cajas pagadas, las %d que faltan a $%s c/u' % (
+                    _pag, _cajas, _cajas - _pag, money(_prom))
     if _est and _est > o['sc']:
         o['sc'] = _est
         o['sc_estimado'] = True
