@@ -1,7 +1,7 @@
 {
- "generado": "2026-10-05",
- "fuente": "INFORME DE INVERSION 2026 — hojas INVERSION PROVEEDORES y SHOP AND CROSS 2026",
- "nota": "El mes es el mes en que se PAGO, no el del nombre de la orden. Alibaba sale enlace por enlace. La aduana de cada orden se reparte entre los meses en que la hoja la registra.",
+ "generado": "2026-10-09",
+ "fuente": "INFORME DE INVERSION 2026 — hojas INVERSION PROVEEDORES y SHOP AND CROSS 2026 (leidas del xlsx, celda por celda)",
+ "nota": "El mes es el mes en que se PAGO. La aduana ahora sale guia por guia de la columna TOTAL INV X ORDEN, ya no repartida: por eso cuadra con el detalle y no con la tabla dinamica.",
  "mes": {
   "2026-02": {
    "ali": 173607.75,
@@ -12,59 +12,59 @@
   },
   "2026-03": {
    "ali": 635570.44,
-   "adu": 17825.99,
+   "adu": 19949.89,
    "usd": 35208.59,
    "enlaces": 55,
    "ordenes": 8
   },
   "2026-04": {
    "ali": 459544.07,
-   "adu": 27122.28,
+   "adu": 23034.57,
    "usd": 25886.93,
    "enlaces": 44,
    "ordenes": 8
   },
   "2026-05": {
    "ali": 629427.12,
-   "adu": 27144.65,
+   "adu": 31492.54,
    "usd": 35644.88,
    "enlaces": 57,
    "ordenes": 10
   },
   "2026-06": {
    "ali": 704439.92,
-   "adu": 34399.11,
+   "adu": 32693.09,
    "usd": 39729.22,
    "enlaces": 53,
    "ordenes": 7
   },
   "2026-07": {
    "ali": 705805.34,
-   "adu": 21341.74,
+   "adu": 19750.21,
    "usd": 39653.72,
    "enlaces": 74,
    "ordenes": 9
   },
   "2026-08": {
    "ali": 776554.84,
-   "adu": 29518.88,
+   "adu": 29157.46,
    "usd": 44716.35,
    "enlaces": 51,
    "ordenes": 6
   },
   "2026-09": {
    "ali": 885532.28,
-   "adu": 38764.34,
+   "adu": 41618.93,
    "usd": 49625.54,
    "enlaces": 50,
    "ordenes": 8
   },
   "2026-10": {
-   "ali": 5758.41,
-   "adu": 1579.69,
+   "ali": 66442.45,
+   "adu": 7115.61,
    "usd": 307.13,
-   "enlaces": 8,
-   "ordenes": 2
+   "enlaces": 12,
+   "ordenes": 4
   }
  }
 }
