@@ -676,6 +676,12 @@ color:#9aa3c0;border-bottom:2px solid transparent}
 .top{background:#141a33;color:#fff;padding:0 18px;position:sticky;top:0;z-index:30}
 .in{max-width:1600px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .brand{padding:12px 0;font-weight:700}.brand small{display:block;font-weight:400;font-size:11px;color:#9aa3c0}
+.actz{margin-left:auto;background:#1f6f4a;border:1px solid #39b07a;border-radius:9px;
+padding:5px 13px;font-size:11px;line-height:1.3;white-space:nowrap;text-align:right;color:#d8f3e6}
+.actz b{color:#fff;font-size:13px;font-weight:800;letter-spacing:.2px}
+.actz i{display:block;font-style:normal;color:#9ed8bb;font-size:10px}
+@media(max-width:700px){.actz{margin-left:0;white-space:normal;text-align:left;width:100%;
+margin-bottom:10px}}
 .wrap{max-width:1600px;margin:0 auto;padding:18px}
 h2{font-size:19px;margin:0 0 10px}
 .intro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:16px}
@@ -864,7 +870,9 @@ tr.resalta>td:first-child{box-shadow:inset 1px 0 0 var(--warn),inset 0 1px 0 var
   <a class="nl on" href="precios.html">💲 Tablas de precios</a>
 </div></div>
 <div class="top"><div class="in"><div class="brand">Jewelry Remate MX
-<small>Tablas de precios por orden de compra</small></div></div></div>
+<small>Tablas de precios por orden de compra</small></div>
+<div class="actz">Actualizado al <b>__CORTE__</b>
+<i>si no coincide, recarga con Cmd/Ctrl + Shift + R</i></div></div></div>
 <div class="wrap viz">
 
 <div class="intro">
