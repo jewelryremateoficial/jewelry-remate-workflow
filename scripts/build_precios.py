@@ -30,6 +30,17 @@ DATOS = os.environ.get('OC_PRECIOS') or os.path.join(REPO, 'datos', 'precios')
 TC = 20.0          # tipo de cambio fijo
 ALIBABA = 0.03     # comision fija
 ROAS = (3, 3.5, 4)
+# Hay ordenes a las que Reyna les pide una columna de ROAS extra. ZOEY100926 lleva 5x
+# (Reyna, 10 oct 2026). Lo que se ponga aqui cambia la tabla de la pagina Y el Excel
+# que se descarga, para que no se contradigan.
+ROAS_POR_ORDEN = {'ZOEY100926': (3, 3.5, 4, 5)}
+
+def roas_de(nombre):
+    return ROAS_POR_ORDEN.get(nombre, ROAS)
+
+def roas_txt(r):
+    """3 -> '3', 3.5 -> '3.5' (sin el .0 que mete Python)."""
+    return ('%g' % r)
 # REDONDEO de precios de venta: Eduardo los cierra en ...99 (5,899 / 2,999 / 999).
 # Se sube al siguiente ...99, nunca se baja.
 def redondea99(x):
@@ -259,6 +270,7 @@ for nombre in sorted(ordenes, key=_clave):
     datos_js[nombre] = {
         'costo': round(o['costo'], 2), 'shipping': round(o['shipping'], 2),
         'sc': round(o['sc'], 2), 'tc': TC, 'alibaba': ALIBABA,
+        'roas': list(roas_de(nombre)),
         'lineas': [{'sku': f['sku'], 'prod': f['prod'], 'var': f['var'],
                     'cant': f['cant'], 'cu': round(f['cu'], 4),
                     'pact': round(f['pact'], 2) if f['pact'] else None,
@@ -275,8 +287,10 @@ for nombre in sorted(ordenes, key=_clave):
         % (nombre, nombre, len(filas), pzs, money(inv_mxn, 0) if inv_mxn else '—'))
 
     trs = []
+    _roas = roas_de(nombre)
     for i, f in enumerate(filas, 1):
         cls, tip = semaforo(f)
+        _tds_roas = ''.join('<td class="n roas">%s</td>' % money(f['M'] * r) for r in _roas)
         trs.append(
             '<tr data-b="%s">'
             '<td class="n">%d</td><td class="sku">%s</td><td>%s</td><td>%s</td>'
@@ -284,7 +298,7 @@ for nombre in sorted(ordenes, key=_clave):
             '<td class="n">%s</td><td class="n">%s</td><td class="n">%s</td>'
             '<td class="n">%s</td><td class="n">%s</td><td class="n">%s</td>'
             '<td class="n destacado">%s</td>'
-            '<td class="n roas">%s</td><td class="n roas">%s</td><td class="n roas">%s</td>'
+            '%s'
             '<td class="n pact %s" title="%s" data-sku="%s" data-m="%.2f">%s</td>'
             '<td class="n">%s</td></tr>'
             % (html.escape((f['prod'] + ' ' + f['sku'] + ' ' + f['var']).upper()),
@@ -292,7 +306,7 @@ for nombre in sorted(ordenes, key=_clave):
                f['cant'], money(f['cu']), money(f['F']), money(f['G']), money(f['H']),
                money(f['I']), money(f['J']), '%.4f%%' % (f['K'] * 100), money(f['L']),
                money(f['M']),
-               money(f['M'] * ROAS[0]), money(f['M'] * ROAS[1]), money(f['M'] * ROAS[2]),
+               _tds_roas,
                cls, html.escape(tip), html.escape(clave_pin(nombre, i, f)), f['M'],
                ('<input class="pin" value="%s" inputmode="decimal">' % money(f['pact'], 0))
                if f['pact'] else
@@ -349,7 +363,7 @@ for nombre in sorted(ordenes, key=_clave):
       <th>COMPRA ALIBABA<br><i>US</i></th><th>COMPRA<br><i>MXN</i></th>
       <th>%% DEL COSTO</th><th>SHOP AND CROSS<br><i>MXN</i></th>
       <th>COSTO UNIT TOTAL<br><i>MXN</i></th>
-      <th>ROAS 3</th><th>ROAS 3.5</th><th>ROAS 4</th>
+      %s
       <th>PRECIO ACTUAL<br><i>Shopify</i></th><th>PRECIO ANTIGUO</th>
     </tr></thead>
     <tbody>%s</tbody>
@@ -361,7 +375,9 @@ for nombre in sorted(ordenes, key=_clave):
                  ('<i class="sub">pagados $%s</i>' % money(o.get('sc_pagado', 0.0))) if o.get('sc_estimado') else '',
                  pct_sc * 100, TC, money(costo_total_mxn, 0),
                  money(inv_mxn, 0) if inv_mxn else '—', inv.get('pagos', '—'),
-                 aviso, ''.join(trs)))
+                 aviso,
+                 ''.join('<th>ROAS %s</th>' % roas_txt(r) for r in _roas),
+                 ''.join(trs)))
 
 CORTE = '%d de %s de %d' % (HOY.day, _MESES_L[HOY.month - 1], HOY.year)
 
@@ -1061,11 +1077,16 @@ document.querySelectorAll('.desc').forEach(function(b){
       ['A2','A3','A4','A6','E2','E3','G2','G3','G4','I2','I3'].forEach(function(c){
         ws.getCell(c).font={bold:true}});
 
+      // Los ROAS salen de la orden: casi todas llevan 3/3.5/4, pero algunas traen una
+      // columna extra (ZOEY100926 con 5x). Las columnas de precio se recorren solas.
+      var RO=d.roas||[3,3.5,4];
+      var COL_P=14+RO.length;                 // primera columna despues de los ROAS
       ws.getRow(7).values=['SKU','PRODUCTO','VARIANTE','CANTIDAD','COSTO UNITARIO (US)',
         'COSTO TOTAL (US)','COSTO CON ENVIO X TOTAL PCS (US)','% ALIBABA (US)',
         'COSTO DE COMPRA ALIBABA (US)','COSTO DE COMPRA (MXN) TC=20','% SOBRE EL COSTO TOTAL (US)',
-        'SHOP AND CROSS (MXN)','COSTO UNIT TOTAL (MXN)','ROAS 3','ROAS 3.5','ROAS 4',
-        'PRECIO ACTUAL','PRECIO ANTIGUO'];
+        'SHOP AND CROSS (MXN)','COSTO UNIT TOTAL (MXN)']
+        .concat(RO.map(function(r){return 'ROAS '+r;}))
+        .concat(['PRECIO ACTUAL','PRECIO ANTIGUO']);
       ws.getRow(7).font={bold:true};
       ws.getRow(7).alignment={wrapText:true,vertical:'middle'};
       ws.getRow(7).height=34;
@@ -1086,13 +1107,12 @@ document.querySelectorAll('.desc').forEach(function(b){
         row.getCell(11).value={formula:'I'+r+'/$I$6'};
         row.getCell(12).value={formula:'$L$6*K'+r};
         row.getCell(13).value={formula:'(J'+r+'+L'+r+')/D'+r};
-        row.getCell(14).value={formula:'M'+r+'*3'};
-        row.getCell(15).value={formula:'M'+r+'*3.5'};
-        row.getCell(16).value={formula:'M'+r+'*4'};
-        if(l.pact!=null)row.getCell(17).value=l.pact;
-        if(l.pant!=null)row.getCell(18).value=l.pant;
-        [5,6,7,8,9,10,12,13,14,15,16,17,18].forEach(function(c){
-          row.getCell(c).numFmt='#,##0.00'});
+        RO.forEach(function(k,j){ row.getCell(14+j).value={formula:'M'+r+'*'+k}; });
+        if(l.pact!=null)row.getCell(COL_P).value=l.pact;
+        if(l.pant!=null)row.getCell(COL_P+1).value=l.pant;
+        var fmt=[5,6,7,8,9,10,12,13,COL_P,COL_P+1];
+        RO.forEach(function(k,j){ fmt.push(14+j); });
+        fmt.forEach(function(c){ row.getCell(c).numFmt='#,##0.00'});
         row.getCell(11).numFmt='0.0000%';
       });
       ws.views=[{state:'frozen',ySplit:7}];
