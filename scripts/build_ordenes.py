@@ -289,6 +289,14 @@ button.act:disabled{opacity:.5}
 .sec>h3.warn{color:var(--warn);background:var(--warn-bg)}.sec>h3.gray{color:var(--muted);background:var(--gray-bg)}
 .sec>h3.reb{color:var(--reb);background:var(--reb-bg)}
 .sec .exp{padding:8px 16px 0;font-size:12.5px;color:var(--muted)}
+/* rayitas que parten una seccion por dentro, para no multiplicar apartados */
+tr.subdiv td{font-size:11.5px;font-weight:800;letter-spacing:.2px;padding:6px 16px;border:0}
+tr.subdiv.ago td{background:var(--a-bg);color:var(--a)}
+tr.subdiv.ok td{background:var(--ok-bg);color:var(--ok)}
+tr.subdiv.est td{background:#f3eefc;color:#54308f}
+tr.subdiv.len td{background:var(--bajo-bg,#fdf7e0);color:var(--bajo,#7a6110)}
+tr.subdiv.nue td{background:#e9f2fb;color:#1b5a8a}
+tr.subdiv.gris td{background:var(--gray-bg);color:var(--muted)}
 .tblwrap{overflow-x:auto}table{border-collapse:collapse;width:100%}
 th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;background:#fafbfe;position:sticky;top:0}
 td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}
@@ -557,20 +565,58 @@ function renderOrden(){
   // PEDIR = SOLO lo que vendio en los ultimos 60 dias (Eduardo, 18 ago 2026: "no me pongas
   // productos sin venta en el area de se venden"). Lo que vendio hace mas de 60 dias se va
   // a AGOTADOS si esta en cero, o a LENTOS si todavia tiene stock.
-  var pedir=act.filter(function(r){return r.u>0&&!isReb(r)&&!isEst(r)}).sort(byName);
-  var prueba=act.filter(function(r){return r.u===0&&r.q<=0&&!isReb(r)&&sug(r,tm)>0}).sort(byName);
-  var lentos=act.filter(function(r){return r.u===0&&r.u9>0&&r.q>0&&!isReb(r)&&!isEst(r)}).sort(byName);
-  var rebL=act.filter(function(r){return isReb(r)}).sort(byName);
-  var est=act.filter(function(r){return isEst(r)&&!isReb(r)}).sort(byName);
+  // CUATRO APARTADOS (Reyna, 12 oct 2026). Antes eran seis y un SKU rebajado que vendia
+  // se iba SOLO a REBAJA, asi que no lo veias donde te importaba. Ahora el corte es por lo
+  // que HIZO el producto, no por sus caracteristicas, y por eso no se pueden traslapar:
+  // o vendio, o esta rebajado sin vender, o no vendio, o esta en borrador. Lo demas
+  // (agotado, lento, estancado, nuevo) ya lo dicen las etiquetas de cada renglon.
+  // Ojo con u<0: hay variantes con mas devoluciones que ventas en 60d. Con u===0 se caian
+  // de todas las secciones; el corte va con u>0 / u<=0 para que no se pierda ninguna.
+  var vend=act.filter(function(r){return r.u>0}).sort(byName);
+  var rebL=act.filter(function(r){return r.u<=0&&isReb(r)}).sort(byName);
+  var sinv=act.filter(function(r){return r.u<=0&&!isReb(r)}).sort(byName);
   var drafts=rs.filter(function(r){return r.st!==''}).sort(byName);
-  function tbl(list,g){return '<div class="tblwrap"><table>'+THEAD+'<tbody>'+list.map(function(r){return rowHTML(r,tm,g)}).join('')+'</tbody></table></div>'}
+  // dentro de SIN VENTA: primero lo que tiene el dinero detenido, al final lo agotado,
+  // que no se pide y no hay nada que decidir (Reyna, 12 oct 2026).
+  var sEst=sinv.filter(function(r){return r.q>0&&r.u9<=0&&r.a>=90});
+  var sLen=sinv.filter(function(r){return r.q>0&&r.u9>0});
+  var sNue=sinv.filter(function(r){return r.q>0&&r.u9<=0&&r.a<90});
+  var sAgo=sinv.filter(function(r){return r.q<=0});
+  var mxEst=sEst.reduce(function(a,r){return a+(r.c||0)*20*r.q},0);
+  function trs(list,g){return list.map(function(r){return rowHTML(r,tm,g)}).join('')}
+  function div(cls,txt){return '<tr class="subdiv '+cls+'"><td colspan="10">'+txt+'</td></tr>'}
+  function wrap(cuerpo){return '<div class="tblwrap"><table>'+THEAD+'<tbody>'+cuerpo+'</tbody></table></div>'}
+  function tbl(list,g){return wrap(trs(list,g))}
+  function vacio(){return '<div class="exp" style="padding-bottom:12px">Ninguno.</div>'}
   var H='';
-  H+='<div class="sec"><h3 class="ok">✅ PEDIR — se venden y hay que resurtir ('+pedir.length+')</h3>'+(pedir.length?tbl(pedir,false):'<div class="exp" style="padding-bottom:12px">Nada pendiente.</div>')+'</div>';
-  H+='<div class="sec"><h3 class="warn">🧪 AGOTADOS SIN VENTA RECIENTE — 2 pzs de prueba ('+prueba.length+')</h3><div class="exp">Activos, en cero y sin venta en 60 días. Ordenados por movimiento 90d y por lo más nuevo.</div>'+(prueba.length?tbl(prueba,false):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
-  H+='<div class="sec"><h3 class="bajo">🐢 LENTOS CON STOCK — vendieron hace más de 60 días ('+lentos.length+')</h3><div class="exp">Sin ventas en los últimos 60 días pero con historial en 90 y con existencia. No traen cantidad sugerida: ya tienes producto. Si quieres resurtir alguno, la cantidad la pones tú.</div>'+(lentos.length?tbl(lentos,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
-  H+='<div class="sec"><h3 class="reb">🏷️ REBAJA 30%+ (precio de comparación) — tu criterio ('+rebL.length+')</h3><div class="exp">Pieza por pieza en 60 días: 🏷️ vendidas con rebaja · 💵 a precio normal · 🎟️ por código de descuento (NO cuenta como rebaja). También los que están rebajados 30%+ ahorita. Sin cantidad sugerida.</div>'+(rebL.length?tbl(rebL,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
-  H+='<div class="sec"><h3 class="gray">📝 EN BORRADOR / ARCHIVADOS de este proveedor ('+drafts.length+')</h3><div class="exp">No se piden por default (tu criterio del porqué están en borrador). Si uno vendió estando activo, viene marcado.</div>'+(drafts.length?tbl(drafts,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
-  H+='<div class="sec"><h3 class="gray">⚖️ ESTANCADOS REALES — 0 ventas en 90 días, con stock ('+est.length+')</h3><div class="exp">Solo productos con <b>90+ días desde su alta</b> y <b>0 ventas en 90 días</b>. Los dados de alta hace poco NO aparecen aquí — son nuevos, no estancados. Los 🐢 lentos (40+ días sin venta) sí se pueden pedir y van marcados en su sección.</div>'+(est.length?tbl(est,true):'<div class="exp" style="padding-bottom:12px">Ninguno.</div>')+'</div>';
+  // 1 — SE VENDIERON. Los agotados arriba: es lo urgente.
+  var vSin=vend.filter(function(r){return r.q<=0}), vCon=vend.filter(function(r){return r.q>0});
+  H+='<div class="sec"><h3 class="ok">\u2705 SE VENDIERON ('+vend.length+')</h3>'
+    +'<div class="exp">Primero los que est\u00e1n en cero. Traen cantidad sugerida; aj\u00fastala a tu criterio.</div>'
+    +(vend.length?wrap(div('ago','\u{1F534} AGOTADOS — se vendieron y est\u00e1n en cero ('+vSin.length+')')+trs(vSin,false)
+       +(vCon.length?div('ok','\u{1F7E2} CON EXISTENCIA — se vendieron y todav\u00eda queda ('+vCon.length+')')+trs(vCon,false):'')):vacio())
+    +'</div>';
+  // 2 — REBAJA. Solo los que NO vendieron: los que si vendieron ya salieron arriba.
+  H+='<div class="sec"><h3 class="reb">\u{1F3F7}\uFE0F EN REBAJA ('+rebL.length+')</h3>'
+    +'<div class="exp">Rebajados 30%+ que <b>no</b> vendieron. Los rebajados que s\u00ed vendieron salen arriba con su etiqueta, no aqu\u00ed. Sin cantidad sugerida.</div>'
+    +(rebL.length?tbl(rebL,true):vacio())+'</div>';
+  // 3 — SIN VENTA. Lo estancado primero, con su dinero en el titulo.
+  H+='<div class="sec"><h3 class="gray">\u{1F4A4} SIN VENTA EN 60 D\u00cdAS ('+sinv.length+')'
+    +(mxEst>0?' \u2014 $'+Math.round(mxEst).toLocaleString('es-MX')+' MXN parados':'')+'</h3>'
+    +'<div class="exp">Dividido por dentro. Primero lo que te tiene el dinero detenido; los agotados van al final porque no hay nada que decidir.</div>'
+    +(sinv.length?wrap(
+        (sEst.length?div('est','\u2696\uFE0F ESTANCADOS — 90+ d\u00edas de alta y 0 ventas en 90 d\u00edas ('+sEst.length+')  \u00b7  $'+Math.round(mxEst).toLocaleString('es-MX')+' MXN parados')+trs(sEst,true):'')
+       +(sLen.length?div('len','\u{1F422} LENTOS — vendieron entre 60 y 90 d\u00edas ('+sLen.length+')')+trs(sLen,true):'')
+       +(sNue.length?div('nue','\u{1F195} NUEVOS — alta reciente, todav\u00eda sin venta ('+sNue.length+')')+trs(sNue,true):'')
+       +(sAgo.length?div('gris','AGOTADOS — en cero y sin venta, nada que decidir ('+sAgo.length+')')+trs(sAgo,true):'')
+      ):vacio())+'</div>';
+  // 4 — BORRADOR.
+  var dSin=drafts.filter(function(r){return r.q<=0}), dCon=drafts.filter(function(r){return r.q>0});
+  H+='<div class="sec"><h3 class="gray">\u{1F4DD} EN BORRADOR Y ARCHIVADOS ('+drafts.length+')</h3>'
+    +'<div class="exp">No se piden por default: t\u00fa sabes por qu\u00e9 est\u00e1n en borrador. Si uno vendi\u00f3 estando activo, viene marcado.</div>'
+    +(drafts.length?wrap((dSin.length?div('ago','EN CERO ('+dSin.length+')')+trs(dSin,true):'')
+       +(dCon.length?div('gris','CON EXISTENCIA ('+dCon.length+')')+trs(dCon,true):'')):vacio())
+    +'</div>';
   document.getElementById('ocont').innerHTML=H;
   document.querySelectorAll('#ocont input.q').forEach(function(inp){
     inp.oninput=function(){var tr=inp.closest('tr');var k=tr.dataset.k;var val=parseInt(inp.value)||0;edits[k]=val;esave();
