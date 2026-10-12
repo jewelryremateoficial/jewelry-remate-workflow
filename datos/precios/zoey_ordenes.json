@@ -8230,7 +8230,7 @@
   "costo": 16906.0,
   "shipping": 1690.0,
   "sc": 0.0,
-  "cajas": 5,
+  "cajas": 7,
   "lineas": [
    {
     "sku": "72142921022126",
@@ -9528,6 +9528,7 @@
     "cu": 25.0,
     "pant": null
    }
-  ]
+  ],
+  "aduana_completa": true
  }
 }
