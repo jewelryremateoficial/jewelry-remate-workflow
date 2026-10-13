@@ -25506,7 +25506,7 @@
  },
  "HAIFENG120826": {
   "proveedor": "HAIFENG",
-  "costo": 9214.53,
+  "costo": 9188.64,
   "shipping": 0.0,
   "sc": 0.0,
   "lineas": [
@@ -25544,7 +25544,7 @@
    },
    {
     "sku": "21605774316461",
-    "prod": "6.0",
+    "prod": "ANILLO BACK SOON T SILVER",
     "var": "7",
     "cant": 2,
     "cu": 3.0,
@@ -25618,7 +25618,7 @@
     "sku": "61222821052141",
     "prod": "ANILLO CD GRABADO GOLD BLACK ZIRCONIAS",
     "var": "6",
-    "cant": 1,
+    "cant": 2,
     "cu": 6.9,
     "pant": null
    },
@@ -25666,7 +25666,7 @@
     "sku": "40154173560109",
     "prod": "ANILLO CLAVO DOBLE GOLD ZIRCONIAS",
     "var": "6",
-    "cant": 4,
+    "cant": 3,
     "cu": 5.0,
     "pant": null
    },
@@ -25674,7 +25674,7 @@
     "sku": "40154173692877",
     "prod": "ANILLO CLAVO DOBLE GOLD ZIRCONIAS",
     "var": "7",
-    "cant": 4,
+    "cant": 2,
     "cu": 5.0,
     "pant": null
    },
@@ -25834,7 +25834,7 @@
     "sku": "89205551513197",
     "prod": "ANILLO KNOT SILVER ZIRCONIAS",
     "var": "8",
-    "cant": 1,
+    "cant": 2,
     "cu": 6.5,
     "pant": null
    },
@@ -25874,7 +25874,7 @@
     "sku": "82224433533261",
     "prod": "ANILLO LOVE CON ZIRCONIA GOLD",
     "var": "6",
-    "cant": 6,
+    "cant": 2,
     "cu": 1.8,
     "pant": null
    },
@@ -25882,7 +25882,7 @@
     "sku": "82224433666029",
     "prod": "ANILLO LOVE CON ZIRCONIA GOLD",
     "var": "7",
-    "cant": 4,
+    "cant": 2,
     "cu": 1.8,
     "pant": null
    },
@@ -26058,7 +26058,7 @@
     "sku": "66176c87490bf",
     "prod": "ANILLO LOVE SILVER",
     "var": "11",
-    "cant": 6,
+    "cant": 2,
     "cu": 1.8,
     "pant": null
    },
@@ -26170,7 +26170,7 @@
     "sku": "22064323187309",
     "prod": "ANILLO SERPENTI VIPER ROSE GOLD WHITE",
     "var": "8",
-    "cant": 5,
+    "cant": 3,
     "cu": 8.0,
     "pant": null
    },
@@ -26250,7 +26250,7 @@
     "sku": "21674041055981",
     "prod": "ANILLO T DE COMPROMISO",
     "var": "9",
-    "cant": 3,
+    "cant": 2,
     "cu": 5.0,
     "pant": null
    },
@@ -26810,7 +26810,7 @@
     "sku": "52306841075693",
     "prod": "COLLAR BV ROSEGOLD SERPIENTE",
     "var": "Default Title",
-    "cant": 6,
+    "cant": 3,
     "cu": 7.0,
     "pant": null
    },
@@ -26850,7 +26850,7 @@
     "sku": "71078751659341",
     "prod": "COLLAR C SILVER ZIRCONIAS",
     "var": "Default Title",
-    "cant": 2,
+    "cant": 1,
     "cu": 5.99,
     "pant": null
    },
@@ -27026,7 +27026,7 @@
     "sku": "668eee430f697",
     "prod": "COLLAR SMILE ROSE GOLD",
     "var": "Cadena ajustable de",
-    "cant": 12,
+    "cant": 10,
     "cu": 3.4,
     "pant": null
    },
@@ -27073,15 +27073,15 @@
    {
     "sku": "84158211070285",
     "prod": "COLLAR TREBOL ROSEGOLD-RED",
-    "var": "High Quality 43cm y",
-    "cant": 5,
+    "var": "High Quality 43cm y 10",
+    "cant": 7,
     "cu": 4.0,
     "pant": null
    },
    {
     "sku": "665bbe801cd41",
     "prod": "COLLAR TREBOL ROSEGOLD-RED",
-    "var": "High Quality 45cm y",
+    "var": "High Quality 45cm y 15",
     "cant": 2,
     "cu": 4.0,
     "pant": null
@@ -27162,7 +27162,7 @@
     "sku": "35432872862253",
     "prod": "PULSERA CD D-LUCK GOLD WHITE",
     "var": "Default Title",
-    "cant": 2,
+    "cant": 1,
     "cu": 15.0,
     "pant": null
    },
@@ -27218,7 +27218,7 @@
     "sku": "668eee357952c",
     "prod": "PULSERA DE CUENTAS CON INSIGNIA DE CORAZÓN BLUE",
     "var": "17 cm",
-    "cant": 35,
+    "cant": 47,
     "cu": 5.0,
     "pant": null
    },
@@ -27338,7 +27338,7 @@
     "sku": "63e0c53d10478",
     "prod": "PULSERA LOVE CON ZIRCONIA SILVER",
     "var": "17 cm",
-    "cant": 4,
+    "cant": 3,
     "cu": 4.5,
     "pant": null
    },
@@ -27727,200 +27727,192 @@
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191183405",
+    "prod": "PULSERA MSS PAVE",
     "var": "SILVER",
     "cant": 2,
     "cu": 8.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191050637",
+    "prod": "PULSERA MSS PAVE",
     "var": "GOLD",
     "cant": 2,
     "cu": 8.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191209389",
+    "prod": "ARETES MSS LADYS",
     "var": "GOLD",
     "cant": 2,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191325197",
+    "prod": "ANILLO MSS PAVE ZIRCONIAS",
     "var": "SILVER #6",
     "cant": 2,
     "cu": 9.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191457965",
+    "prod": "ANILLO MSS PAVE ZIRCONIAS",
     "var": "SILVER #7",
     "cant": 2,
     "cu": 9.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191533549",
+    "prod": "ANILLO MSS MOVE DIAMOND",
     "var": "GOLD #6",
     "cant": 2,
     "cu": 8.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191666317",
+    "prod": "ANILLO MSS MOVE DIAMOND",
     "var": "GOLD #7",
     "cant": 2,
     "cu": 8.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191811501",
+    "prod": "ANILLO MSS ROMANE",
     "var": "GOLD #7",
     "cant": 2,
     "cu": 7.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191778733",
+    "prod": "ANILLO MSS ROMANE",
     "var": "GOLD #6",
     "cant": 2,
     "cu": 7.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144191971949",
+    "prod": "ANILLO MSS ROMANE SILVER",
     "var": "SILVER #6",
     "cant": 2,
     "cu": 7.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144192035789",
+    "prod": "ANILLO MSS BAGUE",
     "var": "SILVER #7",
     "cant": 2,
     "cu": 7.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
-    "var": "",
-    "cant": 2,
-    "cu": 0.0,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "43506311016045",
+    "prod": "LENTES L ATTITUDE",
     "var": "",
     "cant": 2,
     "cu": 38.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "43506311147117",
+    "prod": "LENTES CD B1U",
     "var": "",
     "cant": 2,
     "cu": 48.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "43506311276493",
+    "prod": "LENTES BT AVIADOR",
     "var": "",
     "cant": 2,
     "cu": 48.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "43506311374797",
+    "prod": "LENTES BT DROP",
     "var": "",
     "cant": 2,
     "cu": 48.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "43506311405869",
+    "prod": "LENTES CC MONTURA",
     "var": "",
     "cant": 2,
     "cu": 45.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "43506311568013",
+    "prod": "LENTES CC PILOT",
     "var": "",
     "cant": 2,
     "cu": 48.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "43506311664621",
+    "prod": "BOLSO H VIDEPOCHES",
     "var": "",
     "cant": 2,
     "cu": 100.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144192160077",
+    "prod": "ARETES CC COMETE",
     "var": "SILVER",
     "cant": 2,
     "cu": 11.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144192249901",
+    "prod": "ANILLO GC GHOST",
     "var": "SILVER #8",
     "cant": 2,
     "cu": 4.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144192382669",
+    "prod": "ANILLO GC GHOST",
     "var": "SILVER #9",
     "cant": 2,
     "cu": 4.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144192421069",
+    "prod": "ANILLO GC MARMONT",
     "var": "SILVER #9",
     "cant": 2,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144192517677",
+    "prod": "ANILLO GC ICON GOLD",
     "var": "GOLD #7",
     "cant": 2,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "VISERA CD V1U",
+    "sku": "93144192650445",
+    "prod": "ANILLO GC ICON GOLD",
     "var": "GOLD #8",
     "cant": 2,
     "cu": 6.99,

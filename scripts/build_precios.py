@@ -33,7 +33,7 @@ ROAS = (3, 3.5, 4)
 # Hay ordenes a las que Reyna les pide una columna de ROAS extra. ZOEY100926 lleva 5x
 # (Reyna, 10 oct 2026). Lo que se ponga aqui cambia la tabla de la pagina Y el Excel
 # que se descarga, para que no se contradigan.
-ROAS_POR_ORDEN = {'ZOEY100926': (3, 3.5, 4, 5)}
+ROAS_POR_ORDEN = {'ZOEY100926': (3, 3.5, 4, 5), 'HAIFENG120826': (3, 3.5, 4, 5)}
 
 def roas_de(nombre):
     return ROAS_POR_ORDEN.get(nombre, ROAS)
