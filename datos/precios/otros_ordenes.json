@@ -35442,8 +35442,8 @@
  },
  "NANCY180926": {
   "proveedor": "NANCY VIP",
-  "costo": 4312.24,
-  "shipping": 470.0,
+  "costo": 4164.86,
+  "shipping": 378.0,
   "sc": 1435.66,
   "cajas": null,
   "lineas": [
@@ -35477,14 +35477,6 @@
     "var": "8",
     "cant": 2,
     "cu": 4.99,
-    "pant": null
-   },
-   {
-    "sku": "42981580832908",
-    "prod": "ANILLO LV VOLT MULTI",
-    "var": "",
-    "cant": 2,
-    "cu": 5.59,
     "pant": null
    },
    {
@@ -35569,7 +35561,7 @@
    },
    {
     "sku": "43047216775308",
-    "prod": "ARETES ESLABON LISO GOLD",
+    "prod": "ARETES ESLABON LISO  GOLD",
     "var": "",
     "cant": 6,
     "cu": 5.79,
@@ -35708,7 +35700,7 @@
     "prod": "ARETES V ROUND GOLD",
     "var": "Regular",
     "cant": 3,
-    "cu": 5.59,
+    "cu": 6.29,
     "pant": null
    },
    {
@@ -35749,14 +35741,6 @@
     "var": "Regular",
     "cant": 8,
     "cu": 4.29,
-    "pant": null
-   },
-   {
-    "sku": "22974392600397",
-    "prod": "BRAZALETE CD PETIT MULTI GOLD",
-    "var": "AJUSTABLE",
-    "cant": 3,
-    "cu": 7.79,
     "pant": null
    },
    {
@@ -35995,7 +35979,15 @@
     "sku": "661770f08cba3",
     "prod": "PULSERA CLAVO SILVER",
     "var": "17 CM",
-    "cant": 8,
+    "cant": 3,
+    "cu": 2.99,
+    "pant": null
+   },
+   {
+    "sku": "661770f08cba3",
+    "prod": "PULSERA CLAVO SILVER",
+    "var": "17 CM",
+    "cant": 5,
     "cu": 2.99,
     "pant": null
    },
@@ -36029,14 +36021,6 @@
     "var": "16cm",
     "cant": 6,
     "cu": 10.19,
-    "pant": null
-   },
-   {
-    "sku": "43047201243276",
-    "prod": "PULSERA LOCK SILVER CON ZIRCONIAS",
-    "var": "17cm",
-    "cant": 2,
-    "cu": 10.59,
     "pant": null
    },
    {
@@ -36096,22 +36080,6 @@
     "pant": null
    },
    {
-    "sku": "76195311060109",
-    "prod": "PULSERA T KNOT DELGADA GOLD ZIRCONIAS",
-    "var": "",
-    "cant": 2,
-    "cu": 7.49,
-    "pant": null
-   },
-   {
-    "sku": "68089823403053",
-    "prod": "PULSERA T KNOT DELGADA SILVER ZIRCONIAS",
-    "var": "",
-    "cant": 2,
-    "cu": 7.49,
-    "pant": null
-   },
-   {
     "sku": "665bd055c2e65",
     "prod": "PULSERA TB CON UNA INSIGNIA BLACK",
     "var": "17cm",
@@ -36157,22 +36125,6 @@
     "var": "",
     "cant": 1,
     "cu": 14.79,
-    "pant": null
-   },
-   {
-    "sku": "58980701022381",
-    "prod": "TARJETERO LV ENVELOPE",
-    "var": "",
-    "cant": 4,
-    "cu": 14.39,
-    "pant": null
-   },
-   {
-    "sku": "665bb79d85c5b-1",
-    "prod": "ARRACADAS VC",
-    "var": "Regular",
-    "cant": 1,
-    "cu": 5.59,
     "pant": null
    },
    {
@@ -36264,619 +36216,603 @@
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 6",
+    "sku": "2653039370892",
+    "prod": "ANILLO BV GOLD",
+    "var": "6",
     "cant": 4,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 7",
+    "sku": "2653039403660",
+    "prod": "ANILLO BV GOLD",
+    "var": "7",
     "cant": 4,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 8",
+    "sku": "2653039436428",
+    "prod": "ANILLO BV GOLD",
+    "var": "8",
     "cant": 5,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 9",
+    "sku": "2653039469196",
+    "prod": "ANILLO BV GOLD",
+    "var": "9",
     "cant": 5,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 5",
+    "sku": "63e0b1f6e98db",
+    "prod": "ANILLO BV SILVER",
+    "var": "5",
     "cant": 4,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 6",
+    "sku": "63e0b1f7d50b1",
+    "prod": "ANILLO BV SILVER",
+    "var": "6",
     "cant": 4,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 7",
+    "sku": "63e0b1f8bb7d5",
+    "prod": "ANILLO BV SILVER",
+    "var": "7",
     "cant": 4,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 9",
+    "sku": "63e0b1fa92d45",
+    "prod": "ANILLO BV SILVER",
+    "var": "9",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 10",
+    "sku": "63e0b1fbdf1a6",
+    "prod": "ANILLO BV SILVER",
+    "var": "10",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 11",
+    "sku": "63e0b1fcc7359",
+    "prod": "ANILLO BV SILVER",
+    "var": "11",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "rose gold 5",
+    "sku": "63e0b1e29450b",
+    "prod": "ANILLO BV ROSE GOLD",
+    "var": "5",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "rose gold 6",
+    "sku": "63e0b1e36f7c6",
+    "prod": "ANILLO BV ROSE GOLD",
+    "var": "6",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "rose gold 7",
+    "sku": "63e0b1e44c6d7",
+    "prod": "ANILLO BV ROSE GOLD",
+    "var": "7",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "anillo bv silver delgado 6",
+    "sku": "63e0b1f91d20d",
+    "prod": "ANILLO BV SILVER DELGADO",
+    "var": "6",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "anillo bv silver delgado 7",
+    "sku": "63e0b1fa23537",
+    "prod": "ANILLO BV SILVER DELGADO",
+    "var": "7",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "anillo bv silver delgado 8",
+    "sku": "63e0b1fb11aa3",
+    "prod": "ANILLO BV SILVER DELGADO",
+    "var": "8",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "anillo bv gold delgado 6",
+    "sku": "63e0b1e3636a9",
+    "prod": "ANILLO BV GOLD DELGADO",
+    "var": "6 HIGH QUALITY",
     "cant": 2,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "anillo bv gold delgado 7",
-    "cant": 2,
+    "sku": "63e0b1e45372f",
+    "prod": "ANILLO BV GOLD DELGADO",
+    "var": "7 HIGH QUALITY",
+    "cant": 1,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "anillo bv gold delgado 8",
-    "cant": 2,
-    "cu": 7.29,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "",
-    "var": "gold 7",
+    "sku": "63e0b1e52d057",
+    "prod": "ANILLO BV GOLD DELGADO",
+    "var": "8 HIGH QUALITY",
     "cant": 3,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "rose gold 7",
+    "sku": "64e78e77f008d",
+    "prod": "ANILLO BV BICOLOR ROSEGOLD",
+    "var": "7",
     "cant": 3,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 17cm",
+    "sku": "80472750437023",
+    "prod": "PULSERA CLAVO GOLD DELGADA CON ZIRCONIA LARGE",
+    "var": "17cm",
     "cant": 3,
     "cu": 12.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 17cm",
+    "sku": "46614163675210",
+    "prod": "PULSERA CLAVO SILVER DELGADA CON ZIRCONIA LARGE",
+    "var": "17cm",
     "cant": 3,
     "cu": 12.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 17cm",
+    "sku": "52809422563550",
+    "prod": "PULSERA T S925",
+    "var": "17cm",
     "cant": 2,
     "cu": 10.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "broch gold",
+    "sku": "72649128152155",
+    "prod": "BROCHE CD MEDALLON",
+    "var": "",
     "cant": 2,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "three colors 5",
+    "sku": "64e78e797f140",
+    "prod": "ANILLO BV 3 OROS",
+    "var": "6",
     "cant": 5,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "three colors 6",
+    "sku": "64e78e7a486d9",
+    "prod": "ANILLO BV 3 OROS",
+    "var": "7",
     "cant": 5,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "three colors 7",
-    "cant": 5,
-    "cu": 7.29,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "",
-    "var": "three colors 8",
+    "sku": "64e78e7b03ab1",
+    "prod": "ANILLO BV 3 OROS",
+    "var": "8",
     "cant": 4,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "green gold 17cm",
-    "cant": 2,
+    "sku": "35838322991232",
+    "prod": "PULSERA MSS MALAQUITA",
+    "var": "17cm",
+    "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "green gold",
-    "cant": 2,
+    "sku": "15256116674734",
+    "prod": "COLLAR MSS MALAQUITA",
+    "var": "",
+    "cant": 3,
     "cu": 8.19,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "green gold",
-    "cant": 2,
+    "sku": "57984546784235",
+    "prod": "ANILLO MSS MALAQUITA",
+    "var": "",
+    "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold",
+    "sku": "97204467699189",
+    "prod": "COLLAR C CHUNKY TRIOMPHE GOLD",
+    "var": "",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver",
+    "sku": "32083475557489",
+    "prod": "COLLAR C CHUNKY TRIOMPHE SILVER",
+    "var": "",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold",
+    "sku": "88319348542808",
+    "prod": "COLLAR VF COULEURS",
+    "var": "",
     "cant": 3,
     "cu": 7.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "blue silver",
+    "sku": "90886942355141",
+    "prod": "ARETES T HEART BLUE",
+    "var": "",
     "cant": 3,
     "cu": 3.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "blue 17cm",
+    "sku": "35707190481758",
+    "prod": "PULSERA T CORDON BLUE",
+    "var": "17cm",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "black 17cm",
+    "sku": "34808286708950",
+    "prod": "PULSERA T CORDON BLACK",
+    "var": "17cm",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold",
+    "sku": "85646546823497",
+    "prod": "ARETES CD MEDALLON",
+    "var": "",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "set",
+    "sku": "26614775605742",
+    "prod": "SET DE COLLAR, PULSERA Y ARETES HARDWEAR SILVER",
+    "var": "",
     "cant": 3,
     "cu": 26.57,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "rose gold 17cm",
+    "sku": "44842758731451",
+    "prod": "PULSERA L BLOSSOM ROSE GOLD",
+    "var": "17cm",
     "cant": 3,
     "cu": 9.79,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "black gold",
+    "sku": "56744341007853",
+    "prod": "LENTES CC MONTURA",
+    "var": "",
     "cant": 3,
     "cu": 5.39,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "black gold",
+    "sku": "86604568456025",
+    "prod": "LENTES L AURA LOW",
+    "var": "",
     "cant": 3,
     "cu": 4.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "black gold",
+    "sku": "21424321763187",
+    "prod": "LENTES L 1.1 MILLIONAIRES",
+    "var": "",
+    "cant": 2,
+    "cu": 4.89,
+    "pant": null
+   },
+   {
+    "sku": "55187770616120",
+    "prod": "LENTES L LIGHT CAT",
+    "var": "",
     "cant": 3,
     "cu": 4.89,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "black gold",
-    "cant": 3,
-    "cu": 4.89,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "",
-    "var": "black gold",
-    "cant": 3,
-    "cu": 3.99,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "",
-    "var": "black gold",
+    "sku": "53457342200303",
+    "prod": "CINTO MM BLACK",
+    "var": "",
     "cant": 3,
     "cu": 4.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "brown",
+    "sku": "94956734303628",
+    "prod": "MONEDERO LV",
+    "var": "",
     "cant": 3,
     "cu": 9.19,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "blue black",
+    "sku": "37232815032673",
+    "prod": "MONEDERO L BLACK",
+    "var": "",
     "cant": 3,
     "cu": 9.19,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
+    "sku": "39618712944716",
+    "prod": "CARTERA H BEARN COMPACT",
     "var": "black",
     "cant": 3,
-    "cu": 18.59,
+    "cu": 27.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold white",
+    "sku": "77770625867370",
+    "prod": "ARETES L CONFETTI",
+    "var": "",
     "cant": 3,
     "cu": 4.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold white 17cm",
+    "sku": "97882418147224",
+    "prod": "PULSERA L CONFETTI",
+    "var": "17cm",
     "cant": 3,
     "cu": 7.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver black 17cm",
+    "sku": "46575324298482",
+    "prod": "PULSERA L CORDON LOCKIT BEADS",
+    "var": "17cm",
     "cant": 3,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver black 18cm",
+    "sku": "41994648856685",
+    "prod": "PULSERA L CORDON EMPREINTE SILVER",
+    "var": "18cm",
     "cant": 3,
     "cu": 5.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold black 17cm",
+    "sku": "48356472995980",
+    "prod": "PULSERA L CORDON EMPREINTE GOLD",
+    "var": "17cm",
     "cant": 3,
     "cu": 5.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 17cm",
+    "sku": "64134111202430",
+    "prod": "PULSERA T CIERRE LOCK",
+    "var": "17cm",
     "cant": 3,
     "cu": 6.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 17cm",
+    "sku": "36228814021475",
+    "prod": "PULSERA T OPEN HEART",
+    "var": "17cm",
     "cant": 3,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold silver 7",
+    "sku": "43047226572940",
+    "prod": "ANILLO SIXTEEN STONE",
+    "var": "HIGH QUALITY 7",
     "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver black 17cm",
+    "sku": "85029355588851",
+    "prod": "PULSERA MSS CORDON",
+    "var": "17cm",
     "cant": 3,
     "cu": 8.89,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 17cm",
-    "cant": 3,
+    "sku": "86807763000779",
+    "prod": "PULSERA MSS PAVE SO",
+    "var": "17cm",
+    "cant": 2,
     "cu": 12.19,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 17cm",
+    "sku": "25850124540196",
+    "prod": "PULSERA MSS MOVE UNO SILVER",
+    "var": "17cm",
     "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 17cm",
+    "sku": "49337281382644",
+    "prod": "PULSERA MSS MOVE UNO GOLD",
+    "var": "17cm",
     "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 17cm",
+    "sku": "24312388481122",
+    "prod": "PULSERA MSS DOBLE CADENA",
+    "var": "17cm",
     "cant": 3,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 17cm",
+    "sku": "28289575710015",
+    "prod": "PULSERA MSS GEOMETRIC SILVER",
+    "var": "17cm",
     "cant": 3,
     "cu": 7.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "black gold 18cm",
+    "sku": "17177202379997",
+    "prod": "PULSERA MSS TITANIUM BLACK",
+    "var": "18cm",
     "cant": 3,
     "cu": 8.89,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver",
+    "sku": "23179919902991",
+    "prod": "COLLAR MSS DUO PAVE",
+    "var": "",
     "cant": 3,
     "cu": 8.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver",
+    "sku": "87313381926414",
+    "prod": "COLLAR MSS ROMANE SILVER",
+    "var": "",
     "cant": 3,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold",
+    "sku": "96374014587285",
+    "prod": "COLLAR MSS ROMANE GOLD",
+    "var": "",
     "cant": 3,
     "cu": 6.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold",
+    "sku": "96864052987442",
+    "prod": "ARETES MSS IMPERIAL MOVE",
+    "var": "",
     "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold",
+    "sku": "55088338331413",
+    "prod": "ARETES MSS ROMANE GOLD",
+    "var": "",
     "cant": 3,
     "cu": 6.29,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 7",
+    "sku": "79620556153244",
+    "prod": "ANILLO MSS BORLA",
+    "var": "7",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "6",
-    "cant": 2,
-    "cu": 4.99,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "",
-    "var": "gold 7",
-    "cant": 1,
+    "sku": "98284812726440",
+    "prod": "ANILLO MSS NOA CLASSIC",
+    "var": "7",
+    "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold 7",
+    "sku": "80143452514891",
+    "prod": "ANILLO MSS MOVE LINK GOLD",
+    "var": "7",
     "cant": 3,
     "cu": 7.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "silver 6",
+    "sku": "16937878761878",
+    "prod": "ANILLO MSS MOVE NOVA PAVE SILVER",
+    "var": "6",
     "cant": 3,
     "cu": 5.99,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "rose gold 1cm",
+    "sku": "63e0bd2165d38",
+    "prod": "ARETES T-SMILE ROSE GOLD",
+    "var": "1cm",
     "cant": 5,
     "cu": 5.59,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "",
-    "var": "gold",
+    "sku": "67201534607245",
+    "prod": "COLLAR OPEN HEART GOLD",
+    "var": "",
     "cant": 2,
     "cu": 7.69,
+    "pant": null
+   },
+   {
+    "sku": "67619161024877",
+    "prod": "ARRACADAS MSS PAVE DIAMONDS HOOP",
+    "var": "",
+    "cant": 2,
+    "cu": 8.59,
+    "pant": null
+   },
+   {
+    "sku": "67619161157645",
+    "prod": "ARRACADAS MSS PAVE DIAMONDS HOOP",
+    "var": "",
+    "cant": 2,
+    "cu": 8.19,
     "pant": null
    }
   ]
