@@ -8227,8 +8227,8 @@
  },
  "ZOEY100926": {
   "hoja": "ODC del Drive (1mInvc8f2Dha...), verificado contra TOTAL ODC",
-  "costo": 16906.0,
-  "shipping": 1690.0,
+  "costo": 15468.0,
+  "shipping": 2257.0,
   "sc": 0.0,
   "cajas": 7,
   "lineas": [
@@ -8405,12 +8405,12 @@
     "prod": "BOLSO CD CRUNCHY MILLY",
     "var": "",
     "cant": 4,
-    "cu": 65.0,
+    "cu": 0.0,
     "pant": null
    },
    {
     "sku": "43728083774252",
-    "prod": "BOLSO DE VIAJE LV KEEPALL 45",
+    "prod": "BOLSO DE VIAJE  LV KEEPALL 45",
     "var": "44cm de largo x 25cm de alto x 20cm de ancho",
     "cant": 2,
     "cu": 60.0,
@@ -8421,7 +8421,7 @@
     "prod": "BOLSO DE VIAJE GC LOGO",
     "var": "42cm de largo x 29cm de alto x 21cm de ancho",
     "cant": 3,
-    "cu": 75.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -8453,7 +8453,7 @@
     "prod": "BOLSO GC BUCKET EMBLEM",
     "var": "",
     "cant": 2,
-    "cu": 58.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -8724,7 +8724,7 @@
     "sku": "43728084752652",
     "prod": "CHAMARRA C BLACK",
     "var": "M",
-    "cant": 2,
+    "cant": 1,
     "cu": 65.0,
     "pant": null
    },
@@ -8909,7 +8909,7 @@
     "prod": "PERFUME BACCARAT",
     "var": "70ml",
     "cant": 2,
-    "cu": 18.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -8917,7 +8917,7 @@
     "prod": "PERFUME CREED AVENTUS EAU DE PARFUM",
     "var": "100 ml",
     "cant": 2,
-    "cu": 18.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -8925,7 +8925,7 @@
     "prod": "PERFUME SANTAL 33",
     "var": "100ml",
     "cant": 6,
-    "cu": 18.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -8933,7 +8933,7 @@
     "prod": "PERFUME YSL MEN",
     "var": "100 ml",
     "cant": 2,
-    "cu": 18.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -8941,7 +8941,7 @@
     "prod": "PERFUME YSL MYSLF",
     "var": "",
     "cant": 3,
-    "cu": 18.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -9029,7 +9029,7 @@
     "prod": "RELOJ C SANTOS BLACK",
     "var": "RELOJ SIN CAJA HOMBRE 35mm",
     "cant": 2,
-    "cu": 35.0,
+    "cu": 0.0,
     "pant": null
    },
    {
@@ -9162,7 +9162,7 @@
    },
    {
     "sku": "72002489515276",
-    "prod": "ZAPATILLA J'ADIOR",
+    "prod": "ZAPATILLA J’ADIOR",
     "var": "25cm",
     "cant": 1,
     "cu": 58.0,
@@ -9193,7 +9193,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "94956736687244",
     "prod": "BOLSA MINI POCHETTE LV",
     "var": "9cm de alto x 15cm de largo x 3cm de ancho",
     "cant": 13,
@@ -9201,7 +9201,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "85367152250157",
     "prod": "BOLSO C NINO BLACK",
     "var": "20*15cm",
     "cant": 5,
@@ -9209,7 +9209,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "654bdbd5ab77d",
     "prod": "BOLSO CC BOY MINI BLACK",
     "var": "24.8cm de largo x 16cm de alto x 7.5cm de ancho",
     "cant": 4,
@@ -9217,7 +9217,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "10132411318605",
     "prod": "BOLSO CD BOW BLACK",
     "var": "22*14cm",
     "cant": 3,
@@ -9225,7 +9225,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "10132411116909",
     "prod": "BOLSO CD SADDLE ALL BLACK",
     "var": "25*6.5*20cm",
     "cant": 2,
@@ -9233,7 +9233,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "66581dfb3078d",
     "prod": "BOLSO KELLY BAG BLACK",
     "var": "13.5cm de alto x 21.5cm de largo x 6cm de ancho",
     "cant": 2,
@@ -9241,7 +9241,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "677c26ae9f248",
     "prod": "BOLSO LV BAGATELLE",
     "var": "23cm de largo x 20cm de alto x 8.5cm",
     "cant": 1,
@@ -9249,7 +9249,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "64e78f941b012",
     "prod": "BOLSO V WHITE",
     "var": "20.5cmx14cm",
     "cant": 1,
@@ -9257,7 +9257,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "67572cbd4a7ca",
     "prod": "BOLSO YSL CON CADENA BLACK",
     "var": "19cm de alto x 24cm de largo x 7cm de ancho",
     "cant": 5,
@@ -9265,7 +9265,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "58071991054829",
     "prod": "BOLSO YSL CON CADENA BURDEOS",
     "var": "17.5cm de alto x 23.5cm de largo x 6cm de ancho",
     "cant": 3,
@@ -9273,7 +9273,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "67572cbe60534",
     "prod": "BOLSO YSL CON CADENA OFF WHITE",
     "var": "Middle Quality 17.5cm de alto x 23.5cm de largo x 6cm de ancho",
     "cant": 5,
@@ -9281,7 +9281,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "10132411606189",
     "prod": "CARTERA F BAGUETTE MINI",
     "var": "13.5*1.5*8cm",
     "cant": 4,
@@ -9293,11 +9293,11 @@
     "prod": "CARTERA PR LOGO",
     "var": "11.2*8.5cm",
     "cant": 2,
-    "cu": 21.0,
+    "cu": 0.0,
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "85367151846765",
     "prod": "CARTERA YSL SILVER LOGO",
     "var": "19*11*3cm",
     "cant": 6,
@@ -9305,7 +9305,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "42265109266572",
     "prod": "CINTO CD",
     "var": "100cm",
     "cant": 15,
@@ -9313,7 +9313,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "654bdbcf948ed",
     "prod": "CINTO FR GOLD BLACK",
     "var": "115cm",
     "cant": 8,
@@ -9321,7 +9321,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "42556045426828",
     "prod": "CINTO FR ROSEGOLD",
     "var": "100cm",
     "cant": 3,
@@ -9329,7 +9329,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "10132411463245",
     "prod": "GORRO F LOGOS",
     "var": "",
     "cant": 5,
@@ -9337,7 +9337,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "648cc600a2ec5",
     "prod": "GORRO PR BLACK",
     "var": "M",
     "cant": 5,
@@ -9345,7 +9345,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "94956734303628",
     "prod": "MONEDERO LV",
     "var": "15.5cm de largo x 11cm de alto",
     "cant": 4,
@@ -9353,7 +9353,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "85367151541677",
     "prod": "TARJETERO C LOGO",
     "var": "15.5cm de largo x 11cm de alto",
     "cant": 2,
@@ -9361,7 +9361,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "648cc5b58feaa",
     "prod": "ARETES MM COLGANTE",
     "var": "",
     "cant": 2,
@@ -9369,15 +9369,15 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "648cc5b7144c9",
     "prod": "ARETES MM MOÑO SILVER",
-    "var": "Regular",
+    "var": "",
     "cant": 2,
     "cu": 8.0,
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "85367152384621",
     "prod": "BOLSO CC BOY BLACK",
     "var": "24.8cm de largo x 16cm de alto x 7.5cm de ancho",
     "cant": 3,
@@ -9385,7 +9385,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "665bb9079b157",
     "prod": "BOLSO DOUBLE V LV",
     "var": "17cm de alto x 23cm de largo x 9.5cm de ancho",
     "cant": 4,
@@ -9393,7 +9393,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "66581dfe2ed7f",
     "prod": "BOLSO YSL CON CADENA BROWN",
     "var": "17.5cm de alto x 23.5cm de largo x 6cm de ancho",
     "cant": 2,
@@ -9401,7 +9401,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "85367152015693",
     "prod": "CARTERA CD JOLIE BLACK",
     "var": "11.5*9*2cm",
     "cant": 5,
@@ -9409,15 +9409,23 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "85367151407213",
     "prod": "CARTERA LV SARAH MONOGRAM",
     "var": "19*10cm",
-    "cant": 5,
+    "cant": 1,
     "cu": 17.0,
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "85367151407213",
+    "prod": "CARTERA LV SARAH MONOGRAM",
+    "var": "19*10cm",
+    "cant": 4,
+    "cu": 17.0,
+    "pant": null
+   },
+   {
+    "sku": "654bdbcfcd033",
     "prod": "CINTO FR SILVER BLACK",
     "var": "100cm",
     "cant": 8,
@@ -9425,7 +9433,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "654bdbcfde867",
     "prod": "CINTO YSL GOLD BLACK",
     "var": "100cm",
     "cant": 20,
@@ -9433,7 +9441,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "71326661043149",
     "prod": "TRAJE DE BAÑO COMPLETO F LOGOS",
     "var": "M",
     "cant": 2,
@@ -9441,7 +9449,7 @@
     "pant": null
    },
    {
-    "sku": "",
+    "sku": "44504631084621",
     "prod": "BOLSO C TILLY BROWN",
     "var": "15cm de alto x 19.5cm de largo x 7.5cm de ancho",
     "cant": 1,
@@ -9449,83 +9457,43 @@
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
+    "sku": "36916531063821",
+    "prod": "CINTO V GOLD",
     "var": "100cm",
     "cant": 3,
     "cu": 22.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
+    "sku": "36916531107309",
+    "prod": "CINTO LW GOLD BLACK",
     "var": "GOLD-BLACK 100cm",
     "cant": 3,
     "cu": 22.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
-    "var": "GOLD-BLACK shiny 100cm",
-    "cant": 3,
-    "cu": 22.0,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
-    "var": "GOLD-BLACK 100cm",
-    "cant": 3,
-    "cu": 22.0,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
+    "sku": "36916531292045",
+    "prod": "CINTO LW SILVER BLACK",
     "var": "SILVER-BLACK 100cm",
     "cant": 3,
     "cu": 22.0,
     "pant": null
    },
    {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
-    "var": "GOLD-BLACK 100cm",
-    "cant": 3,
-    "cu": 22.0,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
-    "var": "WHITE L",
-    "cant": 2,
-    "cu": 32.0,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
-    "var": "BLACK L",
-    "cant": 2,
-    "cu": 32.0,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
-    "var": "WHITE M",
-    "cant": 2,
-    "cu": 32.0,
-    "pant": null
-   },
-   {
-    "sku": "",
-    "prod": "PRODUCTO NUEVO",
+    "sku": "36916531302765",
+    "prod": "CAMISETA CD BORDADO",
     "var": "BLACK M",
     "cant": 2,
     "cu": 25.0,
+    "pant": null
+   },
+   {
+    "sku": "37561641429453",
+    "prod": "LENTES C CAPSULE",
+    "var": "HIGH QUALITY",
+    "cant": 1,
+    "cu": 0.0,
     "pant": null
    }
   ],
