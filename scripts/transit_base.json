@@ -2765,7 +2765,7 @@
   ]
  },
  {
-  "name": "ZOEY100926 (del Drive, verdes = inventariado al 12 oct)",
+  "name": "ZOEY100926 (del Drive, verdes = inventariado al 22 oct)",
   "date": "2026-09-10",
   "base": "ZOEY100926",
   "lines": [
@@ -2774,49 +2774,49 @@
     "variant": "7",
     "sku": "72142921022126",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO GC BLONDIE ANCHO CON ZIRCONIA",
     "variant": "7",
     "sku": "79684371047438",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES BV ZERO 1 GOLD CON ZIRCONIA",
     "variant": "",
     "sku": "75249151006253",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES CD GOLD BLACK CON ZIRCONIA",
     "variant": "HIGH QUALITY",
     "sku": "66148671022797",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES CHOP HAPPY DIAMONDS GOLD",
     "variant": "MEDIUM QUALITY",
     "sku": "18307641230989",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES CHOP HAPPY DIAMONDS SILVER",
     "variant": "MEDIUM QUALITY",
     "sku": "18307641329293",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES MM HEART GOLD WHITE",
     "variant": "2cm",
     "sku": "77275241042893",
     "qty": 10,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BALLERINAS CC BEIGE BLACK",
@@ -2872,7 +2872,7 @@
     "variant": "24cm x 15cm",
     "sku": "64e78f2fafa3d",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO A TIEDIE",
@@ -2924,11 +2924,11 @@
     "arrived": false
    },
    {
-    "title": "BOLSO DE VIAJE LV KEEPALL 45",
+    "title": "BOLSO DE VIAJE  LV KEEPALL 45",
     "variant": "44cm de largo x 25cm de alto x 20cm de ancho",
     "sku": "43728083774252",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO DE VIAJE GC LOGO",
@@ -2949,7 +2949,7 @@
     "variant": "14cm de largo x 11cm de alto x 4cm de ancho",
     "sku": "43728085695276",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO GC BROWN",
@@ -2970,7 +2970,7 @@
     "variant": "",
     "sku": "33891171250349",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO LADY D NUDE",
@@ -3012,14 +3012,14 @@
     "variant": "20cm de alto x 21cm de largo x 8cm de ancho",
     "sku": "6701d185d4f38",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO PR BLACK RE-EDITION 2000",
     "variant": "21cm de largo x 15cm de alto x 6cm de ancho",
     "sku": "6701d2533c12e",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL GABY VANITY",
@@ -3047,21 +3047,21 @@
     "variant": "BIG",
     "sku": "29953902272525",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL JAMIE SHOPPING",
     "variant": "SMALL",
     "sku": "29953902272526",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL JAMIE SHOPPING BURGUNDY",
     "variant": "",
     "sku": "29953902481485",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BOLSO YSL KATE CLASSIC",
@@ -3089,7 +3089,7 @@
     "variant": "",
     "sku": "29953901866893",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA CD DAHLIA OBLIQUE",
@@ -3103,7 +3103,7 @@
     "variant": "",
     "sku": "33891171489101",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA CD LIBRO ALARGADA SADDLE",
@@ -3117,35 +3117,35 @@
     "variant": "",
     "sku": "29953902018861",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA G SAINT-MARC GREY",
     "variant": "11cm x 8cm",
     "sku": "94758097365260",
     "qty": 15,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA GC ALARGADA",
     "variant": "",
     "sku": "99781782263469",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA GC CADENA OPHIDIA",
     "variant": "",
     "sku": "99781781554989",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA GC CONTINENTAL BICOLOR",
     "variant": "",
     "sku": "99781781282669",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA H SELLIER COMPACT BLACK",
@@ -3166,28 +3166,28 @@
     "variant": "",
     "sku": "93098781603629",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA LV VICTORINE MONOGRAM EMPREINTE",
     "variant": "",
     "sku": "24780441054861",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA LV ZIPPY CLIP",
     "variant": "",
     "sku": "93098783399149",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA MM NAPA BLACK",
     "variant": "",
     "sku": "43794532275885",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA ZIPPY LV BROWN",
@@ -3200,7 +3200,7 @@
     "title": "CHAMARRA C BLACK",
     "variant": "M",
     "sku": "43728084752652",
-    "qty": 2,
+    "qty": 1,
     "arrived": false
    },
    {
@@ -3236,98 +3236,98 @@
     "variant": "",
     "sku": "63264441047757",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR CD REVOLUTION",
     "variant": "41cm con 6cm de extensión",
     "sku": "67319253498892",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR CON PASADOR Y PLACA ESTILO CORAZÓN CON ZIRCONIA",
     "variant": "",
     "sku": "98946151012205",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR CORAZÓN GOLD",
     "variant": "40cm con 6.5cm de extensión.",
     "sku": "43047194886284",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR CORAZÓN SILVER",
     "variant": "40cm con 6.5cm de extensión.",
     "sku": "43047193870476",
     "qty": 12,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR DOBLE PLACA - GOLD PINK",
     "variant": "44.5cm",
     "sku": "22154981086081",
     "qty": 14,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR DOBLE PLACA-GOLD TURQUESA",
     "variant": "44.5cm",
     "sku": "25156441068705",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR LOVESTRUCK",
     "variant": "43CM",
     "sku": "78326321018849",
     "qty": 10,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR MM SILVER WHITE",
     "variant": "",
     "sku": "78439551060397",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "GORRA B BLACK",
     "variant": "Ajustable",
     "sku": "648cc606e5b5d",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "GORRA C BLACK",
     "variant": "M (AJUSTABLE)",
     "sku": "3382853668492",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "GORRA C BROWN",
     "variant": "M (AJUSTABLE",
     "sku": "3382867546764",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "GORRA CC WHITE",
     "variant": "",
     "sku": "29953901022861",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "LENTES CD PACIFIC R1",
     "variant": "",
     "sku": "43794531550861",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "MOCHILA LV",
@@ -3341,21 +3341,21 @@
     "variant": "",
     "sku": "29953902146541",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "MONEDERO LV ROSALIE BLACK",
     "variant": "",
     "sku": "93098783231917",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "MONEDERO LV ZIPPY",
     "variant": "",
     "sku": "93098783400845",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PERFUME BACCARAT",
@@ -3397,70 +3397,70 @@
     "variant": "",
     "sku": "60411861009357",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA DE CUENTAS ROSEGOLD",
     "variant": "17cm",
     "sku": "10473111097537",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA DE TENNIS DIAMONDS BLUE",
     "variant": "",
     "sku": "34163623457677",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA LOVESTRUCK",
     "variant": "18 cm",
     "sku": "87401991025249",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA LV CATCH IT BLACK",
     "variant": "",
     "sku": "93098781469165",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA LV SPIKE SOO",
     "variant": "",
     "sku": "93098781240333",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA T DE TENNIS DIAMONDS GOLD",
     "variant": "",
     "sku": "34163623595533",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA T DE TENNIS DIAMONDS SILVER",
     "variant": "",
     "sku": "34163623621517",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ BALLON BLUE C",
     "variant": "RELOJ SIN CAJA",
     "sku": "17360611212237",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ C SANTOS BLACK",
     "variant": "RELOJ SIN CAJA MUJER 27mm",
     "sku": "679be1fa82b97",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ C SANTOS BLACK",
@@ -3474,84 +3474,84 @@
     "variant": "RELOJ SIN CAJA",
     "sku": "17360611377165",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ GENEVA PP",
     "variant": "RELOJ CON CAJA",
     "sku": "17360611631597",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ LADY DATEJUST GOLD RX",
     "variant": "RELOJ SIN CAJA",
     "sku": "17360611474253",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ PANTHERE GOLD",
     "variant": "RELOJ SIN CAJA",
     "sku": "53890267165196",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ PANTHERE SILVER",
     "variant": "RELOJ SIN CAJA",
     "sku": "14156151055725",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ PP NAUTILUS SILVER BLUE",
     "variant": "Ajustable con caja",
     "sku": "679be1f9f363c",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "RELOJ SERPENTI SEDUTTORI",
     "variant": "RELOJ SIN CAJA",
     "sku": "67535d35b8818",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO GC EBANO",
     "variant": "",
     "sku": "99781781861773",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO MM NAPA",
     "variant": "",
     "sku": "33794532055533",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO YSL GOLD",
     "variant": "HIGH QUALITY",
     "sku": "43728117034540",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO YSL SILVER",
     "variant": "8cm x 10.5cm",
     "sku": "66f1ed2e521fd",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TENIS H BOUNCING WHITE",
     "variant": "42/8MX",
     "sku": "23025461332941",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TRAJE DE BAÑO CD",
@@ -3582,32 +3582,298 @@
     "arrived": true
    },
    {
-    "title": "ZAPATILLA J'ADIOR",
+    "title": "ZAPATILLA J’ADIOR",
     "variant": "25cm",
     "sku": "72002489515276",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ZAPATILLAS CD HEELED SANDAL",
     "variant": "24MX (38UK)",
     "sku": "70332771093261",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BALLERINAS PR BLACK CON LOGO",
     "variant": "38/24cm",
     "sku": "93378841508909",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "SANDALIAS CD MULE B&W",
     "variant": "25cm",
     "sku": "69141121059021",
     "qty": 2,
+    "arrived": true
+   },
+   {
+    "title": "BOLSA MINI POCHETTE LV",
+    "variant": "9cm de alto x 15cm de largo x 3cm de ancho",
+    "sku": "94956736687244",
+    "qty": 13,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO C NINO BLACK",
+    "variant": "20*15cm",
+    "sku": "85367152250157",
+    "qty": 5,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO CC BOY MINI BLACK",
+    "variant": "24.8cm de largo x 16cm de alto x 7.5cm de ancho",
+    "sku": "654bdbd5ab77d",
+    "qty": 4,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO CD BOW BLACK",
+    "variant": "22*14cm",
+    "sku": "10132411318605",
+    "qty": 3,
     "arrived": false
+   },
+   {
+    "title": "BOLSO CD SADDLE ALL BLACK",
+    "variant": "25*6.5*20cm",
+    "sku": "10132411116909",
+    "qty": 2,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO KELLY BAG BLACK",
+    "variant": "13.5cm de alto x 21.5cm de largo x 6cm de ancho",
+    "sku": "66581dfb3078d",
+    "qty": 2,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO LV BAGATELLE",
+    "variant": "23cm de largo x 20cm de alto x 8.5cm",
+    "sku": "677c26ae9f248",
+    "qty": 1,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO V WHITE",
+    "variant": "20.5cmx14cm",
+    "sku": "64e78f941b012",
+    "qty": 1,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO YSL CON CADENA BLACK",
+    "variant": "19cm de alto x 24cm de largo x 7cm de ancho",
+    "sku": "67572cbd4a7ca",
+    "qty": 5,
+    "arrived": false
+   },
+   {
+    "title": "BOLSO YSL CON CADENA BURDEOS",
+    "variant": "17.5cm de alto x 23.5cm de largo x 6cm de ancho",
+    "sku": "58071991054829",
+    "qty": 3,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO YSL CON CADENA OFF WHITE",
+    "variant": "Middle Quality 17.5cm de alto x 23.5cm de largo x 6cm de ancho",
+    "sku": "67572cbe60534",
+    "qty": 5,
+    "arrived": false
+   },
+   {
+    "title": "CARTERA F BAGUETTE MINI",
+    "variant": "13.5*1.5*8cm",
+    "sku": "10132411606189",
+    "qty": 4,
+    "arrived": true
+   },
+   {
+    "title": "CARTERA PR LOGO",
+    "variant": "11.2*8.5cm",
+    "sku": "",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "CARTERA YSL SILVER LOGO",
+    "variant": "19*11*3cm",
+    "sku": "85367151846765",
+    "qty": 6,
+    "arrived": true
+   },
+   {
+    "title": "CINTO CD",
+    "variant": "100cm",
+    "sku": "42265109266572",
+    "qty": 15,
+    "arrived": true
+   },
+   {
+    "title": "CINTO FR GOLD BLACK",
+    "variant": "115cm",
+    "sku": "654bdbcf948ed",
+    "qty": 8,
+    "arrived": true
+   },
+   {
+    "title": "CINTO FR ROSEGOLD",
+    "variant": "100cm",
+    "sku": "42556045426828",
+    "qty": 3,
+    "arrived": true
+   },
+   {
+    "title": "GORRO F LOGOS",
+    "variant": "",
+    "sku": "10132411463245",
+    "qty": 5,
+    "arrived": true
+   },
+   {
+    "title": "GORRO PR BLACK",
+    "variant": "M",
+    "sku": "648cc600a2ec5",
+    "qty": 5,
+    "arrived": true
+   },
+   {
+    "title": "MONEDERO LV",
+    "variant": "15.5cm de largo x 11cm de alto",
+    "sku": "94956734303628",
+    "qty": 4,
+    "arrived": true
+   },
+   {
+    "title": "TARJETERO C LOGO",
+    "variant": "15.5cm de largo x 11cm de alto",
+    "sku": "85367151541677",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "ARETES MM COLGANTE",
+    "variant": "",
+    "sku": "648cc5b58feaa",
+    "qty": 2,
+    "arrived": true
+   },
+   {
+    "title": "ARETES MM MOÑO SILVER",
+    "variant": "",
+    "sku": "648cc5b7144c9",
+    "qty": 2,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO CC BOY BLACK",
+    "variant": "24.8cm de largo x 16cm de alto x 7.5cm de ancho",
+    "sku": "85367152384621",
+    "qty": 3,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO DOUBLE V LV",
+    "variant": "17cm de alto x 23cm de largo x 9.5cm de ancho",
+    "sku": "665bb9079b157",
+    "qty": 4,
+    "arrived": true
+   },
+   {
+    "title": "BOLSO YSL CON CADENA BROWN",
+    "variant": "17.5cm de alto x 23.5cm de largo x 6cm de ancho",
+    "sku": "66581dfe2ed7f",
+    "qty": 2,
+    "arrived": true
+   },
+   {
+    "title": "CARTERA CD JOLIE BLACK",
+    "variant": "11.5*9*2cm",
+    "sku": "85367152015693",
+    "qty": 5,
+    "arrived": true
+   },
+   {
+    "title": "CARTERA LV SARAH MONOGRAM",
+    "variant": "19*10cm",
+    "sku": "85367151407213",
+    "qty": 1,
+    "arrived": true
+   },
+   {
+    "title": "CARTERA LV SARAH MONOGRAM",
+    "variant": "19*10cm",
+    "sku": "85367151407213",
+    "qty": 4,
+    "arrived": false
+   },
+   {
+    "title": "CINTO FR SILVER BLACK",
+    "variant": "100cm",
+    "sku": "654bdbcfcd033",
+    "qty": 8,
+    "arrived": true
+   },
+   {
+    "title": "CINTO YSL GOLD BLACK",
+    "variant": "100cm",
+    "sku": "654bdbcfde867",
+    "qty": 20,
+    "arrived": true
+   },
+   {
+    "title": "TRAJE DE BAÑO COMPLETO F LOGOS",
+    "variant": "M",
+    "sku": "71326661043149",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "BOLSO C TILLY BROWN",
+    "variant": "15cm de alto x 19.5cm de largo x 7.5cm de ancho",
+    "sku": "44504631084621",
+    "qty": 1,
+    "arrived": true
+   },
+   {
+    "title": "CINTO V GOLD",
+    "variant": "100cm",
+    "sku": "36916531063821",
+    "qty": 3,
+    "arrived": true
+   },
+   {
+    "title": "CINTO LW GOLD BLACK",
+    "variant": "GOLD-BLACK 100cm",
+    "sku": "36916531107309",
+    "qty": 3,
+    "arrived": true
+   },
+   {
+    "title": "CINTO LW SILVER BLACK",
+    "variant": "SILVER-BLACK 100cm",
+    "sku": "36916531292045",
+    "qty": 3,
+    "arrived": true
+   },
+   {
+    "title": "CAMISETA CD BORDADO",
+    "variant": "BLACK M",
+    "sku": "36916531302765",
+    "qty": 2,
+    "arrived": false
+   },
+   {
+    "title": "LENTES C CAPSULE",
+    "variant": "HIGH QUALITY",
+    "sku": "37561641429453",
+    "qty": 1,
+    "arrived": true
    }
   ]
  },
