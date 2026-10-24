@@ -3878,7 +3878,7 @@
   ]
  },
  {
-  "name": "NANCY180926 (verdes del Drive al 24 oct; los no cargados en Shopify siguen en camino)",
+  "name": "NANCY180926 (falta solo la guia 878692219206)",
   "date": "2026-09-18",
   "base": "NANCY180926",
   "lines": [
@@ -3887,14 +3887,14 @@
     "variant": "HIGH QUALITY",
     "sku": "58980701738189",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO KNOT GOLD",
     "variant": "6",
     "sku": "66593a9c168cf",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO KNOT GOLD",
@@ -3915,7 +3915,7 @@
     "variant": "8",
     "sku": "66593bd812701",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO TB GOLD",
@@ -3950,14 +3950,14 @@
     "variant": "",
     "sku": "62745763441517",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES CC BOUTON CAMELIA",
     "variant": "",
     "sku": "58980703081677",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES CC ETOILE FILANTE SILVER",
@@ -3971,21 +3971,21 @@
     "variant": "HIGH QUALITY",
     "sku": "42981640208524",
     "qty": 11,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES DE ESLABONES GOLD MZ",
     "variant": "High Quality",
     "sku": "668eee447fb3d",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES ESLABON LISO  GOLD",
     "variant": "",
     "sku": "43047216775308",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES ESSENTIAL LV GOLD",
@@ -4020,7 +4020,7 @@
     "variant": "Regular",
     "sku": "665bd22d2f1c6",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES FR SILVER",
@@ -4048,14 +4048,14 @@
     "variant": "Regular",
     "sku": "64e78caddd8f1",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES LV LADY GOLD",
     "variant": "",
     "sku": "22974391600461",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES LV MY GOLD",
@@ -4111,28 +4111,28 @@
     "variant": "Regular",
     "sku": "665bb78f1ae43",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARRACADAS CD GOLD BLACK",
     "variant": "",
     "sku": "665bb79224272",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARRACADAS GC GOLD",
     "variant": "",
     "sku": "654bdb241005f",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARRACADAS SIXTEEN STONE",
     "variant": "",
     "sku": "68089821931885",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARRACADAS T CORAZÓN",
@@ -4195,7 +4195,7 @@
     "variant": "Tamaño del dije: 3.5cm  39cm de largo con extensión de 5cm",
     "sku": "18795171029645",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR LOCK CON ZIRCONIAS ROSEGOLD SILVER",
@@ -4398,7 +4398,7 @@
     "variant": "17cm",
     "sku": "84595861099021",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA SERPENTI LISA GOLD",
@@ -4461,7 +4461,7 @@
     "variant": "",
     "sku": "71288021719885",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "SET DE COLLAR Y PULSERA CORAZÓN",
@@ -4517,14 +4517,14 @@
     "variant": "gold",
     "sku": "79024851004397",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR MSS MOVE ROSEGOLD LISO",
     "variant": "rose gold",
     "sku": "16048621033133",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR MSS MOVE SILVER LISO",
@@ -4538,7 +4538,7 @@
     "variant": "gold",
     "sku": "89668081080557",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR MSS MOVE UNO ROSEGOLD",
@@ -4552,189 +4552,189 @@
     "variant": "silver",
     "sku": "50016841020461",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV GOLD",
     "variant": "6",
     "sku": "2653039370892",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV GOLD",
     "variant": "7",
     "sku": "2653039403660",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV GOLD",
     "variant": "8",
     "sku": "2653039436428",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV GOLD",
     "variant": "9",
     "sku": "2653039469196",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER",
     "variant": "5",
     "sku": "63e0b1f6e98db",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER",
     "variant": "6",
     "sku": "63e0b1f7d50b1",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER",
     "variant": "7",
     "sku": "63e0b1f8bb7d5",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER",
     "variant": "9",
     "sku": "63e0b1fa92d45",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER",
     "variant": "10",
     "sku": "63e0b1fbdf1a6",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER",
     "variant": "11",
     "sku": "63e0b1fcc7359",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV ROSE GOLD",
     "variant": "5",
     "sku": "63e0b1e29450b",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV ROSE GOLD",
     "variant": "6",
     "sku": "63e0b1e36f7c6",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV ROSE GOLD",
     "variant": "7",
     "sku": "63e0b1e44c6d7",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER DELGADO",
     "variant": "6",
     "sku": "63e0b1f91d20d",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER DELGADO",
     "variant": "7",
     "sku": "63e0b1fa23537",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV SILVER DELGADO",
     "variant": "8",
     "sku": "63e0b1fb11aa3",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV GOLD DELGADO",
     "variant": "6 HIGH QUALITY",
     "sku": "63e0b1e3636a9",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV GOLD DELGADO",
     "variant": "7 HIGH QUALITY",
     "sku": "63e0b1e45372f",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV GOLD DELGADO",
     "variant": "8 HIGH QUALITY",
     "sku": "63e0b1e52d057",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV BICOLOR ROSEGOLD",
     "variant": "7",
     "sku": "64e78e77f008d",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA CLAVO GOLD DELGADA CON ZIRCONIA LARGE",
     "variant": "17cm",
     "sku": "80472750437023",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA CLAVO SILVER DELGADA CON ZIRCONIA LARGE",
     "variant": "17cm",
     "sku": "46614163675210",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA T S925",
     "variant": "17cm",
     "sku": "52809422563550",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BROCHE CD MEDALLON",
     "variant": "",
     "sku": "72649128152155",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV 3 OROS",
     "variant": "6",
     "sku": "64e78e797f140",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV 3 OROS",
     "variant": "7",
     "sku": "64e78e7a486d9",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO BV 3 OROS",
@@ -4769,14 +4769,14 @@
     "variant": "",
     "sku": "97204467699189",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR C CHUNKY TRIOMPHE SILVER",
     "variant": "",
     "sku": "32083475557489",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR VF COULEURS",
@@ -4825,7 +4825,7 @@
     "variant": "17cm",
     "sku": "44842758731451",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "LENTES CC MONTURA",
@@ -4888,7 +4888,7 @@
     "variant": "",
     "sku": "77770625867370",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA L CONFETTI",
@@ -4937,7 +4937,7 @@
     "variant": "HIGH QUALITY 7",
     "sku": "43047226572940",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA MSS CORDON",
@@ -4958,21 +4958,21 @@
     "variant": "17cm",
     "sku": "25850124540196",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA MSS MOVE UNO GOLD",
     "variant": "17cm",
     "sku": "49337281382644",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA MSS DOBLE CADENA",
     "variant": "17cm",
     "sku": "24312388481122",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA MSS GEOMETRIC SILVER",
@@ -4993,49 +4993,49 @@
     "variant": "",
     "sku": "23179919902991",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR MSS ROMANE SILVER",
     "variant": "",
     "sku": "87313381926414",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR MSS ROMANE GOLD",
     "variant": "",
     "sku": "96374014587285",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES MSS IMPERIAL MOVE",
     "variant": "",
     "sku": "96864052987442",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES MSS ROMANE GOLD",
     "variant": "",
     "sku": "55088338331413",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO MSS BORLA",
     "variant": "7",
     "sku": "79620556153244",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO MSS NOA CLASSIC",
     "variant": "7",
     "sku": "98284812726440",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO MSS MOVE LINK GOLD",
@@ -5049,7 +5049,7 @@
     "variant": "6",
     "sku": "16937878761878",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES T-SMILE ROSE GOLD",
@@ -5063,7 +5063,7 @@
     "variant": "",
     "sku": "67201534607245",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARRACADAS MSS PAVE DIAMONDS HOOP",
