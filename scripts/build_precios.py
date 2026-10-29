@@ -28,7 +28,10 @@ SCRATCH = os.environ.get('OC_SCRATCH') or os.path.join(REPO, '.scratch')
 DATOS = os.environ.get('OC_PRECIOS') or os.path.join(REPO, 'datos', 'precios')
 
 TC = 20.0          # tipo de cambio fijo
-ALIBABA = 0.03     # comision fija
+ALIBABA = 0.03     # comision fija de Alibaba
+# Hay ordenes que NO se pagan por Alibaba y por lo tanto no llevan esa comision:
+# CYNTHIA se paga por PayPal y Flylink (Reyna, 29 oct 2026). El porcentaje se pone en
+# el campo 'alibaba' de la orden en datos/precios/*.json; si no viene, se usa el 3%.
 # TODAS las ordenes llevan ROAS 5x (Reyna, 21 oct 2026). Antes era una columna extra que se
 # pedia orden por orden (ZOEY100926 el 10 de octubre, HAIFENG120826 el 13); ya quedo parejo
 # para todas. Lo que se ponga aqui cambia la tabla de la pagina Y el Excel que se descarga,
@@ -151,6 +154,7 @@ def calcula(o):
     """Aplica la formula de Eduardo a una orden completa."""
     costo, ship, sc = o['costo'], o['shipping'], o['sc']
     pct_ship = ship / costo if costo else 0
+    pct_ali = o.get('alibaba', ALIBABA)
     filas = []
     for l in o['lineas']:
         # La caja va AL COSTO, no al precio: tambien paga flete, comision e importacion.
@@ -158,7 +162,7 @@ def calcula(o):
         l = dict(l, cu=cu, caja=1 if con_caja(l) else 0)
         F = l['cu'] * l['cant']
         G = F * pct_ship
-        H = (F + G) * ALIBABA
+        H = (F + G) * pct_ali
         I = F + G + H
         filas.append(dict(l, F=F, G=G, H=H, I=I))
     tot_I = sum(f['I'] for f in filas) or 1
@@ -271,7 +275,7 @@ for nombre in sorted(ordenes, key=_clave):
     pct_sc = o['sc'] / compra_mxn if compra_mxn else 0     # J3 = L6/J6
     datos_js[nombre] = {
         'costo': round(o['costo'], 2), 'shipping': round(o['shipping'], 2),
-        'sc': round(o['sc'], 2), 'tc': TC, 'alibaba': ALIBABA,
+        'sc': round(o['sc'], 2), 'tc': TC, 'alibaba': o.get('alibaba', ALIBABA),
         'roas': list(roas_de(nombre)),
         'lineas': [{'sku': f['sku'], 'prod': f['prod'], 'var': f['var'],
                     'cant': f['cant'], 'cu': round(f['cu'], 4),
