@@ -32,7 +32,9 @@ MES = re.compile(r'^(%s)\s*(\d{4}),' % '|'.join(NM))
 # (coma en vez de punto, error de dedo en la hoja) se come el monto que le sigue.
 MONTO = re.compile(r'\$\d{1,3}(?:,\d{3})*[.,]\d{2}|\d{1,3}(?:,\d{3})*\.\d{2}USD')
 # error de dedo en la hoja SHOP AND CROSS: la orden es HAIFENG120826
-TYPO = {'HAIFENG120827': 'HAIFENG120826'}
+# En SHOP AND CROSS la orden de Rita se captura como 'RITA' a secas; en la tabla de
+# precios es RITA300926. Sin este mapeo su aduana no cae en ningun mes (29 oct 2026).
+TYPO = {'HAIFENG120827': 'HAIFENG120826', 'RITA': 'RITA300926'}
 
 
 def num(x):
