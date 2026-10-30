@@ -38027,5 +38027,726 @@
    }
   ],
   "alibaba": 0.0
+ },
+ "RITA300926": {
+  "proveedor": "RITA",
+  "costo": 5289.77,
+  "shipping": 986.0,
+  "sc": 0,
+  "cajas": null,
+  "lineas": [
+   {
+    "sku": "",
+    "prod": "PRODUCTO 01 · 75%Nylon 25%Spandex",
+    "var": "BURGUNDY S",
+    "cant": 5,
+    "cu": 7.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 01 · 75%Nylon 25%Spandex",
+    "var": "BURGUNDY M",
+    "cant": 5,
+    "cu": 7.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 01 · 75%Nylon 25%Spandex",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 7.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 01 · 75%Nylon 25%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 7.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 02 · 75%Nylon 25%Spandex",
+    "var": "BURGUNDY S",
+    "cant": 5,
+    "cu": 6.33,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 02 · 75%Nylon 25%Spandex",
+    "var": "BURGUNDY M",
+    "cant": 5,
+    "cu": 6.33,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 02 · 75%Nylon 25%Spandex",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 6.33,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 02 · 75%Nylon 25%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 6.33,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 03 · 75%Nylon 25%Spandex",
+    "var": "BEIGE M",
+    "cant": 4,
+    "cu": 13.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 03 · 75%Nylon 25%Spandex",
+    "var": "WHITE M",
+    "cant": 4,
+    "cu": 13.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 04 · 78%Nylon 22%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 8.46,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 04 · 78%Nylon 22%Spandex",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 8.46,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 04 · 78%Nylon 22%Spandex",
+    "var": "PINK M",
+    "cant": 5,
+    "cu": 8.46,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 04 · 78%Nylon 22%Spandex",
+    "var": "PINK S",
+    "cant": 5,
+    "cu": 8.46,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 05 · 78%Nylon 22%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 7.58,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 05 · 78%Nylon 22%Spandex",
+    "var": "DARK BLUE M",
+    "cant": 5,
+    "cu": 7.58,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 06 · 78%Nylon 22%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 11.43,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 06 · 78%Nylon 22%Spandex",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 11.43,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 06 · 78%Nylon 22%Spandex",
+    "var": "DARK BLUE M",
+    "cant": 5,
+    "cu": 11.43,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 06 · 78%Nylon 22%Spandex",
+    "var": "DARK BLUE S",
+    "cant": 5,
+    "cu": 11.43,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 07 · 78%Nylon 22%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 07 · 78%Nylon 22%Spandex",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 07 · 78%Nylon 22%Spandex",
+    "var": "DARK BROWN M",
+    "cant": 5,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 07 · 78%Nylon 22%Spandex",
+    "var": "DARK BROWN S",
+    "cant": 5,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 07 · 78%Nylon 22%Spandex",
+    "var": "BROWN M",
+    "cant": 5,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 07 · 78%Nylon 22%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 07 · 78%Nylon 22%Spandex",
+    "var": "WHITE M",
+    "cant": 5,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 08 · 80%Nylon 20%Spandex",
+    "var": "PINK S",
+    "cant": 5,
+    "cu": 6.77,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 08 · 80%Nylon 20%Spandex",
+    "var": "PINK M",
+    "cant": 5,
+    "cu": 6.77,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 09 · 90%Cotton 10%Spandex",
+    "var": "WHITE S",
+    "cant": 5,
+    "cu": 6.85,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 09 · 90%Cotton 10%Spandex",
+    "var": "PINK S",
+    "cant": 5,
+    "cu": 6.85,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 10 · 78%Nylon 22%Spandex",
+    "var": "PURPLE S",
+    "cant": 5,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 10 · 78%Nylon 22%Spandex",
+    "var": "PURPLE M（10.23-25）",
+    "cant": 5,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 10 · 78%Nylon 22%Spandex",
+    "var": "BLACK S（10.23-25）",
+    "cant": 5,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 10 · 78%Nylon 22%Spandex",
+    "var": "BLACK M（10.23-25）",
+    "cant": 5,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 11 · 78%Nylon 22%Spandex (just the top)",
+    "var": "BLACK M（10.15）",
+    "cant": 5,
+    "cu": 9.36,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 11 · 78%Nylon 22%Spandex (just the top)",
+    "var": "WHITE M",
+    "cant": 5,
+    "cu": 9.36,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 12 · 75%Nylon 25%Spandex",
+    "var": "WHITE S",
+    "cant": 10,
+    "cu": 13.75,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 12 · 75%Nylon 25%Spandex",
+    "var": "PURPLE S",
+    "cant": 10,
+    "cu": 13.75,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 12 · 75%Nylon 25%Spandex",
+    "var": "PINK S",
+    "cant": 10,
+    "cu": 13.75,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 13 · 80%Nylon 20%Spandex",
+    "var": "WHITE S",
+    "cant": 4,
+    "cu": 14.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 13 · 80%Nylon 20%Spandex",
+    "var": "WHITE M",
+    "cant": 4,
+    "cu": 14.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 14 · 28%Cotton 72%Polyester",
+    "var": "BLACK L",
+    "cant": 8,
+    "cu": 13.75,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 14 · 28%Cotton 72%Polyester",
+    "var": "WHITE L",
+    "cant": 8,
+    "cu": 13.75,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 14 · 28%Cotton 72%Polyester",
+    "var": "DARK BLUE L",
+    "cant": 5,
+    "cu": 13.75,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 15 · 82%Polyester 12%Spandex",
+    "var": "BROWN M",
+    "cant": 5,
+    "cu": 11.24,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 15 · 82%Polyester 12%Spandex",
+    "var": "WHITE M",
+    "cant": 5,
+    "cu": 11.24,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 16 · 79%Nylon 21%Spandex",
+    "var": "WHITE M",
+    "cant": 4,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 16 · 79%Nylon 21%Spandex",
+    "var": "BLACK M",
+    "cant": 4,
+    "cu": 7.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 17 · 78%Nylon 22%Spandex (BRA)",
+    "var": "BLACK S",
+    "cant": 9,
+    "cu": 9.36,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 18 · 78%Nylon 22%Spandex",
+    "var": "BLACK S",
+    "cant": 10,
+    "cu": 13.85,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 18 · 78%Nylon 22%Spandex",
+    "var": "BLACK M",
+    "cant": 10,
+    "cu": 13.85,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 18 · 78%Nylon 22%Spandex",
+    "var": "PINK S",
+    "cant": 10,
+    "cu": 13.85,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 18 · 78%Nylon 22%Spandex",
+    "var": "PINK M",
+    "cant": 10,
+    "cu": 13.85,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 19 · 78%Nylon 22%Spandex",
+    "var": "BLACK S",
+    "cant": 10,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 19 · 78%Nylon 22%Spandex",
+    "var": "BLACK M",
+    "cant": 10,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 19 · 78%Nylon 22%Spandex",
+    "var": "BURGUNDY S（10.20）",
+    "cant": 10,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 19 · 78%Nylon 22%Spandex",
+    "var": "BURGUNDY M（10.20）",
+    "cant": 10,
+    "cu": 6.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 20 · 78%Nylon 22%Spandex",
+    "var": "BURGUNDY S(10.20)",
+    "cant": 10,
+    "cu": 12.18,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 20 · 78%Nylon 22%Spandex",
+    "var": "BURGUNDY M",
+    "cant": 10,
+    "cu": 12.18,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 20 · 78%Nylon 22%Spandex",
+    "var": "BLACK S",
+    "cant": 10,
+    "cu": 12.18,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 20 · 78%Nylon 22%Spandex",
+    "var": "BLACK M（10.20）",
+    "cant": 10,
+    "cu": 12.18,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 21 · 78%Nylon 22%Spandex",
+    "var": "WHITE S",
+    "cant": 5,
+    "cu": 10.53,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 21 · 78%Nylon 22%Spandex",
+    "var": "WHITE M",
+    "cant": 5,
+    "cu": 10.53,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 22 · 78%Nylon 22%Spandex",
+    "var": "WHITE S",
+    "cant": 5,
+    "cu": 8.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 22 · 78%Nylon 22%Spandex",
+    "var": "WHITE M",
+    "cant": 5,
+    "cu": 8.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 23",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 8.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 24 · 90%Polyester 10%Spandex",
+    "var": "WHITE S",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 24 · 90%Polyester 10%Spandex",
+    "var": "WHITE M",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 24 · 90%Polyester 10%Spandex",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 24 · 90%Polyester 10%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 25 · 88%Polyester 12%Spandex",
+    "var": "DARK BLUE S",
+    "cant": 5,
+    "cu": 12.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 25 · 88%Polyester 12%Spandex",
+    "var": "DARK BLUE M",
+    "cant": 5,
+    "cu": 12.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 25 · 88%Polyester 12%Spandex",
+    "var": "DARK S",
+    "cant": 5,
+    "cu": 12.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 25 · 88%Polyester 12%Spandex",
+    "var": "DARK M",
+    "cant": 5,
+    "cu": 12.65,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 26 · 75%Nylon 25%Spandex",
+    "var": "RED S",
+    "cant": 5,
+    "cu": 9.83,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 26 · 75%Nylon 25%Spandex",
+    "var": "RED M",
+    "cant": 5,
+    "cu": 9.83,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 26 · 75%Nylon 25%Spandex",
+    "var": "WHITE S",
+    "cant": 5,
+    "cu": 9.83,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 26 · 75%Nylon 25%Spandex",
+    "var": "WHITE M",
+    "cant": 5,
+    "cu": 9.83,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 26 · 75%Nylon 25%Spandex",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 9.83,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 26 · 75%Nylon 25%Spandex",
+    "var": "BLACK M",
+    "cant": 5,
+    "cu": 9.83,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 27 · 75%Nylon 25%Spandex",
+    "var": "BROWN S（10.14-22）",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 27 · 75%Nylon 25%Spandex",
+    "var": "BROWN M（10.14-22）",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 27 · 75%Nylon 25%Spandex",
+    "var": "WHITE S（10.14-22）",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 27 · 75%Nylon 25%Spandex",
+    "var": "WHITE M（10.14-22）",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 27 · 75%Nylon 25%Spandex",
+    "var": "BLACK S（10.14-22）",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 27 · 75%Nylon 25%Spandex",
+    "var": "BLACK M（10.14-22）",
+    "cant": 5,
+    "cu": 10.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 28 · 82.5%Polyester 17.5%Spandex (compression)",
+    "var": "BLACK S",
+    "cant": 5,
+    "cu": 3.98,
+    "pant": null
+   },
+   {
+    "sku": "",
+    "prod": "PRODUCTO 28 · 82.5%Polyester 17.5%Spandex (compression)",
+    "var": "WHITE S",
+    "cant": 5,
+    "cu": 3.98,
+    "pant": null
+   }
+  ]
  }
 }
