@@ -110,8 +110,11 @@ def _norm(x):
     return _re.sub(r'[^A-Z0-9]', '', x.upper())
 inversion = {}
 for k, v in _inf['inv'].items():
-    inversion[k] = {'total_usd': v['usd'], 'total_mxn': v['mxn'],
-                    'pagos': v['pagos'], 'mes': v['mes']}
+    # La clave se guarda normalizada porque abajo se busca con _norm(nombre). Si se guarda
+    # tal cual, una orden con espacio en el nombre (HAIFENG290926 MAYOREO) nunca cuadra y
+    # su inversion sale en cero (Reyna, 9 nov 2026).
+    inversion[_norm(k)] = {'total_usd': v['usd'], 'total_mxn': v['mxn'],
+                           'pagos': v['pagos'], 'mes': v['mes']}
 
 ORDEN_PROV = ['HAIFENG', 'ZOEY', 'CYNTHIA CAO', 'NANCY VIP', 'DINA DU', 'COCOMA', 'MOLLY']
 

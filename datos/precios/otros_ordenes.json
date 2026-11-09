@@ -35044,7 +35044,8 @@
     "cu": 6.99,
     "pant": null
    }
-  ]
+  ],
+  "aduana_completa": true
  },
  "MOLLY100626": {
   "proveedor": "MOLLY",
@@ -42390,7 +42391,7 @@
    }
   ]
  },
- "HAIFENG290926": {
+ "HAIFENG290926 MAYOREO": {
   "proveedor": "HAIFENG",
   "costo": 7729.03,
   "shipping": 0.0,
@@ -43501,6 +43502,7 @@
     "cu": 7.0,
     "pant": null
    }
-  ]
+  ],
+  "aduana_completa": true
  }
 }
