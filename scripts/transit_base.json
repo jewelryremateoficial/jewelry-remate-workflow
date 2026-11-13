@@ -3878,7 +3878,7 @@
   ]
  },
  {
-  "name": "NANCY180926 (falta solo la guia 878692219206)",
+  "name": "NANCY180926 (completa, sus 4 guias en verde)",
   "date": "2026-09-18",
   "base": "NANCY180926",
   "lines": [
@@ -3922,7 +3922,7 @@
     "variant": "8",
     "sku": "42981951144076",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO TREBOL GOLD BLACK",
@@ -4006,14 +4006,14 @@
     "variant": "Regular",
     "sku": "42981998657676",
     "qty": 30,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES FR GOLD CON PERLA",
     "variant": "1.3 cm",
     "sku": "42982006882444",
     "qty": 12,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES FR GOLD CON ZIRCONIA",
@@ -4027,14 +4027,14 @@
     "variant": "Regular",
     "sku": "678a9af396518",
     "qty": 8,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES GC LOGO SILVER",
     "variant": "Regular",
     "sku": "665bb51372697",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES LOCK GOLD",
@@ -4153,14 +4153,14 @@
     "variant": "HIGH QUALITY",
     "sku": "58980703502573",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA CD SADDLE",
     "variant": "",
     "sku": "58980703754541",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "COLLAR 20 TRÉBOLES GOLD GREEN",
@@ -4279,14 +4279,14 @@
     "variant": "",
     "sku": "62745761085613",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "MONEDERO LV ROSALIE DAMIER",
     "variant": "",
     "sku": "40049131409613",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA CC COMETE GEODE SILVER",
@@ -4300,7 +4300,7 @@
     "variant": "",
     "sku": "29857041083437",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA CLAVO GOLD",
@@ -4356,7 +4356,7 @@
     "variant": "17 CM",
     "sku": "661770f08cba3",
     "qty": 5,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA CLAVO SILVER CON ZIRCONIA",
@@ -4384,7 +4384,7 @@
     "variant": "16cm",
     "sku": "661774c181d21",
     "qty": 6,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA ONE TRÉBOL GOLD GREEN",
@@ -4440,14 +4440,14 @@
     "variant": "17cm",
     "sku": "665bd055c2e65",
     "qty": 4,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA TB CON UNA INSIGNIA WHITE",
     "variant": "17cm",
     "sku": "665bd055d2452",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA V GOLD CON ZIRCONIA",
@@ -4468,14 +4468,14 @@
     "variant": "50 cm / 16 cm con 2 cm de extensión",
     "sku": "42981908742285",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "TARJETERO LV CHARMS PINK",
     "variant": "",
     "sku": "58980701120685",
     "qty": 1,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "BRAZALETE MSS GOLD",
@@ -4832,56 +4832,56 @@
     "variant": "",
     "sku": "56744341007853",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "LENTES L AURA LOW",
     "variant": "",
     "sku": "86604568456025",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "LENTES L 1.1 MILLIONAIRES",
     "variant": "",
     "sku": "21424321763187",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "LENTES L LIGHT CAT",
     "variant": "",
     "sku": "55187770616120",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CINTO MM BLACK",
     "variant": "",
     "sku": "53457342200303",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "MONEDERO LV",
     "variant": "",
     "sku": "94956734303628",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "MONEDERO L BLACK",
     "variant": "",
     "sku": "37232815032673",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "CARTERA H BEARN COMPACT",
     "variant": "black",
     "sku": "39618712944716",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARETES L CONFETTI",
@@ -4944,7 +4944,7 @@
     "variant": "17cm",
     "sku": "85029355588851",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "PULSERA MSS PAVE SO",
@@ -5042,7 +5042,7 @@
     "variant": "7",
     "sku": "80143452514891",
     "qty": 3,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ANILLO MSS MOVE NOVA PAVE SILVER",
@@ -5070,14 +5070,14 @@
     "variant": "",
     "sku": "67619161024877",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    },
    {
     "title": "ARRACADAS MSS PAVE DIAMONDS HOOP",
     "variant": "",
     "sku": "67619161157645",
     "qty": 2,
-    "arrived": false
+    "arrived": true
    }
   ]
  },
