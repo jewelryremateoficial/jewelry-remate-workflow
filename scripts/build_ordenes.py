@@ -186,6 +186,14 @@ def img_i(url):
     if url not in img_idx: img_idx[url] = len(imgs); imgs.append(url)
     return img_idx[url]
 
+# Coleccion Holiday Rebajas, leida de Shopify y guardada en el repo para que el build sea
+# reproducible sin volver a pegarle a la API (Reyna, 13 nov 2026).
+try:
+    HOLIDAY = set(json.load(open(REPO + '/datos/holiday_rebajas.json', encoding='utf-8'))['productos'])
+except Exception:
+    HOLIDAY = set()
+print('coleccion Holiday Rebajas:', len(HOLIDAY), 'productos')
+
 rows = []
 for v in variants:
     p = prods.get(v['pid'])
@@ -202,6 +210,13 @@ for v in variants:
     rb = reb.get(sku, {'r': 0, 'n': 0, 'c': 0})
     a = age.get(v['pid'], 999)
     ra = 1 if (v['cap'] > 0 and v['price'] > 0 and v['price'] <= 0.705 * v['cap']) else 0
+    # Rebaja de Holiday (Reyna, 13 nov 2026). Son dos cosas distintas y por eso van en dos campos:
+    # 'hol' = el producto esta dentro de la coleccion Holiday Rebajas de Shopify. Entra el producto
+    #         completo, asi que puede haber tallas de ese producto todavia a precio normal.
+    # 'h25' = esta variante trae exactamente el 25% off en su precio de comparacion.
+    # Son INFORMATIVOS: no mueven ninguna seccion ni entran en el calculo de lo sugerido.
+    hol = 1 if str(v['pid']).rsplit('/', 1)[-1] in HOLIDAY else 0
+    h25 = 1 if (v['cap'] > 0 and v['price'] > 0 and 0.735 <= v['price'] / v['cap'] <= 0.765) else 0
     # Ventas reales: si la variante fue recreada, ShopifyQL reporta de menos. 'fx' marca la fila
     # para pintarle un asterisco y que Eduardo sepa que ese numero fue recuperado.
     u60 = (e60 or {}).get('u', 0)
@@ -219,7 +234,7 @@ for v in variants:
         't': v['title'], 'vt': vt if vt != 'Default Title' else '',
         'v': vendor or 'OTROS', 'st': st, 'q': v['inv'], 'p': v['price'], 'cap': v['cap'],
         'i': img_i(p['img']), 'u': u60, 'u9': u90, 'fx': fx,
-        'a': a, 'rb': rb['r'], 'pn': rb['n'], 'cd': rb['c'], 'ra': ra,
+        'a': a, 'rb': rb['r'], 'pn': rb['n'], 'cd': rb['c'], 'ra': ra, 'hol': hol, 'h25': h25,
         'dsl': dsl_for(sku, u60, u90),
         'c': round(c['best'], 2) if c else None, 'm': material.get(sku, ''),
         'dup': 1 if (st == '' and norm_t(v['title']) in dups) else 0,
@@ -310,6 +325,12 @@ img.th{width:44px;height:44px;object-fit:cover;border-radius:8px;background:#eee
 .chip.top{color:#7a4bd6;background:#f0eafc}.chip.gris{color:var(--muted);background:var(--gray-bg)}
 .chip.reb{color:var(--reb);background:var(--reb-bg)}.chip.dup{color:#8a2be2;background:#f3eafe}
 .chip.nuevo{color:#0b7285;background:#e3fafc}
+.chip.hol{color:#6b3fa0;background:#efe6f5}
+.subdiv.hol25 td{background:#efe6f5;color:#6b3fa0}
+.subdiv.holnorm td{background:var(--gray-bg);color:var(--muted)}
+.holwarn{margin:0 0 12px;padding:10px 14px;border-radius:10px;background:var(--a-bg);color:var(--a);font-size:13px;font-weight:700}
+.holwarn ul{margin:6px 0 0;padding-left:18px;font-weight:400}
+.holwarn button{margin-left:8px;font:700 11px/1 inherit;padding:3px 8px;border-radius:6px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer}
 .chip.enodc{color:#0b5c8a;background:#e1f0fb;border:1px solid #b6dcf5}
 .chip.falta{color:#b26a00;background:#fdf3e0;border:1px solid #f0d9a8}
 .chip.dupodc{color:#c0392b;background:#fdecea;border:1px solid #f3c2bc}
@@ -403,6 +424,7 @@ var VENDORS=__VENDORS__;
 var TBASE=__TBASE__;
 var WEEKS=10, TOP_U=10, TOP_MULT=1.2;
 function usd(n){return n==null?'—':'$'+Number(n).toFixed(2)}
+function mxn(n){return n==null||!n?'—':'$'+Math.round(Number(n)).toLocaleString('es-MX')}
 function normSku(s){s=String(s==null?'':s).trim();if(s.slice(-2)==='.0')s=s.slice(0,-2);return s}
 function normT(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim().toUpperCase()}
 function img(i){return i>=0?'<img class="th" loading="lazy" src="'+IMGS[i]+'">':'<div class="th"></div>'}
@@ -539,6 +561,7 @@ function rowHTML(r,tm,noSug){
   if(isEst(r))chips+=' <span class="chip gris">Estancado real: 90+ días de alta y 0 ventas en 90d</span>';
   if(isLento(r))chips+=' <span class="chip bajo">🐢 Lento — '+(r.dsl>=90?'90+':r.dsl)+' días sin venta</span>';
   if(r.a<90&&r.a>=0&&r.st==='')chips+=' <span class="chip nuevo">'+r.a+' días activo</span>';
+  if(r.hol)chips+=' <span class="chip hol">🎄 Holiday'+(r.h25?' −25%':'')+'</span>';
   var obs=[];
   if(r.u===0&&r.q<=0&&r.st==='')obs.push('agotado sin venta reciente — prueba');
   if(r.ns)obs.push('SIN SKU en Shopify — conviene ponérselo');
@@ -600,6 +623,31 @@ function renderOrden(){
   H+='<div class="sec"><h3 class="reb">\u{1F3F7}\uFE0F EN REBAJA ('+rebL.length+')</h3>'
     +'<div class="exp">Rebajados 30%+ que <b>no</b> vendieron. Los rebajados que s\u00ed vendieron salen arriba con su etiqueta, no aqu\u00ed. Sin cantidad sugerida.</div>'
     +(rebL.length?tbl(rebL,true):vacio())+'</div>';
+  // 2b — HOLIDAY REBAJAS (Reyna, 13 nov 2026). Apartado de SOLO LECTURA: sus renglones no
+  // llevan data-k ni casilla PEDIR, asi que no entran en el total ni en el Excel y ninguna
+  // otra seccion cambia. Es para reconocer lo que esta en la coleccion Holiday de Shopify,
+  // que es cosa distinta del apartado EN REBAJA de arriba (ese va por precio de comparacion
+  // 30%+ y solo con los que no vendieron).
+  var hol=act.filter(function(r){return r.hol}).sort(byName);
+  var h25=hol.filter(function(r){return r.h25}), hNor=hol.filter(function(r){return !r.h25});
+  function trsRO(list){return list.map(function(r){
+    return '<tr class="gris">'
+     +'<td>'+img(r.i)+'</td>'
+     +'<td><span class="pname">'+r.t+'</span><span class="vsub">'+(r.vt||'')+' · SKU '+(r.ns?'—':r.k)+'</span></td>'
+     +'<td class="num">'+r.u+'</td><td class="num">'+(r.u/60*7).toFixed(1)+'</td>'
+     +'<td class="num">'+r.q+'</td><td class="num">'+(r.cap>0?mxn(r.cap):'—')+'</td>'
+     +'<td class="num">'+mxn(r.p)+'</td>'
+     +'<td class="num">'+(r.cap>0?Math.round((1-r.p/r.cap)*100)+'%':'—')+'</td>'
+     +'<td class="num">'+usd(r.c)+'</td>'
+     +'<td>'+(r.h25?'<span class="chip hol">25% off</span>':'<span class="chip gris">precio normal</span>')+'</td></tr>'}).join('')}
+  var THEADH='<thead><tr><th></th><th>Producto · variante</th><th class="num">Vendió 60d</th><th class="num">Pzs/semana</th><th class="num">Stock</th><th class="num">Antes</th><th class="num">Precio hoy</th><th class="num">Off</th><th class="num">Costo (US)</th><th>Estado</th></tr></thead>';
+  H+='<div class="sec"><h3 class="reb">\u{1F384} HOLIDAY REBAJAS ('+hol.length+')</h3>'
+    +'<div class="exp">Lo que est\u00e1 dentro de la colecci\u00f3n <b>Holiday Rebajas</b> de Shopify. <b>Aqu\u00ed no se pide</b>: no hay casilla y no entra al Excel, es para que los reconozcas. Ojo: en la colecci\u00f3n entra el producto completo, as\u00ed que puede haber tallas todav\u00eda a precio normal. Lo que ya ten\u00edas, el apartado <b>EN REBAJA</b> de arriba, va por otra regla: 30%+ de descuento y solo los que no vendieron.</div>'
+    +'<div id="holwarn"></div>'
+    +(hol.length?'<div class="tblwrap"><table>'+THEADH+'<tbody>'
+       +(h25.length?div('hol25','\u{1F3F7}\uFE0F CON 25% OFF ('+h25.length+')')+trsRO(h25):'')
+       +(hNor.length?div('holnorm','EN LA COLECCI\u00d3N, TODAV\u00cdA A PRECIO NORMAL ('+hNor.length+')')+trsRO(hNor):'')
+       +'</tbody></table></div>':vacio())+'</div>';
   // 3 — SIN VENTA. Lo estancado primero, con su dinero en el titulo.
   H+='<div class="sec"><h3 class="gray">\u{1F4A4} SIN VENTA EN 60 D\u00cdAS ('+sinv.length+')'
     +(mxEst>0?' \u2014 $'+Math.round(mxEst).toLocaleString('es-MX')+' MXN parados':'')+'</h3>'
@@ -621,9 +669,35 @@ function renderOrden(){
   document.querySelectorAll('#ocont input.q').forEach(function(inp){
     inp.oninput=function(){var tr=inp.closest('tr');var k=tr.dataset.k;var val=parseInt(inp.value)||0;edits[k]=val;esave();
       var r=DATA.find(function(x){return x.k===k});inp.classList.toggle('hot',val>0);inp.classList.add('edited');
-      tr.querySelector('[data-tot]').textContent=r&&r.c?usd(val*r.c):'—';sum();draftbar()};
+      tr.querySelector('[data-tot]').textContent=r&&r.c?usd(val*r.c):'—';sum();draftbar();holbar()};
   });
-  sum();
+  sum();holbar();
+  // Aviso vivo: si le pone cantidad a algo que esta en la coleccion Holiday, se lo decimos
+  // aqui mismo, en el apartado de Holiday, con un boton para dejarlo en cero (Reyna, 13 nov 2026).
+  function holbar(){
+    var caja=document.getElementById('holwarn');if(!caja)return;
+    var con=[];
+    document.querySelectorAll('#ocont tr[data-k]').forEach(function(tr){
+      var r=DATA.find(function(x){return x.k===tr.dataset.k});
+      if(!r||!r.hol)return;
+      var val=parseInt(tr.querySelector('input.q').value)||0;
+      if(val>0)con.push({r:r,v:val});
+    });
+    if(!con.length){caja.innerHTML='';return}
+    caja.innerHTML='<div class="holwarn">\u26A0\uFE0F Le pusiste cantidad a '+con.length+' que est\u00e1'+(con.length>1?'n':'')+' en la colecci\u00f3n Holiday:<ul>'
+      +con.map(function(x){return '<li>'+x.r.t+(x.r.vt?' · '+x.r.vt:'')+' \u2014 <b>'+x.v+' pz</b>'
+        +(x.r.h25?' <span class="chip hol">25% off</span>':' <span class="chip gris">precio normal</span>')
+        +'<button data-cero="'+x.r.k+'">dejar en 0</button></li>'}).join('')+'</ul></div>';
+    caja.querySelectorAll('[data-cero]').forEach(function(b){
+      b.onclick=function(){
+        var tr=document.querySelector('#ocont tr[data-k="'+b.dataset.cero+'"]');
+        if(!tr)return;
+        var inp=tr.querySelector('input.q');inp.value=0;edits[b.dataset.cero]=0;esave();
+        inp.classList.remove('hot');inp.classList.add('edited');
+        tr.querySelector('[data-tot]').textContent='—';sum();draftbar();holbar();
+      };
+    });
+  }
   function sum(){
     var pz=0,us=0,ln=0,vistos={};
     document.querySelectorAll('#ocont tr[data-k]').forEach(function(tr){
