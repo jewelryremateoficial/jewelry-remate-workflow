@@ -292,6 +292,7 @@ h2{margin:6px 0 4px;font-size:21px}
 .card h3{margin:0 0 6px;font-size:16px}.card .sem{font-weight:700;font-size:12px}
 .card.rojo .sem{color:var(--a)}.card.amarillo .sem{color:var(--warn)}.card.verde .sem{color:var(--ok)}
 .card ul{margin:8px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--muted)}
+.card li.aviso{color:var(--a);font-weight:600}
 .card li b{color:var(--ink)}
 .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
 select,input[type=search]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
@@ -486,17 +487,25 @@ function renderSem(){
     var urgN=rs.filter(function(r){return r.q<=0&&r.u>0&&inTransit(r,tm)<=0&&!isReb(r)}).length;
     var crit=rs.filter(function(r){return r.u9>0&&r.q>0&&cobertura(r)<14}).length;
     var rebN=rs.filter(function(r){return isReb(r)}).length;
+    // Holiday (Reyna, 13 nov 2026): se cuenta y se avisa, pero NO cambia lo sugerido. holSug
+    // dice cuantas de las que ya traen cantidad estan dentro de la coleccion, que es justo
+    // lo que ella quiere cachar antes de mandar la orden.
+    var holN=rs.filter(function(r){return r.hol}).length;
+    var hol25=rs.filter(function(r){return r.hol&&r.h25}).length;
+    var holSug=0;
     var pz=0,us=0,ln=0;
-    rs.forEach(function(r){if(isReb(r)||isEst(r))return;var s=sug(r,tm);if(s>0){pz+=s;ln++;if(r.c)us+=s*r.c}});
+    rs.forEach(function(r){if(isReb(r)||isEst(r))return;var s=sug(r,tm);if(s>0){pz+=s;ln++;if(r.c)us+=s*r.c;if(r.hol)holSug++}});
     totalPz+=pz;totalUS+=us;
     var cls=urgN>=5?'rojo':(urgN>0||crit>=5?'amarillo':'verde');
-    return {v:v,cls:cls,lab:cls==='rojo'?'🔴 PEDIR YA':(cls==='amarillo'?'🟡 PRONTO':'🟢 OK'),urgN:urgN,crit:crit,rebN:rebN,pz:pz,us:us,ln:ln};
+    return {v:v,cls:cls,lab:cls==='rojo'?'🔴 PEDIR YA':(cls==='amarillo'?'🟡 PRONTO':'🟢 OK'),urgN:urgN,crit:crit,rebN:rebN,holN:holN,hol25:hol25,holSug:holSug,pz:pz,us:us,ln:ln};
   }).sort(function(a,b){return b.urgN-a.urgN||b.crit-a.crit});
   cards.forEach(function(c){
     html+='<div class="card '+c.cls+'" onclick="goOrden(\''+c.v+'\')"><h3>'+c.v+'</h3><div class="sem">'+c.lab+'</div><ul>'+
     '<li><b>'+c.urgN+'</b> agotadas que sí venden (sin pedir)</li>'+
     '<li><b>'+c.crit+'</b> críticas (&lt;14 días de stock)</li>'+
     '<li><b>'+c.rebN+'</b> en rebaja 30%+ (tu criterio)</li>'+
+    (c.holN?'<li><b>'+c.holN+'</b> en Holiday Rebajas'+(c.hol25?' ('+c.hol25+' con 25% off)':'')+'</li>':'')+
+    (c.holSug?'<li class="aviso">\u26A0\uFE0F <b>'+c.holSug+'</b> de lo sugerido est\u00e1 en Holiday \u2014 rev\u00edsalas</li>':'')+
     '<li>Sugerido: <b>'+c.pz+'</b> pzs / <b>'+c.ln+'</b> líneas ≈ <b>'+usd(c.us)+' USD</b></li></ul></div>';
   });
   document.getElementById('semcards').innerHTML=html;
