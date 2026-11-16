@@ -14,9 +14,15 @@ en la memoria (reglas-centro-ordenes) y en el encabezado de scripts/build_ordene
      `product_vendor, product_variant_sku, product_title, product_variant_title`. Si el vendor va
      al final, el SKU se lee del titulo, no cruza nada y las ventas salen a la mitad sin avisar.
 2. **Ventas 90 días**: mismas dos consultas con `SINCE -90d` → `sales90_HAIFENG.json`, `sales90_OTROS.json`
-3. **Catálogo completo** (paginado de 250 en 250 hasta hasNextPage=false) → `vp_001.json`, `vp_002.json`, …:
-   `query($after:String){ productVariants(first:250, after:$after){ pageInfo{hasNextPage endCursor} nodes{ id title sku price compareAtPrice inventoryQuantity product{ id title vendor status featuredImage{ url(transform:{maxWidth:120,maxHeight:120}) } } } } }`
-   (si la última página llega inline, repetirla agregando campos barcode/createdAt/updatedAt/handle para forzar el guardado a archivo)
+3. **Catálogo completo** → `vp_001.json`, `vp_002.json`, … (bloques de 250 variantes).
+   Al 16 nov 2026 la API YA NO deja `productVariants(first:250)`: el tope de cualquier conexión
+   es 100, y `Product.featuredImage` y `ProductVariant.barcode` quedaron deprecados y los rechaza.
+   Se baja por PRODUCTOS, de 100 en 100 (unas 26 páginas), y se convierte al formato de siempre:
+   `query{ products(first:100, after:"<cursor>"){ pageInfo{hasNextPage endCursor} nodes{ id title vendor status handle createdAt updatedAt productType featuredMedia{preview{image{url(transform:{maxWidth:120,maxHeight:120})}}} variants(first:100){ nodes{ id title sku price compareAtPrice inventoryQuantity createdAt updatedAt position taxable } } } } }`
+   Cada página pesa ~80 KB, así que el conector la guarda sola en un archivo y de ahí se copia.
+   Luego se aplana a `{"data":{"productVariants":{"nodes":[{…, "product":{id,title,vendor,status,featuredImage:{url}}}]}}}`.
+   (si alguna página llega inline en vez de guardarse, repetirla agregando `descriptionHtml` para
+   que pase el límite y se guarde en archivo)
 4. **Línea por línea 60d para rebaja** (bulk): mutación `bulkOperationRunQuery` con
    `{ orders(query:"created_at:>=<HOY-60d>") { edges { node { id createdAt lineItems { edges { node { sku quantity originalUnitPriceSet{shopMoney{amount}} discountedUnitPriceSet{shopMoney{amount}} } } } } } } }`
    → esperar COMPLETED, descargar el url con curl → `lineitems60.jsonl`
