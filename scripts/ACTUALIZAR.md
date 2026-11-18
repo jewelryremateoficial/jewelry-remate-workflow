@@ -14,6 +14,10 @@ en la memoria (reglas-centro-ordenes) y en el encabezado de scripts/build_ordene
      `product_vendor, product_variant_sku, product_title, product_variant_title`. Si el vendor va
      al final, el SKU se lee del titulo, no cruza nada y las ventas salen a la mitad sin avisar.
 2. **Ventas 90 días**: mismas dos consultas con `SINCE -90d` → `sales90_HAIFENG.json`, `sales90_OTROS.json`
+   **Subir el LIMIT a 3000 en la de 90d de OTROS.** Al 18 nov 2026 esa consulta devuelve 1,010
+   renglones, y con `LIMIT 1000` se queda justo en 1000 sin avisar que corto. Como viene ordenada
+   por piezas DESC, lo que se pierde son los de 1 o 2 ventas, que es justo lo que decide si un
+   producto cuenta como estancado o no. Si `rowCount` sale exactamente igual al LIMIT, corto.
 3. **Catálogo completo** → `vp_001.json`, `vp_002.json`, … (bloques de 250 variantes).
    Al 16 nov 2026 la API YA NO deja `productVariants(first:250)`: el tope de cualquier conexión
    es 100, y `Product.featuredImage` y `ProductVariant.barcode` quedaron deprecados y los rechaza.
@@ -26,7 +30,12 @@ en la memoria (reglas-centro-ordenes) y en el encabezado de scripts/build_ordene
 4. **Línea por línea 60d para rebaja** (bulk): mutación `bulkOperationRunQuery` con
    `{ orders(query:"created_at:>=<HOY-60d>") { edges { node { id createdAt lineItems { edges { node { sku quantity originalUnitPriceSet{shopMoney{amount}} discountedUnitPriceSet{shopMoney{amount}} } } } } } } }`
    → esperar COMPLETED, descargar el url con curl → `lineitems60.jsonl`
-5. **Productos nuevos (edad)**: `products(query:"created_at:>=<HOY-90d>")` con id/createdAt/publishedAt/status → `newprods_1.json` (y _2 si hay más páginas; los ACTIVE son los importantes)
+5. **Productos nuevos (edad)**: `products(query:"created_at:>=<HOY-90d>")` con id/createdAt/publishedAt/status.
+   **`build_ordenes.py` solo lee `newprods_1.json` y `newprods_2.json`**, pero al 18 nov 2026 la
+   consulta ya sale en 4 páginas de 100 (313 productos). Hay que juntar TODAS las páginas y
+   partirlas a la mitad en esos dos archivos, con la forma `{"nodes":[...]}`. Si se deja una página
+   fuera, esos productos salen como viejos (90+ días) y se cuelan a "estancados" sin haber tenido
+   tiempo de venderse.
 6. **Costos**: correr `scripts/dump_costs.py` (lee los Excel de ~/Downloads/TABLAS DE PRECIOS y el historial). Si los Excel no están disponibles, usar el `scripts/costs.json` guardado (los costos no cambian a diario). Igual `transit_base.json`.
 
 ## Generar y publicar:
